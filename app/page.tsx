@@ -3,7 +3,7 @@ import { useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "framer-motion"
-import { Search, ArrowRight, Zap, Mountain, Pickaxe, TrendingUp } from "lucide-react"
+import { Search, ArrowRight, Zap, Mountain, Pickaxe, TrendingUp, AlertTriangle, Globe } from "lucide-react"
 import { VectorSearch } from "@/components/vector-search"
 import { RegulatoryHeatmap } from "@/components/regulatory-heatmap"
 
@@ -118,6 +118,28 @@ export default function RhisPrismApp() {
                     <a href="/heatmap">
                       View Global Heatmap
                       <TrendingUp className="h-5 w-5 ml-2" />
+                    </a>
+                  </Button>
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="lg"
+                    className="px-8 py-4 text-lg font-semibold rounded-full bg-transparent"
+                  >
+                    <a href="/risk-heatmap">
+                      View Risk Heatmap
+                      <AlertTriangle className="h-5 w-5 ml-2" />
+                    </a>
+                  </Button>
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="lg"
+                    className="px-8 py-4 text-lg font-semibold rounded-full bg-transparent"
+                  >
+                    <a href="/unified-dashboard">
+                      Unified Dashboard
+                      <Globe className="h-5 w-5 ml-2" />
                     </a>
                   </Button>
                 </div>
