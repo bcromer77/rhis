@@ -1,169 +1,134 @@
-import { mockInsights } from "./mock-insights"
-
 export interface HeatmapInsight {
   title: string
-  category: "Economic" | "Environmental" | "Regulatory"
+  location: string
+  category: string
   riskLevel: "low" | "medium" | "high"
   impact: string
-  location: string
-  sentiment: "Supportive" | "Neutral" | "Negative"
-  date: string
   politician: string
-  citation: string
-  coordinates?: [number, number] // [latitude, longitude]
+  date: string
+  source: string
 }
 
-// Function to calculate risk level based on sentiment and category
-function calculateRiskLevel(
-  sentiment: "Supportive" | "Neutral" | "Negative",
-  category: "Economic" | "Environmental" | "Regulatory",
-): "low" | "medium" | "high" {
-  // Environmental regulations tend to be higher risk due to compliance costs
-  if (category === "Environmental") {
-    if (sentiment === "Negative") return "high"
-    if (sentiment === "Neutral") return "high"
-    return "medium"
-  }
-
-  // Regulatory changes can be medium to high risk
-  if (category === "Regulatory") {
-    if (sentiment === "Negative") return "high"
-    if (sentiment === "Neutral") return "medium"
-    return "low"
-  }
-
-  // Economic policies - supportive ones are opportunities (low risk)
-  if (category === "Economic") {
-    if (sentiment === "Supportive") return "low"
-    if (sentiment === "Neutral") return "medium"
-    return "high"
-  }
-
-  return "medium"
-}
-
-// Transform regulatory insights into heatmap data
-export const heatmapData: HeatmapInsight[] = mockInsights.map((insight) => ({
-  title: insight.title,
-  category: insight.category,
-  riskLevel: calculateRiskLevel(insight.sentiment, insight.category),
-  impact: insight.impact,
-  location: "India", // All insights are India-focused for ArcelorMittal
-  sentiment: insight.sentiment,
-  date: insight.date,
-  politician: insight.politician,
-  citation: insight.citation,
-  coordinates: [20.5937, 78.9629], // Center of India coordinates
-}))
-
-// Additional heatmap data with specific locations for ArcelorMittal operations
 export const enhancedHeatmapData: HeatmapInsight[] = [
   {
-    title: "Indian Railways Infrastructure Expansion",
-    category: "Economic",
-    riskLevel: "low",
-    impact: "Enhanced supply chain efficiency for steel transportation",
-    location: "Pan-India",
-    sentiment: "Supportive",
-    date: "2025-03-18",
-    politician: "Pratap C. Sarangi",
-    citation: "Transcript from Demands for Grants under the Ministry of Railways for 2025-26",
-    coordinates: [20.5937, 78.9629],
-  },
-  {
-    title: "Environmental Compliance and New Regulations",
+    title: "New Environmental Impact Assessment Requirements for Coal Mining",
+    location: "India",
     category: "Environmental",
     riskLevel: "high",
-    impact: "Increased operational costs due to new environmental regulations",
-    location: "Jharkhand",
-    sentiment: "Neutral",
-    date: "2025-03-08",
-    politician: "Dr. Bhupender Yadav",
-    citation: "Environment Committee Proceedings",
-    coordinates: [23.6102, 85.2799],
+    impact:
+      "Stricter environmental impact assessment requirements for coal mining operations mandate comprehensive biodiversity studies, water quality assessments, and community consultation processes.",
+    politician: "Pawan Kalyan",
+    date: "2024-01-15",
+    source: "Ministry of Environment, Forest and Climate Change",
   },
   {
-    title: "Steel Export Incentives Package",
+    title: "Gold Mining Royalty Rate Adjustment Proposal",
+    location: "Canada",
     category: "Economic",
-    riskLevel: "low",
-    impact: "Boost to steel exports and international competitiveness",
-    location: "Odisha",
-    sentiment: "Supportive",
-    date: "2025-03-15",
-    politician: "Shri Piyush Goyal",
-    citation: "Ministry of Commerce and Industry Budget Session",
-    coordinates: [20.9517, 85.0985],
+    riskLevel: "medium",
+    impact:
+      "Provincial government considering 15% increase in gold mining royalty rates to fund infrastructure development with new taxation frameworks.",
+    politician: "Doug Ford",
+    date: "2024-01-20",
+    source: "Ontario Ministry of Northern Development",
   },
   {
-    title: "Mining Lease Renewal Delays",
+    title: "Indigenous Land Rights Consultation Framework for Mining",
+    location: "Canada",
     category: "Regulatory",
     riskLevel: "high",
-    impact: "Potential disruption to iron ore supply chain",
-    location: "Chhattisgarh",
-    sentiment: "Negative",
-    date: "2025-03-02",
-    politician: "Dr. Sangeeta Balwant",
-    citation: "Parliamentary Question Hour on Mining Affairs",
-    coordinates: [21.2787, 81.8661],
+    impact:
+      "New mandatory consultation process for mining permits on traditional territories requiring free, prior, and informed consent from Indigenous communities.",
+    politician: "Jagmeet Singh",
+    date: "2024-01-25",
+    source: "Crown-Indigenous Relations and Northern Affairs Canada",
   },
   {
-    title: "Port Infrastructure Development",
-    category: "Economic",
-    riskLevel: "low",
-    impact: "Reduced logistics costs for steel exports",
-    location: "West Bengal",
-    sentiment: "Supportive",
-    date: "2025-03-05",
-    politician: "Shri Sarbananda Sonowal",
-    citation: "Ministry of Ports, Shipping and Waterways Budget Discussion",
-    coordinates: [22.9868, 87.855],
-  },
-  {
-    title: "Carbon Emission Standards",
+    title: "Carbon Emissions Reduction Targets for Steel Industry",
+    location: "European Union",
     category: "Environmental",
     riskLevel: "high",
-    impact: "Required investment in cleaner technologies",
-    location: "Gujarat",
-    sentiment: "Neutral",
-    date: "2025-03-08",
-    politician: "Dr. Bhupender Yadav",
-    citation: "Environment Committee Proceedings",
-    coordinates: [23.0225, 72.5714],
+    impact:
+      "New carbon emissions reduction targets for steel production facilities requiring 40% reduction by 2030 or face significant carbon tax penalties.",
+    politician: "European Commission",
+    date: "2024-02-01",
+    source: "European Commission",
+  },
+  {
+    title: "Land Acquisition Protests in Andhra Pradesh Mining Regions",
+    location: "India",
+    category: "Regulatory",
+    riskLevel: "high",
+    impact:
+      "Protests against forced land acquisition for mining projects demanding fair compensation and environmental protection measures.",
+    politician: "Pawan Kalyan",
+    date: "2024-02-10",
+    source: "Jana Sena Party Press Release",
+  },
+  {
+    title: "Brazil Amazon Mining Restrictions",
+    location: "Brazil",
+    category: "Environmental",
+    riskLevel: "high",
+    impact:
+      "Stricter mining restrictions in Amazon regions with mandatory reforestation and indigenous consultation requirements.",
+    politician: "Marina Silva",
+    date: "2024-02-15",
+    source: "Brazilian Environmental Ministry",
+  },
+  {
+    title: "Mexico Green Energy Transition Excludes Mining",
+    location: "Mexico",
+    category: "Economic",
+    riskLevel: "medium",
+    impact:
+      "Mining excluded from Mexico's top 100 priority projects, focusing instead on renewable energy and sustainable development.",
+    politician: "Claudia Sheinbaum",
+    date: "2024-02-20",
+    source: "Mexican Presidency",
+  },
+  {
+    title: "Steel Industry Carbon Tax Reform",
+    location: "Global",
+    category: "Environmental",
+    riskLevel: "high",
+    impact:
+      "Demands for immediate implementation of carbon border adjustments for steel imports, targeting high-emission producers globally.",
+    politician: "Greta Thunberg",
+    date: "2024-02-25",
+    source: "Fridays for Future International",
   },
 ]
 
-// Risk level statistics
-export const getRiskStatistics = () => {
-  const stats = enhancedHeatmapData.reduce(
+export function getRiskStatistics() {
+  const total = enhancedHeatmapData.length
+  const riskCounts = enhancedHeatmapData.reduce(
     (acc, item) => {
       acc[item.riskLevel]++
-      acc.total++
       return acc
     },
-    { low: 0, medium: 0, high: 0, total: 0 },
+    { low: 0, medium: 0, high: 0 },
   )
 
   return {
-    ...stats,
-    lowPercentage: Math.round((stats.low / stats.total) * 100),
-    mediumPercentage: Math.round((stats.medium / stats.total) * 100),
-    highPercentage: Math.round((stats.high / stats.total) * 100),
+    total,
+    low: riskCounts.low,
+    medium: riskCounts.medium,
+    high: riskCounts.high,
+    lowPercentage: Math.round((riskCounts.low / total) * 100),
+    mediumPercentage: Math.round((riskCounts.medium / total) * 100),
+    highPercentage: Math.round((riskCounts.high / total) * 100),
   }
 }
 
-// Category-wise risk distribution
-export const getCategoryRiskDistribution = () => {
-  const distribution = enhancedHeatmapData.reduce(
+export function getCategoryRiskDistribution() {
+  const categoryTotals = enhancedHeatmapData.reduce(
     (acc, item) => {
-      if (!acc[item.category]) {
-        acc[item.category] = { low: 0, medium: 0, high: 0, total: 0 }
-      }
-      acc[item.category][item.riskLevel]++
-      acc[item.category].total++
+      acc[item.category] = (acc[item.category] || 0) + 1
       return acc
     },
-    {} as Record<string, { low: number; medium: number; high: number; total: number }>,
+    {} as Record<string, number>,
   )
 
-  return distribution
+  return categoryTotals
 }

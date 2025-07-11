@@ -127,13 +127,13 @@ export function EnhancedPoliticalRiskHeatmap() {
   return (
     <div className="space-y-6">
       {/* Country Selection */}
-      <Card className="bg-white/10 backdrop-blur-sm border-purple-500/20">
+      <Card className="bg-white border-slate-200 shadow-lg">
         <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
+          <CardTitle className="text-slate-800 flex items-center gap-2">
             <Globe className="h-5 w-5" />
             Political Risk Analysis
           </CardTitle>
-          <CardDescription className="text-purple-200">
+          <CardDescription className="text-slate-600">
             Select a country to view detailed political risk assessment
           </CardDescription>
         </CardHeader>
@@ -144,7 +144,11 @@ export function EnhancedPoliticalRiskHeatmap() {
                 key={data.country}
                 variant={selectedCountry === data.country ? "default" : "outline"}
                 onClick={() => setSelectedCountry(data.country)}
-                className={selectedCountry === data.country ? "bg-purple-600" : "border-purple-500/30 text-purple-200"}
+                className={
+                  selectedCountry === data.country
+                    ? "bg-blue-600 hover:bg-blue-700"
+                    : "border-slate-300 text-slate-600 hover:bg-slate-100"
+                }
               >
                 {data.country}
               </Button>
@@ -155,23 +159,23 @@ export function EnhancedPoliticalRiskHeatmap() {
 
       {selectedData && (
         <Tabs defaultValue="overview" className="space-y-4">
-          <TabsList className="bg-white/10 border-purple-500/20">
-            <TabsTrigger value="overview" className="data-[state=active]:bg-purple-600">
+          <TabsList className="bg-white border-slate-200">
+            <TabsTrigger value="overview" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white">
               Overview
             </TabsTrigger>
-            <TabsTrigger value="activists" className="data-[state=active]:bg-purple-600">
+            <TabsTrigger value="activists" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white">
               Key Activists
             </TabsTrigger>
-            <TabsTrigger value="events" className="data-[state=active]:bg-purple-600">
+            <TabsTrigger value="events" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white">
               Recent Events
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-4">
             {/* Risk Score Card */}
-            <Card className="bg-white/10 backdrop-blur-sm border-purple-500/20">
+            <Card className="bg-white border-slate-200 shadow-lg">
               <CardHeader>
-                <CardTitle className="text-white flex items-center justify-between">
+                <CardTitle className="text-slate-800 flex items-center justify-between">
                   <span className="flex items-center gap-2">
                     <Shield className="h-5 w-5" />
                     {selectedData.country} Risk Assessment
@@ -182,11 +186,11 @@ export function EnhancedPoliticalRiskHeatmap() {
               <CardContent>
                 <div className="space-y-4">
                   <div>
-                    <div className="flex justify-between text-sm text-purple-200 mb-2">
+                    <div className="flex justify-between text-sm text-slate-600 mb-2">
                       <span>Risk Score</span>
                       <span>{selectedData.riskScore}/100</span>
                     </div>
-                    <div className="w-full bg-gray-700 rounded-full h-3">
+                    <div className="w-full bg-slate-200 rounded-full h-3">
                       <div
                         className={`h-3 rounded-full ${getRiskColor(selectedData.riskLevel)}`}
                         style={{ width: `${selectedData.riskScore}%` }}
@@ -195,10 +199,10 @@ export function EnhancedPoliticalRiskHeatmap() {
                   </div>
 
                   <div>
-                    <h4 className="text-white font-semibold mb-2">Key Risk Factors</h4>
+                    <h4 className="text-slate-800 font-semibold mb-2">Key Risk Factors</h4>
                     <div className="flex flex-wrap gap-2">
                       {selectedData.keyFactors.map((factor, index) => (
-                        <Badge key={index} variant="outline" className="text-purple-200 border-purple-500/30">
+                        <Badge key={index} variant="outline" className="text-slate-600 border-slate-300">
                           {factor}
                         </Badge>
                       ))}
@@ -212,15 +216,15 @@ export function EnhancedPoliticalRiskHeatmap() {
           <TabsContent value="activists" className="space-y-4">
             <div className="grid gap-4">
               {selectedData.activists.map((activist, index) => (
-                <Card key={index} className="bg-white/10 backdrop-blur-sm border-purple-500/20">
+                <Card key={index} className="bg-white border-slate-200 shadow-lg">
                   <CardHeader>
                     <div className="flex items-start justify-between">
                       <div>
-                        <CardTitle className="text-white flex items-center gap-2">
+                        <CardTitle className="text-slate-800 flex items-center gap-2">
                           <Users className="h-5 w-5" />
                           {activist.name}
                         </CardTitle>
-                        <CardDescription className="text-purple-200">
+                        <CardDescription className="text-slate-600">
                           Influence Score: {activist.influence}/100
                         </CardDescription>
                       </div>
@@ -228,9 +232,9 @@ export function EnhancedPoliticalRiskHeatmap() {
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-purple-100 mb-3">{activist.recentActivity}</p>
-                    <div className="w-full bg-gray-700 rounded-full h-2">
-                      <div className="h-2 rounded-full bg-purple-500" style={{ width: `${activist.influence}%` }} />
+                    <p className="text-slate-700 mb-3">{activist.recentActivity}</p>
+                    <div className="w-full bg-slate-200 rounded-full h-2">
+                      <div className="h-2 rounded-full bg-blue-500" style={{ width: `${activist.influence}%` }} />
                     </div>
                   </CardContent>
                 </Card>
@@ -239,9 +243,9 @@ export function EnhancedPoliticalRiskHeatmap() {
           </TabsContent>
 
           <TabsContent value="events" className="space-y-4">
-            <Card className="bg-white/10 backdrop-blur-sm border-purple-500/20">
+            <Card className="bg-white border-slate-200 shadow-lg">
               <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2">
+                <CardTitle className="text-slate-800 flex items-center gap-2">
                   <Activity className="h-5 w-5" />
                   Recent Political Events
                 </CardTitle>
@@ -249,11 +253,11 @@ export function EnhancedPoliticalRiskHeatmap() {
               <CardContent>
                 <div className="space-y-3">
                   {selectedData.recentEvents.map((event, index) => (
-                    <div key={index} className="flex items-start gap-3 p-3 bg-white/5 rounded-lg">
-                      <AlertTriangle className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <div key={index} className="flex items-start gap-3 p-3 bg-slate-50 rounded-lg">
+                      <AlertTriangle className="h-5 w-5 text-yellow-500 mt-0.5 flex-shrink-0" />
                       <div>
-                        <p className="text-purple-100">{event}</p>
-                        <p className="text-sm text-purple-300 mt-1">
+                        <p className="text-slate-700">{event}</p>
+                        <p className="text-sm text-slate-500 mt-1">
                           Impact Assessment: Monitoring for business implications
                         </p>
                       </div>
