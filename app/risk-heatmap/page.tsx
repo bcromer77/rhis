@@ -1,8 +1,9 @@
-import { RegulatoryHeatmap } from "@/components/regulatory-heatmap"
+"use client"
+import { RegulatoryRiskHeatmap } from "@/components/regulatory-risk-heatmap"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 
-export default function HeatmapPage() {
+export default function RiskHeatmapPage() {
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
@@ -16,17 +17,15 @@ export default function HeatmapPage() {
               </a>
             </Button>
             <div>
-              <h1 className="text-2xl font-bold text-slate-800">Global Regulatory Heatmap</h1>
-              <p className="text-slate-600">
-                Comprehensive view of mining regulations and risk levels across key jurisdictions
-              </p>
+              <h1 className="text-2xl font-bold text-slate-800">Regulatory Risk Heatmap</h1>
+              <p className="text-slate-600">Visual analysis of regulatory risks and opportunities for ArcelorMittal</p>
             </div>
           </div>
         </div>
       </header>
 
       <div className="max-w-7xl mx-auto p-6">
-        <RegulatoryHeatmap />
+        <RegulatoryRiskHeatmap />
       </div>
 
       <footer className="text-center text-sm mt-8 text-muted-foreground">

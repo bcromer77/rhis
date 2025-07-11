@@ -1,8 +1,9 @@
-import { RegulatoryHeatmap } from "@/components/regulatory-heatmap"
+"use client"
+import { RegulatoryInsightsDashboard } from "@/components/regulatory-insights-dashboard"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 
-export default function HeatmapPage() {
+export default function InsightsPage() {
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
@@ -16,17 +17,15 @@ export default function HeatmapPage() {
               </a>
             </Button>
             <div>
-              <h1 className="text-2xl font-bold text-slate-800">Global Regulatory Heatmap</h1>
-              <p className="text-slate-600">
-                Comprehensive view of mining regulations and risk levels across key jurisdictions
-              </p>
+              <h1 className="text-2xl font-bold text-slate-800">Regulatory Insights</h1>
+              <p className="text-slate-600">Economic, Environmental, and Regulatory scanning results</p>
             </div>
           </div>
         </div>
       </header>
 
       <div className="max-w-7xl mx-auto p-6">
-        <RegulatoryHeatmap />
+        <RegulatoryInsightsDashboard />
       </div>
 
       <footer className="text-center text-sm mt-8 text-muted-foreground">
