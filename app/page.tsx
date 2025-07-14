@@ -128,43 +128,25 @@ export default function HomePage() {
             </Card>
           </Link>
 
-          {/* Geo-Temporal Map */}
-          <Link href="/geo-map">
-            <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer border-l-4 border-l-indigo-500">
-              <CardHeader>
-                <div className="flex items-center space-x-2">
-                  <Map className="h-6 w-6 text-indigo-600" />
-                  <CardTitle>Geo-Temporal Risk Map</CardTitle>
-                </div>
-                <CardDescription>Time-based geographic risk analysis and forecasting</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-2">
-                  <Badge variant="outline">Temporal</Badge>
-                  <Badge variant="outline">Forecasting</Badge>
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-
-          {/* Risk Heatmap */}
-          <Link href="/risk-heatmap">
-            <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer border-l-4 border-l-orange-500">
-              <CardHeader>
-                <div className="flex items-center space-x-2">
-                  <AlertTriangle className="h-6 w-6 text-orange-600" />
-                  <CardTitle>ESG Risk Heatmap</CardTitle>
-                </div>
-                <CardDescription>Environmental, social, and governance risk visualization</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-2">
-                  <Badge variant="outline">ESG</Badge>
-                  <Badge variant="outline">Visualization</Badge>
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
+{/* Indigenous Broadcasting News */}
+<Link href="/indigenous-news">            
+  <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer border-l-4 border-l-indigo-500">
+    <CardHeader>
+      <div className="flex items-center space-x-2">
+        <Map className="h-6 w-6 text-indigo-600" /> 
+        <CardTitle>Indigenous Broadcasting News</CardTitle>
+      </div>
+      <CardDescription>Community alerts, FPIC violations, and live grievance tracking</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <div className="flex flex-wrap gap-2">
+        <Badge variant="outline">FPIC Risk</Badge>   
+        <Badge variant="outline">Electoral Instability</Badge>
+        <Badge variant="outline">Live Feeds</Badge>
+      </div>
+    </CardContent>
+  </Card>
+</Link>
 
           {/* Regulatory Insights */}
           <Link href="/insights">
