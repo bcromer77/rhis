@@ -1,6 +1,6 @@
 "use client"
 
-import { GeoTemporalRiskMap } from "@/components/geo-temporal-risk-map"
+import IndigenousBroadcastingDashboard from "@/components/indigenous-broadcasting-dashboard";
 
 export default function GeoMapPage() {
   return (
@@ -10,7 +10,7 @@ export default function GeoMapPage() {
           <h1 className="text-4xl font-bold text-white mb-4">GeoTemporal Risk Map</h1>
           <p className="text-purple-200">Interactive risk mapping with temporal analysis and facility monitoring</p>
         </div>
-        <GeoTemporalRiskMap />
+<IndigenousBroadcastingDashboard />
       </div>
     </div>
   )
