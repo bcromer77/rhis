@@ -1,4 +1,5 @@
 "use client"
+
 import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -7,7 +8,7 @@ import { VectorSearch } from "@/components/vector-search"
 import { RegulatoryHeatmap } from "@/components/regulatory-heatmap"
 import { EnhancedPoliticalRiskHeatmap } from "@/components/enhanced-political-risk-heatmap"
 import { EcologyVoices } from "@/components/global-political-signals"
-import { GeoTemporalRiskMap } from "@/components/geo-temporal-risk-map"
+import IndigenousBroadcastingDashboard from "@/components/indigenous-broadcasting-dashboard"
 import { Search, TrendingUp, Users, Globe, Map, Activity, BarChart3, AlertTriangle } from "lucide-react"
 
 interface UnifiedRegulatoryDashboardProps {
@@ -29,18 +30,10 @@ export function UnifiedRegulatoryDashboard({ initialView = "split" }: UnifiedReg
               <p className="text-slate-600">Comprehensive risk monitoring and analysis platform</p>
             </div>
             <div className="flex gap-2">
-              <Button
-                variant={viewMode === "split" ? "default" : "outline"}
-                onClick={() => setViewMode("split")}
-                size="sm"
-              >
+              <Button variant={viewMode === "split" ? "default" : "outline"} onClick={() => setViewMode("split")} size="sm">
                 Split View
               </Button>
-              <Button
-                variant={viewMode === "full" ? "default" : "outline"}
-                onClick={() => setViewMode("full")}
-                size="sm"
-              >
+              <Button variant={viewMode === "full" ? "default" : "outline"} onClick={() => setViewMode("full")} size="sm">
                 Full View
               </Button>
             </div>
@@ -160,7 +153,7 @@ export function UnifiedRegulatoryDashboard({ initialView = "split" }: UnifiedReg
 
             <TabsContent value="geo" className="mt-6">
               <div className="h-[800px] rounded-lg overflow-hidden">
-                <GeoTemporalRiskMap />
+                <IndigenousBroadcastingDashboard />
               </div>
             </TabsContent>
           </Tabs>
@@ -169,3 +162,4 @@ export function UnifiedRegulatoryDashboard({ initialView = "split" }: UnifiedReg
     </div>
   )
 }
+
