@@ -88,6 +88,7 @@ export function GeoTemporalRiskMap() {
             lng: -79.3832,
             riskLevel: "Low",
             category: "Regulatory",
+            description: "Carbon pricing adjustments for industrial sectors",
             trend: "stable",
             lastUpdated: "2025-01-09",
           },
