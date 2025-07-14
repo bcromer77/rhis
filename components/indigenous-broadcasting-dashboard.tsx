@@ -11,7 +11,7 @@ const issuesData = [
     date: "2025-07-13",
     headline: "Tribal Concerns Ignored in Port Expansion",
     details:
-      "Broadcast emphasizes lack of structured consultation with tribal panchayats over a proposed deep-water port linked to export corridors. Station describes state tone as aggressive toward traditional landholding systems.",
+      "Broadcast emphasizes lack of structured consultation with tribal panchayats over a proposed deep-water port linked to export corridors. Station describes state tone as aggressive toward indigenous claims.",
     sentiment: "Negative",
     consultPeriod: "Not Initiated",
     legalFlags: ["FPIC Risk", "Electoral Instability"],
@@ -19,19 +19,20 @@ const issuesData = [
     action:
       "Engage tribal legal advisors. Review Andhra Pradesh Land Transfer laws. Flag upcoming elections for strategic adjustment."
   },
-{
-  country: "Canada",
-  region: "Quebec",
-  station: "CBC North",
-  date: "2025-07-10",
-  headline: "Hydro Project Criticized by Innu Leaders",
-  details: "Broadcast features Innu Nation spokesperson raising alarm over lack of consultation on transmission lines. Legal opinion aired cites violation of duty to consult.",
-  sentiment: "Negative",
-  consultPeriod: "Ongoing",
-  legalFlags: ["Duty to Consult", "Environmental Licensing"],
-  risk: ["Legal", "Community", "Infrastructure"],
-  action: "Trigger FPIC review. Engage Innu leadership council. Pause approvals."
-}
+  {
+    country: "Canada",
+    region: "Quebec",
+    station: "CBC North",
+    date: "2025-07-10",
+    headline: "Hydro Project Criticized by Innu Leaders",
+    details:
+      "Broadcast features Innu Nation spokesperson raising alarm over lack of consultation on transmission lines. Legal opinion aired cites violation of duty to consult.",
+    sentiment: "Negative",
+    consultPeriod: "Ongoing",
+    legalFlags: ["Duty to Consult", "Environmental Licensing"],
+    risk: ["Legal", "Community", "Infrastructure"],
+    action: "Trigger FPIC review. Engage Innu leadership council. Pause approvals."
+  },
   {
     country: "Mexico",
     region: "Sinaloa",
@@ -39,92 +40,76 @@ const issuesData = [
     date: "2025-07-12",
     headline: "Wind Farm Expansion: No Indigenous Input",
     details:
-      "Station reports new wind turbine installations without consultation with Mayo and Yoreme communities. Legal commentary aired live warns of constitutional breaches under Article 2 of Mexican law.",
+      "Station reports new wind turbine installations without consultation with Mayo and Yoreme communities. Legal commentary aired live warns of constitutional breaches under Article 2.",
     sentiment: "Negative",
     consultPeriod: "Violated",
     legalFlags: ["Constitutional Breach", "High Court Watch"],
     risk: ["Legal", "Environmental", "ESG"],
-    action:
-      "Document Article 2 precedents. Activate local counsel in Sinaloa. Prepare impact mitigation response."
+    action: "Document Article 2 precedents. Activate local counsel in Sinaloa. Prepare impact mitigation response."
   }
 ];
 
-const riskColors: Record<string, string> = {
-  Legal: "bg-red-100 text-red-700 border-red-300",
-  Environmental: "bg-green-100 text-green-700 border-green-300",
-  Consultation: "bg-yellow-100 text-yellow-700 border-yellow-300",
-  Community: "bg-blue-100 text-blue-700 border-blue-300",
-  Political: "bg-orange-100 text-orange-700 border-orange-300",
-  Reputational: "bg-purple-100 text-purple-700 border-purple-300",
-  ESG: "bg-indigo-100 text-indigo-700 border-indigo-300"
-};
-
 export default function IndigenousBroadcastingDashboard() {
-  const [country, setCountry] = useState("");
-  const [filtered, setFiltered] = useState(issuesData);
+  const [selectedCountry, setSelectedCountry] = useState("");
 
-  const handleFilter = () => {
-    let data = issuesData;
-    if (country) data = data.filter((i) => i.country === country);
-    setFiltered(data);
-  };
+  const filteredData = selectedCountry
+    ? issuesData.filter((item) => item.country === selectedCountry)
+    : issuesData;
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans p-8">
-      <h1 className="text-3xl font-bold mb-4">Indigenous Broadcasting Dashboard</h1>
-      <div className="flex gap-4 mb-6">
-        <select
-          value={country}
-          onChange={(e) => setCountry(e.target.value)}
-          className="px-4 py-2 border rounded"
-        >
-          <option value="">All Countries</option>
-          <option value="India">India</option>
-          <option value="Mexico">Mexico</option>
-        </select>
-        <button
-          onClick={handleFilter}
-          className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
-          Filter
-        </button>
-      </div>
-
-      <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
-        {filtered.map((issue, idx) => (
-          <div key={idx} className="bg-white shadow-md rounded-xl p-6 border-l-4 border-blue-500">
-            <div className="mb-2 text-sm text-gray-500">
-              {issue.station} · {issue.region}, {issue.country}
-            </div>
-            <h2 className="text-xl font-semibold mb-2">{issue.headline}</h2>
-            <div className="mb-2 text-gray-700">{issue.details}</div>
-            <div className="text-sm mb-2">
-              <strong>Sentiment:</strong> {issue.sentiment}
-            </div>
-            <div className="text-sm mb-2">
-              <strong>Consultation Period:</strong> {issue.consultPeriod}
-            </div>
-            <div className="text-sm mb-2">
-              <strong>Legal Flags:</strong> {issue.legalFlags.join(", ")}
-            </div>
-            <div className="flex flex-wrap gap-2 mb-3">
-              {issue.risk.map((r, i) => (
-                <span
-                  key={i}
-                  className={`px-2 py-1 text-xs font-semibold rounded border ${
-                    riskColors[r] || "bg-gray-100 text-gray-800 border-gray-300"
-                  }`}
-                >
-                  {r}
-                </span>
-              ))}
-            </div>
-            <div className="text-sm">
-              <strong>Recommended Action:</strong> {issue.action}
-            </div>
-          </div>
+    <div className="space-y-6">
+      <div className="flex gap-4">
+        {["All", "India", "Canada", "Mexico"].map((country) => (
+          <button
+            key={country}
+            className={`px-4 py-2 rounded-lg font-medium ${
+              selectedCountry === country || (country === "All" && !selectedCountry)
+                ? "bg-white text-slate-900 shadow"
+                : "bg-slate-800 text-slate-200"
+            }`}
+            onClick={() =>
+              setSelectedCountry(country === "All" ? "" : country)
+            }
+          >
+            {country}
+          </button>
         ))}
       </div>
+
+      {filteredData.map((issue, idx) => (
+        <div
+          key={idx}
+          className="border border-purple-600 p-4 rounded-lg bg-slate-800 text-white space-y-2"
+        >
+          <div className="flex justify-between items-center">
+            <h2 className="text-lg font-semibold">
+              {issue.station} — {issue.region}, {issue.country}
+            </h2>
+            <span className="text-sm text-purple-300">{issue.date}</span>
+          </div>
+          <h3 className="text-xl font-bold text-purple-200">{issue.headline}</h3>
+          <p className="text-slate-300">{issue.details}</p>
+
+          <div className="flex flex-wrap gap-2 mt-2">
+            <Badge variant="outline">{issue.sentiment}</Badge>
+            <Badge variant="outline">{issue.consultPeriod}</Badge>
+            {issue.legalFlags.map((flag, i) => (
+              <Badge key={i} className="bg-red-100 text-red-700 border-red-300">
+                {flag}
+              </Badge>
+            ))}
+            {issue.risk.map((r, i) => (
+              <Badge key={i} className="bg-yellow-100 text-yellow-700 border-yellow-300">
+                {r}
+              </Badge>
+            ))}
+          </div>
+
+          <div className="mt-2 text-sm text-purple-300">
+            <strong>Action:</strong> {issue.action}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
