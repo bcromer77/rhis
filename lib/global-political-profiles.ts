@@ -111,6 +111,7 @@ export const rhisPoliticianEntries: PoliticalProfile[] = [
       ],
       opportunities: [
         "Leadership in sustainable mining practices",
+        "Premium pricing for certified sustainable materials",
         "International climate finance access",
       ],
     },
