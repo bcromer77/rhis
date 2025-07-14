@@ -19,6 +19,19 @@ const issuesData = [
     action:
       "Engage tribal legal advisors. Review Andhra Pradesh Land Transfer laws. Flag upcoming elections for strategic adjustment."
   },
+{
+  country: "Canada",
+  region: "Quebec",
+  station: "CBC North",
+  date: "2025-07-10",
+  headline: "Hydro Project Criticized by Innu Leaders",
+  details: "Broadcast features Innu Nation spokesperson raising alarm over lack of consultation on transmission lines. Legal opinion aired cites violation of duty to consult.",
+  sentiment: "Negative",
+  consultPeriod: "Ongoing",
+  legalFlags: ["Duty to Consult", "Environmental Licensing"],
+  risk: ["Legal", "Community", "Infrastructure"],
+  action: "Trigger FPIC review. Engage Innu leadership council. Pause approvals."
+}
   {
     country: "Mexico",
     region: "Sinaloa",
