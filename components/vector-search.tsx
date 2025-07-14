@@ -1,5 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+"use client";
+
+import React from "react";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
 
 const mockLegalSignals = [
   {
@@ -7,21 +9,21 @@ const mockLegalSignals = [
     source: "RHIS Legal Tracker | July 2025",
     riskLevel: "Red",
     tags: ["Treaty Violation", "ISDS", "Cross-Border Compliance"],
-    summary: "Unilateral U.S. tariff violates USMCA obligations. Legal ops should prepare ISDS risk analysis and arbitration scenarios."
+    summary: "Unilateral U.S. tariff violates USMCA terms. Potential for investor-state arbitration and state-to-state dispute resolution.",
   },
   {
-    title: "FPIC Gap: Sinaloa Rail Corridor Expansion",
-    source: "FPIC Legal Radar | Q3 2025",
+    title: "Sinaloa Rail Bypass: Indigenous Consultation Absent",
+    source: "FPIC Legal Signal | RHIS Monitoring",
     riskLevel: "Red",
-    tags: ["Indigenous Rights", "Infrastructure", "Litigation"],
-    summary: "Rail rerouting triggered by tariffs shows no documented Free, Prior, and Informed Consent with local Indigenous authorities."
+    tags: ["FPIC", "Infrastructure", "Environmental Compliance"],
+    summary: "No documented Free, Prior and Informed Consent in rail expansion zones tied to tariff-avoidant trade routes.",
   },
   {
-    title: "Quota Enforcement Template Set via H.R.1 Section 359k",
-    source: "U.S. Congressional Record | 2025",
+    title: "Quota Enforcement Model: Refined Sugar Becomes Template",
+    source: "H.R.1 Section 359k | U.S. House 2025",
     riskLevel: "Yellow",
-    tags: ["Quota Policy", "Customs", "Import Labeling"],
-    summary: "Refined sugar quota controls establish a legal mechanism that may soon apply to mineral inputs."
+    tags: ["Labeling Law", "Customs Enforcement", "Trade Quota"],
+    summary: "Legal mechanism for reallocating tariff-rate quotas now active. May be adapted to steelmaking inputs.",
   }
 ];
 
@@ -31,26 +33,25 @@ export function VectorSearch() {
       {mockLegalSignals.map((signal, idx) => (
         <Card key={idx} className="border shadow-sm rounded-xl">
           <CardHeader>
-            <div className="flex justify-between items-start">
-              <div>
-                <CardTitle className="text-lg text-gray-900">{signal.title}</CardTitle>
-                <CardDescription className="text-xs text-gray-500">{signal.source}</CardDescription>
-              </div>
-              <Badge variant="outline" className={\`text-xs \${signal.riskLevel === "Red" ? "bg-red-100 text-red-700" : "bg-yellow-100 text-yellow-700"}\`}>
-                {signal.riskLevel}
-              </Badge>
-            </div>
+            <h3 className="text-lg font-semibold text-gray-900">{signal.title}</h3>
+            <div className="text-sm text-gray-500">{signal.source}</div>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-gray-800 mb-2">{signal.summary}</p>
-            <div className="flex flex-wrap gap-2 mt-2">
+            <div className="flex flex-wrap gap-2 mb-2">
               {signal.tags.map((tag, i) => (
-                <Badge key={i} className="text-xs bg-gray-100 text-gray-700">{tag}</Badge>
+                <span
+                  key={i}
+                  className="text-xs px-2 py-1 bg-gray-100 text-gray-800 rounded-full border"
+                >
+                  {tag}
+                </span>
               ))}
             </div>
+            <p className="text-sm text-gray-700">{signal.summary}</p>
           </CardContent>
         </Card>
       ))}
     </div>
   );
 }
+
