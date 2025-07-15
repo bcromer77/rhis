@@ -70,7 +70,6 @@
     "tailwindcss-animate": "^1.0.7",
     "vis-network": "^10.0.1",
     "zod": "^3.24.1"
-    // Note: Add "sentence-transformers" or equivalent for vector search when client provides model
   },
   "devDependencies": {
     "@types/node": "^22",
