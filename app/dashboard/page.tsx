@@ -1,5 +1,4 @@
 "use client";
-
 import { VectorSearch } from "@/components/vector-search";
 
 export default function DashboardPage() {
@@ -8,7 +7,9 @@ export default function DashboardPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-white mb-4">Vector Search</h1>
-          <p className="text-purple-200">AI-powered search across legal, regulatory and political intelligence</p>
+          <p className="text-purple-200">
+            AI-powered search across legal, regulatory and political intelligence
+          </p>
         </div>
         <VectorSearch />
       </div>
