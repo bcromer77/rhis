@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import IndigenousVectorSearchBar from "@/components/mock/IndigenousVectorSearchBar";
+import IndigenousVectorSearchBar from "@/components/mock/IndigenousVectorSearchBar"; // or wherever you saved it
 
-// Exported wrapper component for use in `/dashboard`
 export const VectorSearch = () => {
   const [mounted, setMounted] = useState(false);
 
@@ -15,9 +14,10 @@ export const VectorSearch = () => {
 
   return (
     <IndigenousVectorSearchBar
-      issuesData={[]} // Replace with real data or prop in future
+      issuesData={[]} // can update with MongoDB props later
       selectedRegion=""
       selectedTab="All"
     />
   );
 };
+
