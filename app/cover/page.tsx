@@ -1,30 +1,24 @@
-// ✅ ✅ Place this OUTSIDE the "use client" scope
-export const metadata = {
-  title: "RHIS PRISM Access Gateway",
-  description: "Secure entry to RippleXn's regulatory horizon scanning platform.",
-};
+"use client";
 
-"use client"
-
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function CoverPage() {
-  const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
-  const router = useRouter()
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (password === "rhis2025") {
-      router.push("/") // or redirect to /dashboard
+      router.push("/"); // Redirect on success
     } else {
-      setError("Incorrect password. Try again.")
+      setError("Incorrect password. Try again.");
     }
-  }
+  };
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen bg-gradient-to-br from-slate-900 to-black text-white animate-pulse-slow">
+    <div className="flex flex-col justify-center items-center h-screen bg-gradient-to-br from-slate-900 to-black text-white animate-fade-in">
       <h1 className="text-4xl font-bold mb-4">RHIS PRISM</h1>
       <p className="mb-8 text-gray-400">Enter password to access the intelligence dashboard</p>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -45,6 +39,6 @@ export default function CoverPage() {
       </form>
       <p className="mt-12 text-sm text-gray-500">Powered by <span className="text-blue-400 font-semibold">RippleXn</span></p>
     </div>
-  )
+  );
 }
 
