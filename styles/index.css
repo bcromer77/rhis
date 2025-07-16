@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Define HSL variables to match tailwind.config.ts hex colors */
+:root {
+  --background: 0 0% 98%; /* #F9FAFB, gray-50 */
+  --foreground: 0 0% 13%; /* #1F2937, gray-800 */
+  --card: 0 0% 98%; /* #F9FAFB, gray-50 */
+  --card-foreground: 0 0% 13%; /* #1F2937, gray-800 */
+  --popover: 0 0% 98%; /* #F9FAFB, gray-50 */
+  --popover-foreground: 0 0% 13%; /* #1F2937, gray-800 */
+  --primary: 204 91% 55%; /* #3B82F6, blue-500 */
+  --primary-foreground: 0 0% 100%; /* white */
+  --secondary: 160 64% 43%; /* #10B981, emerald-500 */
+  --secondary-foreground: 0 0% 100%; /* white */
+  --muted: 0 0% 80%; /* #D1D5DB, gray-300 */
+  --muted-foreground: 0 0% 45%; /* #6B7280, gray-500 for readability */
+  --accent: 204 94% 94%; /* #DBEAFE, blue-100 */
+  --accent-foreground: 204 91% 55%; /* #3B82F6, blue-500 */
+  --destructive: 0 84% 60%; /* #EF4444, red-500 */
+  --destructive-foreground: 0 0% 100%; /* white */
+  --border: 0 0% 82%; /* #D1D5DB, gray-300 */
+  --input: 0 0% 82%; /* #D1D5DB, gray-300 */
+  --ring: 204 91% 55%; /* #3B82F6, blue-500 */
+  --chart-1: 24 94% 50%; /* #F59E0B, amber-500 */
+  --chart-2: 160 64% 43%; /* #10B981, emerald-500 */
+  --chart-3: 204 91% 55%; /* #3B82F6, blue-500 */
+  --chart-4: 0 84% 60%; /* #EF4444, red-500 */
+  --chart-5: 221 83% 53%; /* #6366F1, indigo-500 */
+  --sidebar-background: 0 0% 98%; /* #F9FAFB, gray-50 */
+  --sidebar-foreground: 0 0% 13%; /* #1F2937, gray-800 */
+  --sidebar-primary: 204 91% 55%; /* #3B82F6, blue-500 */
+  --sidebar-primary-foreground: 0 0% 100%; /* white */
+  --sidebar-accent: 204 94% 94%; /* #DBEAFE, blue-100 */
+  --sidebar-accent-foreground: 204 91% 55%; /* #3B82F6, blue-500 */
+  --sidebar-border: 0 0% 82%; /* #D1D5DB, gray-300 */
+  --sidebar-ring: 204 91% 55%; /* #3B82F6, blue-500 */
+}
+
+/* Dark mode variants */
+.dark {
+  --background: 0 0% 13%; /* #1F2937, gray-800 */
+  --foreground: 0 0% 98%; /* #F9FAFB, gray-50 */
+  --card: 0 0% 13%; /* #1F2937, gray-800 */
+  --card-foreground: 0 0% 98%; /* #F9FAFB, gray-50 */
+  --popover: 0 0% 13%; /* #1F2937, gray-800 */
+  --popover-foreground: 0 0% 98%; /* #F9FAFB, gray-50 */
+  --primary: 204 91% 55%; /* #3B82F6, blue-500 */
+  --primary-foreground: 0 0% 100%; /* white */
+  --secondary: 160 64% 43%; /* #10B981, emerald-500 */
+  --secondary-foreground: 0 0% 100%; /* white */
+  --muted: 0 0% 45%; /* #6B7280, gray-500 */
+  --muted-foreground: 0 0% 80%; /* #D1D5DB, gray-300 */
+  --accent: 204 94% 94%; /* #DBEAFE, blue-100 */
+  --accent-foreground: 204 91% 55%; /* #3B82F6, blue-500 */
+  --destructive: 0 84% 60%; /* #EF4444, red-500 */
+  --destructive-foreground: 0 0% 100%; /* white */
+  --border: 0 0% 45%; /* #6B7280, gray-500 */
+  --input: 0 0% 45%; /* #6B7280, gray-500 */
+  --ring: 204 91% 55%; /* #3B82F6, blue-500 */
+  --sidebar-background: 0 0% 13%; /* #1F2937, gray-800 */
+  --sidebar-foreground: 0 0% 98%; /* #F9FAFB, gray-50 */
+  --sidebar-primary: 204 91% 55%; /* #3B82F6, blue-500 */
+  --sidebar-primary-foreground: 0 0% 100%; /* white */
+  --sidebar-accent: 204 94% 94%; /* #DBEAFE, blue-100 */
+  --sidebar-accent-foreground: 204 91% 55%; /* #3B82F6, blue-500 */
+  --sidebar-border: 0 0% 45%; /* #6B7280, gray-500 */
+  --sidebar-ring: 204 91% 55%; /* #3B82F6, blue-500 */
+}
