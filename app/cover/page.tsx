@@ -1,13 +1,13 @@
+// ✅ ✅ Place this OUTSIDE the "use client" scope
+export const metadata = {
+  title: "RHIS PRISM Access Gateway",
+  description: "Secure entry to RippleXn's regulatory horizon scanning platform.",
+};
+
 "use client"
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import type { Metadata } from "next"
-
-export const metadata: Metadata = {
-  title: "RHIS PRISM Access Gateway",
-  description: "Secure entry to RippleXn's regulatory horizon scanning platform.",
-}
 
 export default function CoverPage() {
   const [password, setPassword] = useState("")
@@ -17,19 +17,17 @@ export default function CoverPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (password === "rhis2025") {
-      router.push("/") // Redirect to main app
+      router.push("/") // or redirect to /dashboard
     } else {
       setError("Incorrect password. Try again.")
     }
   }
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen bg-gradient-to-br from-slate-900 to-black text-white">
-      <h1 className="text-4xl font-bold mb-4 animate-flicker">RHIS PRISM</h1>
-      <p className="mb-8 text-gray-400 animate-fade-in">
-        Enter password to access the intelligence dashboard
-      </p>
-      <form onSubmit={handleSubmit} className="space-y-4 animate-fade-in">
+    <div className="flex flex-col justify-center items-center h-screen bg-gradient-to-br from-slate-900 to-black text-white animate-pulse-slow">
+      <h1 className="text-4xl font-bold mb-4">RHIS PRISM</h1>
+      <p className="mb-8 text-gray-400">Enter password to access the intelligence dashboard</p>
+      <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="password"
           placeholder="Enter password"
