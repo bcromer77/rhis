@@ -1,6 +1,12 @@
 "use client";
 
-import IndigenousVectorSearchBar from "@/components/mock/IndigenousVectorSearchBar";
+import dynamic from "next/dynamic";
+
+// Dynamically import the component to disable SSR
+const IndigenousVectorSearchBar = dynamic(
+  () => import("@/components/mock/IndigenousVectorSearchBar"),
+  { ssr: false }
+);
 
 export default function DashboardPage() {
   return (
