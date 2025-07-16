@@ -1,10 +1,12 @@
-import type { Metadata } from 'next'
-import './globals.css'
+import type { Metadata } from "next"
+import "./globals.css"
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.dev',
+  title: "RHIS PRISM",
+  description: "Real-time political and regulatory horizon scanning by RippleXn",
+  icons: {
+    icon: "/favicon.ico", // place favicon in public/favicon.ico
+  },
 }
 
 export default function RootLayout({
@@ -14,7 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head />
       <body>{children}</body>
     </html>
   )
 }
+
