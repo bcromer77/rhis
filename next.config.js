@@ -1,12 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
   experimental: {
-    serverActions: true,
+    serverActions: {
+      // Define allowed origins or other server actions configurations
+      allowedOrigins: ["localhost:3000"], // Adjust as needed
+    },
   },
-  trailingSlash: false,
-  poweredByHeader: false,
 };
 
 module.exports = nextConfig;
-

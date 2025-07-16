@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Typewriter from "react-typewriter-effect";
@@ -16,12 +15,12 @@ interface SearchResult {
   issueType: string[];
   region?: string;
   country?: string;
-  riskScore?: number; // 0-100
+  riskScore?: number;
+  likelihood?: number;
   predictiveAlert?: string;
-  likelihood?: number; // 0-100, for bubble chart
-  indigenousApproved?: boolean; // OCAP® compliance
-  language?: string; // For multilingual support
-  embedding?: number[]; // For vector search
+  indigenousApproved?: boolean;
+  language?: string;
+  embedding?: number[];
 }
 
 interface IndigenousVectorSearchBarProps {
@@ -82,7 +81,7 @@ const realTimeData: SearchResult[] = [
   },
 ];
 
-// Static search results (from provided page)
+// Static search results
 const staticSearchResults: SearchResult[] = [
   {
     headline: "USMCA Article 2.4 Breach: 30% Tariff on Minerals",
@@ -138,10 +137,10 @@ const staticSearchResults: SearchResult[] = [
 const bubbleChartData = [
   {
     region: "Sinaloa",
-    x: 70, // Protest likelihood
-    y: 85, // Risk score
-    z: 1000, // Size (impact)
-    color: "#F59E0B", // Amber for Mayo/Yoreme protests
+    x: 70,
+    y: 85,
+    z: 1000,
+    color: "#F59E0B",
     text: "Mayo/Yoreme Protests",
   },
   {
@@ -149,7 +148,7 @@ const bubbleChartData = [
     x: 60,
     y: 60,
     z: 800,
-    color: "#10B981", // Emerald for bauxite opposition
+    color: "#10B981",
     text: "Bauxite Mine Opposition",
   },
   {
@@ -157,7 +156,7 @@ const bubbleChartData = [
     x: 50,
     y: 50,
     z: 600,
-    color: "#3B82F6", // Blue for Innu challenge
+    color: "#3B82F6",
     text: "Innu Legal Challenge",
   },
   {
@@ -165,7 +164,7 @@ const bubbleChartData = [
     x: 80,
     y: 90,
     z: 1200,
-    color: "#6B7280", // Gray for USMCA tariff
+    color: "#6B7280",
     text: "USMCA Tariff Breach",
   },
   {
@@ -173,7 +172,7 @@ const bubbleChartData = [
     x: 75,
     y: 80,
     z: 1000,
-    color: "#EF4444", // Red for CBAM impact
+    color: "#EF4444",
     text: "Carbon Tariff Impact",
   },
 ];
@@ -200,55 +199,63 @@ const IndigenousVectorSearchBar: React.FC<IndigenousVectorSearchBarProps> = ({
 
   // Precompute embeddings for vector database
   useEffect(() => {
-    realTimeData.forEach(async (result) => {
-      if (!result.embedding) {
-        result.embedding = await generateEmbedding(`${result.headline} ${result.details}`);
+    const computeEmbeddings = async () => {
+      for (const result of realTimeData) {
+        if (!result.embedding) {
+          result.embedding = await generateEmbedding(`${result.headline} ${result.details}`);
+        }
       }
-    });
-    staticSearchResults.forEach(async (result) => {
-      if (!result.embedding) {
-        result.embedding = await generateEmbedding(`${result.headline} ${result.details}`);
+      for (const result of staticSearchResults) {
+        if (!result.embedding) {
+          result.embedding = await generateEmbedding(`${result.headline} ${result.details}`);
+        }
       }
-    });
+    };
+    computeEmbeddings();
   }, []);
 
   // XEETCH and STT integration
   useEffect(() => {
     const fetchXEETCHBroadcasts = async () => {
-      // Placeholder for client-provided XEETCH stream
-      const response = await fetch('https://xeetch.inpi.gob.mx/api/stream', {
-        headers: { 'Community-Approval': 'mayo_yoreme_2025' }
-      }).catch(() => ({
-        json: () => Promise.resolve([]),
-      }));
-      const audioBlob = await response.blob?.() || new Blob();
-      const transcript = await transcribeAudio(audioBlob, ['mayo', 'yaqui', 'guarijio', 'spanish']);
-      const embedding = await generateEmbedding(transcript.text);
-      const processedData = [{
-        headline: 'Mayo/Yoreme Demand Water Transparency',
-        source: 'XEETCH La Voz de los Tres Ríos | July 15, 2025',
-        details: transcript.text || 'Community leaders discuss water usage concerns at San Jose mine.',
-        tags: ['Protests', 'FPIC', 'Water Transparency'],
-        issueType: ['Protests', 'FPIC'],
-        region: 'Sinaloa',
-        country: 'Mexico',
-        riskScore: transcript.riskScore || 85,
-        likelihood: transcript.likelihood || 70,
-        predictiveAlert: '70% ± 7% likelihood of protests by September 2025.',
-        indigenousApproved: true,
-        language: transcript.language || 'Mayo',
-        embedding,
-      }];
-      setSearchResults((prev) => [...new Set([...prev, ...processedData])]);
+      try {
+        const response = await fetch("https://xeetch.inpi.gob.mx/api/stream", {
+          headers: { "Community-Approval": "mayo_yoreme_2025" },
+        });
+        // Check if response is a valid Response object
+        const audioBlob = response instanceof Response && response.blob ? await response.blob() : new Blob();
+        const transcript = await transcribeAudio(audioBlob, ["mayo", "yaqui", "guarijio", "spanish"]);
+        const embedding = await generateEmbedding(transcript.text);
+        const processedData: SearchResult[] = [
+          {
+            headline: "Mayo/Yoreme Demand Water Transparency",
+            source: "XEETCH La Voz de los Tres Ríos | July 15, 2025",
+            details: transcript.text || "Community leaders discuss water usage concerns at San Jose mine.",
+            tags: ["Protests", "FPIC", "Water Transparency"],
+            issueType: ["Protests", "FPIC"],
+            region: "Sinaloa",
+            country: "Mexico",
+            riskScore: transcript.riskScore || 85,
+            likelihood: transcript.likelihood || 70,
+            predictiveAlert: "70% ± 7% likelihood of protests by September 2025.",
+            indigenousApproved: true,
+            language: transcript.language || "Mayo",
+            embedding,
+          },
+        ];
+        setSearchResults((prev) => [...new Set([...prev, ...processedData])]);
+      } catch (error) {
+        console.error("Error fetching XEETCH stream:", error);
+      }
     };
-    if (searchQuery.toLowerCase().includes('mayo') || searchQuery.toLowerCase().includes('sinaloa')) {
+
+    if (searchQuery.toLowerCase().includes("mayo") || searchQuery.toLowerCase().includes("sinaloa")) {
       fetchXEETCHBroadcasts();
     }
   }, [searchQuery]);
 
   // Optimized vector search
   const generateEmbedding = async (text: string): Promise<number[]> => {
-    // Simulate Hugging Face sentence-transformers (client-provided model)
+    // Simulate Hugging Face sentence-transformers
     return Array(768).fill(0).map(() => Math.random() * 0.1 - 0.05);
   };
 
@@ -283,8 +290,8 @@ const IndigenousVectorSearchBar: React.FC<IndigenousVectorSearchBarProps> = ({
         likelihood: issue.region === "Sinaloa" ? 70 : issue.region === "Andhra Pradesh" ? 60 : 50,
         predictiveAlert: issue.predictiveAlert,
         indigenousApproved: issue.region === "Sinaloa",
-        language: issue.region === "Sinaloa" ? "Mayo" : "Spanish",
-        embedding: Array(768).fill(0).map(() => Math.random() * 0.1 - 0.05),
+        language: issue.language || "Spanish",
+        embedding: issue.embedding || Array(768).fill(0).map(() => Math.random() * 0.1 - 0.05),
       })),
     ];
 
@@ -300,34 +307,40 @@ const IndigenousVectorSearchBar: React.FC<IndigenousVectorSearchBarProps> = ({
             result.country === selectedRegion ||
             result.region === selectedRegion) &&
           (selectedTab === "All" || result.issueType.includes(selectedTab)) &&
-          (similarity > 0.6 || // Higher threshold for precision
+          (similarity > 0.6 ||
             result.headline.toLowerCase().includes(lowerQuery) ||
             result.details.toLowerCase().includes(lowerQuery) ||
             result.tags.some((tag) => tag.toLowerCase().includes(lowerQuery)) ||
             result.source.toLowerCase().includes(lowerQuery)) &&
-          result.indigenousApproved // OCAP® compliance
+          result.indigenousApproved
       )
       .sort((a, b) => b.similarity - a.similarity)
       .map(({ result }) => result)
-      .slice(0, 10); // Paginate for scalability
+      .slice(0, 10);
 
     setSearchResults(filteredResults);
 
     // Semantic suggestions
     const suggestionList = [
-      "FPIC", "Mayo/Yoreme", "USMCA", "Carbon Credits", "CBAM", "Sinaloa", "Water Transparency",
+      "FPIC",
+      "Mayo/Yoreme",
+      "USMCA",
+      "Carbon Credits",
+      "CBAM",
+      "Sinaloa",
+      "Water Transparency",
     ].filter(async (s) => (await cosineSimilarity(queryEmbedding, await generateEmbedding(s))) > 0.6);
     setSuggestions(query ? suggestionList.slice(0, 3) : []);
   };
 
   const transcribeAudio = async (audioBlob: Blob, languages: string[]) => {
-    // Mock STT (replace with client-provided Google Cloud or custom Wav2Vec2)
+    // Mock STT
     return {
       text: "Community leaders demand water transparency for San Jose mine.",
       sentiment: -0.9,
       riskScore: 85,
       likelihood: 70,
-      language: languages.includes('mayo') ? 'Mayo' : 'Spanish',
+      language: languages[0] || "Mayo",
     };
   };
 
@@ -356,7 +369,9 @@ const IndigenousVectorSearchBar: React.FC<IndigenousVectorSearchBarProps> = ({
       "Headline,Source,Region,Country,RiskScore,Likelihood,PredictiveAlert,Language,IndigenousApproved",
       ...csvData.map(
         (row) =>
-          `"${row.Headline}","${row.Source}","${row.Region}","${row.Country}",${row.RiskScore || 'N/A'},${row.Likelihood || 'N/A'},"${row.PredictiveAlert || 'N/A'}","${row.Language || 'N/A'}","${row.IndigenousApproved}"`
+          `"${row.Headline}","${row.Source}","${row.Region}","${row.Country}",${row.RiskScore || "N/A"},${
+            row.Likelihood || "N/A"
+          },"${row.PredictiveAlert || "N/A"}","${row.Language || "N/A"}","${row.IndigenousApproved}"`
       ),
     ].join("\n");
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
@@ -370,7 +385,6 @@ const IndigenousVectorSearchBar: React.FC<IndigenousVectorSearchBarProps> = ({
     console.log(`Sharing results with ${email}:`, results.filter((r) => r.indigenousApproved));
   };
 
-  // Narrative story mode (Dykes/Disney-inspired)
   const renderStoryMode = () => (
     <motion.div
       initial={{ opacity: 0 }}
@@ -381,7 +395,7 @@ const IndigenousVectorSearchBar: React.FC<IndigenousVectorSearchBarProps> = ({
       <h3 className="text-lg font-bold text-gray-800">Compliance Story: Navigating Global Risks</h3>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
         <p className="text-gray-700 mt-2">
-          <strong>Context:</strong> XEETCH broadcasts highlight Mayo/Yoreme demands for water transparency at the San Jose mine, per semantic analysis. EU CBAM and USMCA breaches escalate compliance risks.
+          <strong>Context:</strong> XEETCH broadcasts highlight Mayo/Yoreme demands for water transparency at the San Jose mine, per semantic analysis. EU CBAM and USMCA breaches escalate risks.
         </p>
       </motion.div>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
@@ -453,7 +467,7 @@ const IndigenousVectorSearchBar: React.FC<IndigenousVectorSearchBarProps> = ({
         </button>
         <button
           className="bg-emerald-500 text-white px-4 py-2 rounded-lg shadow-sm hover:bg-emerald-600 flex items-center"
-          onClick={() => shareWithCommunity(searchResults, 'mayo.council@sinaloa.org')}
+          onClick={() => shareWithCommunity(searchResults, "mayo.council@sinaloa.org")}
         >
           <Share2 className="w-4 h-4 mr-2" />
           Share with Community
@@ -492,11 +506,7 @@ const IndigenousVectorSearchBar: React.FC<IndigenousVectorSearchBarProps> = ({
                         transition={{ delay: idx * 0.1 }}
                       >
                         <h3 className="text-lg font-bold text-amber-500">
-                          <Typewriter
-                            text={result.headline}
-                            delay={30}
-                            cursorColor="#F59E0B"
-                          />
+                          <Typewriter text={result.headline} delay={30} cursorColor="#F59E0B" />
                         </h3>
                         <p className="text-sm text-gray-600">
                           {result.source} {result.indigenousApproved ? "(Community Approved)" : "(Pending Approval)"}
@@ -544,7 +554,7 @@ const IndigenousVectorSearchBar: React.FC<IndigenousVectorSearchBarProps> = ({
                         hovermode: "closest",
                         width: 600,
                         height: 400,
-                        paper_bgcolor: "#F9FAFB", // Match bg-gray-50
+                        paper_bgcolor: "#F9FAFB",
                         plot_bgcolor: "#F9FAFB",
                       }}
                       config={{ responsive: true, displayModeBar: true }}
