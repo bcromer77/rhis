@@ -1,16 +1,16 @@
 "use client";
 
-import { VectorSearch } from "@/components/vector-search";
+import IndigenousVectorSearchBar from "@/components/mock/IndigenousVectorSearchBar";
 
 export default function DashboardPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 text-gray-800">
       <div className="container mx-auto px-4 py-8">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-4">PRISM Search</h1>
-          <p className="text-purple-200">AI-powered Indigenous, Legal, ESG, and Political Intelligence</p>
-        </div>
-        <VectorSearch />
+        <IndigenousVectorSearchBar
+          issuesData={[]}
+          selectedRegion=""
+          selectedTab="All"
+        />
       </div>
     </div>
   );
