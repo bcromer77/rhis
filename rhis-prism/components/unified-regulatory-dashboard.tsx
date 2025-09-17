@@ -14,7 +14,7 @@ interface UnifiedRegulatoryDashboardProps {
   initialView?: "split" | "full"
 }
 
-export function UnifiedRegulatoryDashboard({ initialView = "split" }: UnifiedRegulatoryDashboardProps) {
+export default function UnifiedRegulatoryDashboard({ initialView = "split" }: UnifiedRegulatoryDashboardProps) {
   const [viewMode, setViewMode] = useState<"split" | "full">(initialView)
   const [activeTab, setActiveTab] = useState("search")
 
@@ -25,8 +25,12 @@ export function UnifiedRegulatoryDashboard({ initialView = "split" }: UnifiedReg
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-2xl font-bold text-slate-800">Unified Regulatory Intelligence Dashboard</h1>
-              <p className="text-slate-600">Comprehensive risk monitoring and analysis platform</p>
+              <h1 className="text-2xl font-bold text-slate-800">
+                Unified Regulatory Intelligence Dashboard
+              </h1>
+              <p className="text-slate-600">
+                Comprehensive risk monitoring and analysis platform
+              </p>
             </div>
             <div className="flex gap-2">
               <Button
@@ -145,19 +149,15 @@ export function UnifiedRegulatoryDashboard({ initialView = "split" }: UnifiedReg
             <TabsContent value="search" className="mt-6">
               <VectorSearch />
             </TabsContent>
-
             <TabsContent value="heatmap" className="mt-6">
               <RegulatoryHeatmap />
             </TabsContent>
-
             <TabsContent value="political" className="mt-6">
               <EnhancedPoliticalRiskHeatmap />
             </TabsContent>
-
             <TabsContent value="ecology" className="mt-6">
               <EcologyVoices />
             </TabsContent>
-
             <TabsContent value="geo" className="mt-6">
               <div className="h-[800px] rounded-lg overflow-hidden">
                 <GeoTemporalRiskMap />
