@@ -1,0 +1,7 @@
+requests
+firecrawl
+weaviate-client
+sentence-transformers
+pydantic
+pyyaml
+
