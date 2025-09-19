@@ -1,0 +1,50 @@
+{
+  "task2_government_pdfs_argentina": [
+    {
+      "document_id": "lithiumfever_jujuy_2024",
+      "title": "Lithium Fever: Indigenous Peoples' Rights Under Attack in Jujuy, Argentina",
+      "date": "2024-04-17",
+      "jurisdiction": "Argentina",
+      "chunks": [
+        {
+          "section": "2.2 Lithium extractivism in Jujuy",
+          "text": "Jujuy’s constitutional reform occurred in a context of international pressure for lithium industry development... Lithium extraction in Jujuy’s Puna region... impacts fragile high Andean wetlands.",
+          "page": 12
+        },
+        {
+          "section": "2.2.1 Violation of the right to free, prior and informed consultation",
+          "text": "Projects like Olaroz and Cauchari-Olaroz were developed without ensuring free, prior, and informed consultation... The Kachi Yupi Protocol for Consultation and Free Prior Informed Consent, presented in 2015, was not effectively implemented.",
+          "page": 14
+        },
+        {
+          "section": "3.1 Approval of the constitutional reform without prior consultation",
+          "text": "The constitutional reform, approved on 20 June 2023, lacked mechanisms for free, prior, and informed consultation with indigenous peoples.",
+          "page": 18
+        }
+      ]
+    },
+    {
+      "document_id": "indigenous_rights_lithium_argentina_2019",
+      "title": "Indigenous peoples’ rights to natural resources in Argentina: the challenges of impact assessment, consent and fair and equitable benefit-sharing in cases of lithium mining",
+      "date": "2019-11-21",
+      "jurisdiction": "Argentina",
+      "chunks": [
+        {
+          "section": "Olaroz Case",
+          "text": "The companies concerned begin by contacting existing and recognised local authorities... Following the EIA process, the company then presents its report to the community assembly.",
+          "page": 6
+        },
+        {
+          "section": "Salinas Grandes Case",
+          "text": "Exploration activities by mining companies seeking to extract lithium in the area began in 2010... Local community members... do not appear to have been either informed or collectively consulted.",
+          "page": 9
+        },
+        {
+          "section": "FPIC Protocol",
+          "text": "The protocol underlines that meetings should take place well in advance... that as many meetings as the community requires should take place.",
+          "page": 10
+        }
+      ]
+    }
+  ]
+}

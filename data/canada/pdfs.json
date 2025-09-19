@@ -1,0 +1,50 @@
+{
+  "task2_government_pdfs_canada": [
+    {
+      "document_id": "mccf_first_nations_2025",
+      "title": "Mineral Claims Consultation Framework – Information for First Nations",
+      "date": "2025-01-06",
+      "jurisdiction": "Canada",
+      "chunks": [
+        {
+          "section": "Current Process",
+          "text": "Under the MTA, Free Miner Certificate holders can automatically register claims... without prior consultation with First Nations.",
+          "page": 1
+        },
+        {
+          "section": "Changes with MCCF",
+          "text": "Starting March 26, 2025, the Province will consult First Nations before registering new claims... to understand potential impacts.",
+          "page": 2
+        },
+        {
+          "section": "Consultation Process",
+          "text": "Monthly, consultation packages are sent to First Nations, who have 30 days... to raise concerns related to culture, environment.",
+          "page": 3
+        }
+      ]
+    },
+    {
+      "document_id": "duty_to_consult_guidelines_2011",
+      "title": "Updated Guidelines for Federal Officials to Fulfill the Duty to Consult",
+      "date": "2011-03 (Updated Context)",
+      "jurisdiction": "Canada",
+      "chunks": [
+        {
+          "section": "Legal Basis",
+          "text": "The duty to consult stems from the Honour of the Crown... triggered by contemplated Crown conduct that may adversely impact Aboriginal rights.",
+          "page": 1
+        },
+        {
+          "section": "Scope for Mining and Hydro",
+          "text": "Consultation should be integrated into environmental assessment... for major resource projects including mineral mining and energy generation.",
+          "page": 2
+        },
+        {
+          "section": "Accommodation Measures",
+          "text": "If impacts are identified, implement measures to avoid or minimize effects... such as modifying project designs for hydro infrastructure.",
+          "page": 4
+        }
+      ]
+    }
+  ]
+}

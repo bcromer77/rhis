@@ -1,0 +1,53 @@
+{
+  "task1_youtube_transcripts_colombia": [
+    {
+      "video_id": "kfw4LMesnKk",
+      "title": "Colombia's struggle against illegal mining and deforestation",
+      "date": "2024-10-25",
+      "transcript_chunks": [
+        {
+          "timestamp": "00:01:20",
+          "speaker": "Narrator",
+          "text": "In Colombia, illegal mining continues to devastate indigenous lands, despite ILO 169 protections requiring prior consultation."
+        },
+        {
+          "timestamp": "00:03:45",
+          "speaker": "Indigenous Representative",
+          "text": "Our communities demand enforcement of consultation laws before any mining concessions are granted."
+        },
+        {
+          "timestamp": "00:05:30",
+          "speaker": "Expert",
+          "text": "The 2001 Mining Code restricts rights on indigenous territories, but court rulings emphasize consent under ILO 169."
+        }
+      ],
+      "metadata": {
+        "topic": "ilo_169_mining_consultation",
+        "jurisdiction": "Colombia",
+        "stakeholders_mentioned": ["Wayuu People", "Ministry of Mines", "ILO"]
+      }
+    },
+    {
+      "video_id": "aOwxsL5kh5s",
+      "title": "Colombians demand changes to nation's labour laws",
+      "date": "2025-05-02",
+      "transcript_chunks": [
+        {
+          "timestamp": "00:02:10",
+          "speaker": "Protester",
+          "text": "Reforms must include stronger ILO 169 implementation for mining consultations with indigenous groups."
+        },
+        {
+          "timestamp": "00:04:00",
+          "speaker": "Analyst",
+          "text": "Congress debates on mining laws highlight the need for prior, free, and informed consent."
+        }
+      ],
+      "metadata": {
+        "topic": "mining_law_reforms",
+        "jurisdiction": "Colombia",
+        "stakeholders_mentioned": ["Indigenous Organizations", "Constitutional Court"]
+      }
+    }
+  ]
+}

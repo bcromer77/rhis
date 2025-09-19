@@ -1,0 +1,85 @@
+{
+  "task1_youtube_transcripts_drc": [
+    {
+      "video_id": "fqyDM9VRMJM",
+      "title": "M23 Rebels Suspend Peace Talks with DR Congo Amid Mining Disputes",
+      "date": "2025-08-19",
+      "transcript_chunks": [
+        {
+          "timestamp": "00:02:15",
+          "speaker": "Reporter",
+          "text": "The M23 rebels have suspended peace talks, citing lack of progress on mineral resource sharing in eastern DRC."
+        },
+        {
+          "timestamp": "00:04:30",
+          "speaker": "M23 Representative",
+          "text": "Control over mining areas like Rubaya is essential; the government must consult local communities before concessions."
+        },
+        {
+          "timestamp": "00:06:45",
+          "speaker": "Analyst",
+          "text": "This escalation ties directly to cobalt and coltan mines, where rebels accuse the army of favoring foreign investors."
+        }
+      ],
+      "metadata": {
+        "topic": "m23_mining_conflict",
+        "jurisdiction": "DRC",
+        "stakeholders_mentioned": ["M23 Rebels", "DRC Government", "Local Communities"]
+      }
+    },
+    {
+      "video_id": "sh7P8qnJxAc",
+      "title": "Congo Miners Struggle to Survive Under M23 Rebel Control",
+      "date": "2025-05-14",
+      "transcript_chunks": [
+        {
+          "timestamp": "00:01:20",
+          "speaker": "Miner Interviewee",
+          "text": "Under M23, we pay taxes to rebels instead of the government; no consultation on how mining affects our villages."
+        },
+        {
+          "timestamp": "00:03:10",
+          "speaker": "Journalist",
+          "text": "Artisanal miners in the east face forced labor and environmental damage from uncontrolled extraction."
+        },
+        {
+          "timestamp": "00:05:25",
+          "speaker": "Expert",
+          "text": "The 2018 Mining Code requires community involvement, but ongoing war prevents proper consultations."
+        }
+      ],
+      "metadata": {
+        "topic": "artisanal_mining_rebels",
+        "jurisdiction": "DRC",
+        "stakeholders_mentioned": ["M23 Rebels", "Artisanal Miners", "Ministry of Mines"]
+      }
+    },
+    {
+      "video_id": "P4Cbgpbm090",
+      "title": "Why is the U.S. Negotiating a Minerals Agreement with the DRC",
+      "date": "2025-07-23",
+      "transcript_chunks": [
+        {
+          "timestamp": "00:02:50",
+          "speaker": "Panelist",
+          "text": "Trump's administration pushes for minerals access amid M23 conflicts, but locals demand rights consultations."
+        },
+        {
+          "timestamp": "00:05:15",
+          "speaker": "Diplomat",
+          "text": "The deal includes security guarantees, but ignores community impacts on mining concessions."
+        },
+        {
+          "timestamp": "00:07:40",
+          "speaker": "Critic",
+          "text": "Without ILO 169 ratification, indigenous and local groups in mining areas have no formal FPIC protections."
+        }
+      ],
+      "metadata": {
+        "topic": "us_drc_minerals_deal",
+        "jurisdiction": "DRC",
+        "stakeholders_mentioned": ["US Government", "DRC President Tshisekedi", "M23 Rebels"]
+      }
+    }
+  ]
+}

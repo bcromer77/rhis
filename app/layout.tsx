@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+import type { Metadata } from 'next'
+import './globals.css'
+
+export const metadata: Metadata = {
+  title: 'v0 App',
+  description: 'Created with v0',
+  generator: 'v0.dev',
+=======
 import type { Metadata } from "next"
 import "./globals.css"
 
@@ -7,6 +16,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico", // place favicon in public/favicon.ico
   },
+>>>>>>> origin/main
 }
 
 export default function RootLayout({
@@ -16,9 +26,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+<<<<<<< HEAD
+=======
       <head />
+>>>>>>> origin/main
       <body>{children}</body>
     </html>
   )
 }
+<<<<<<< HEAD
+=======
 
+>>>>>>> origin/main

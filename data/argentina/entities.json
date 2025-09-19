@@ -1,0 +1,39 @@
+{
+  "entities": [
+    {
+      "name": "Governor Gerardo Morales",
+      "type": "politician",
+      "role": "Former Governor of Jujuy",
+      "influence_score": 85,
+      "mentioned_in": ["pdf_lithiumfever_jujuy_2024"]
+    },
+    {
+      "name": "Kolla Communities",
+      "type": "indigenous_group",
+      "region": "Jujuy, Argentina",
+      "influence_score": 80,
+      "stance": "opposition_to_mining"
+    },
+    {
+      "name": "Atacama Peoples",
+      "type": "indigenous_group",
+      "region": "Puna Region, Jujuy",
+      "influence_score": 75,
+      "stance": "demands_consultation"
+    },
+    {
+      "name": "JEMSE",
+      "type": "regulator",
+      "role": "Jujuy Energy and Mining Society",
+      "influence_score": 90,
+      "mentioned_in": ["pdf_indigenous_rights_lithium_argentina_2019"]
+    },
+    {
+      "name": "Lithium Americas",
+      "type": "ngo",
+      "role": "Mining Company",
+      "influence_score": 85,
+      "mentioned_in": ["pdf_lithiumfever_jujuy_2024"]
+    }
+  ]
+}

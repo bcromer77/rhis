@@ -1,0 +1,25 @@
+{
+  "entities": [
+    {
+      "name": "President López Obrador",
+      "type": "politician",
+      "role": "President of Mexico",
+      "influence_score": 95,
+      "mentioned_in": ["transcript_jCQPES9EVQY", "pdf_dof_2023_mining_reform"]
+    },
+    {
+      "name": "Tohono O'odham Nation",
+      "type": "indigenous_group",
+      "region": "Sonora, Mexico",
+      "influence_score": 75,
+      "stance": "opposition_to_mining"
+    },
+    {
+      "name": "SEMARNAT",
+      "type": "regulator",
+      "role": "Secretary of Environment and Natural Resources",
+      "influence_score": 85,
+      "mentioned_in": ["transcript_a-hj8KQWfdU", "pdf_dof_2023_mining_reform"]
+    }
+  ]
+}

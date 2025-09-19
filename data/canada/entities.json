@@ -1,0 +1,32 @@
+{
+  "entities": [
+    {
+      "name": "Crown (Government of Canada)",
+      "type": "politician",
+      "role": "Federal Authority",
+      "influence_score": 98,
+      "mentioned_in": ["pdf_duty_to_consult_guidelines_2011"]
+    },
+    {
+      "name": "Yukon First Nations",
+      "type": "indigenous_group",
+      "region": "Yukon Territory",
+      "influence_score": 85,
+      "stance": "demands_consultation"
+    },
+    {
+      "name": "British Columbia Ministry of Energy, Mines and Low Carbon Innovation",
+      "type": "regulator",
+      "role": "Provincial Regulator",
+      "influence_score": 90,
+      "mentioned_in": ["pdf_mccf_first_nations_2025"]
+    },
+    {
+      "name": "First Nations Major Projects Coalition",
+      "type": "ngo",
+      "role": "Indigenous Advocacy Group",
+      "influence_score": 80,
+      "mentioned_in": ["transcript_JOrM9Ulfm7s"]
+    }
+  ]
+}

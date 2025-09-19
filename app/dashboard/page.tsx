@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+import UnifiedRegulatoryDashboard from "@/components/unified-regulatory-dashboard"
+
+export default function DashboardPage() {
+  return <UnifiedRegulatoryDashboard />
+}
+=======
 "use client";
 
 import dynamic from "next/dynamic";
@@ -22,3 +29,4 @@ export default function DashboardPage() {
   );
 }
 
+>>>>>>> origin/main

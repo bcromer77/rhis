@@ -1,0 +1,58 @@
+{
+  "task1_youtube_transcripts_argentina": [
+    {
+      "video_id": "g8720T9250I",
+      "title": "Argentina indigenous groups protest against lithium mining",
+      "date": "2023-08-02",
+      "transcript_chunks": [
+        {
+          "timestamp": "00:01:15",
+          "speaker": "Narrator",
+          "text": "In Argentina, members of an indigenous community have been on a march to demand greater rights. It follows a change in legislation in Jujuy province that limits the right to protest."
+        },
+        {
+          "timestamp": "00:02:30",
+          "speaker": "Indigenous Leader",
+          "text": "We are protesting against the lithium mining projects in Jujuy because they threaten our ancestral lands and water resources without proper consultation."
+        },
+        {
+          "timestamp": "00:04:45",
+          "speaker": "Community Member",
+          "text": "The constitutional reform in Jujuy ignores ILO 169 and our right to free, prior, and informed consent for extraction activities."
+        }
+      ],
+      "metadata": {
+        "topic": "jujuy_lithium_indigenous_consultation",
+        "jurisdiction": "Argentina",
+        "stakeholders_mentioned": ["Kolla Communities", "Atacama Peoples", "Jujuy Government"]
+      }
+    },
+    {
+      "video_id": "DyplEBE_lKo",
+      "title": "Lithium exploitation: Indigenous communities on alert in Argentina",
+      "date": "2023-07-01",
+      "transcript_chunks": [
+        {
+          "timestamp": "00:00:45",
+          "speaker": "Reporter",
+          "text": "Indigenous communities in Jujuy are on high alert as lithium mining expands, demanding consultation under international law."
+        },
+        {
+          "timestamp": "00:03:20",
+          "speaker": "Activist",
+          "text": "Projects like Olaroz and Cauchari-Olaroz were approved without meaningful consultation, violating our rights to our territories."
+        },
+        {
+          "timestamp": "00:05:10",
+          "speaker": "Expert",
+          "text": "The Kachi Yupi Protocol outlines how consultations should occur, but companies prefer individual negotiations over collective consent."
+        }
+      ],
+      "metadata": {
+        "topic": "lithium_mining_protests",
+        "jurisdiction": "Argentina",
+        "stakeholders_mentioned": ["Salinas Grandes Communities", "Lithium Americas", "ILO"]
+      }
+    }
+  ]
+}

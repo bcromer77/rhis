@@ -1,0 +1,660 @@
+accounts:
+  # --- ENERGY SUPPLY & POLICY ---
+  - handle: EIAgov
+    category: energy_supply
+    region: US
+    credibility: high
+    notes: Publishes weekly US crude oil inventory data.
+
+  - handle: TankerTrackers
+    category: energy_supply
+    region: Global
+    credibility: medium
+    notes: Tracks real-time oil tanker movements and exports.
+
+  - handle: IEA
+    category: energy_policy
+    region: Global
+    credibility: high
+    notes: Releases global energy demand forecasts monthly.
+
+  - handle: Energy
+    category: energy_policy
+    region: US
+    credibility: high
+    notes: Announces US renewable energy policy updates.
+
+  - handle: ArgusMedia
+    category: energy_supply
+    region: Global
+    credibility: high
+    notes: Provides daily commodity price assessments.
+
+  - handle: SPGlobalPlatts
+    category: energy_supply
+    region: Global
+    credibility: high
+    notes: Publishes energy market benchmarks and indices.
+
+  - handle: OPECSecretariat
+    category: energy_policy
+    region: Global
+    credibility: high
+    notes: OPEC oil production quota announcements.
+
+  - handle: Chevron
+    category: energy_supply
+    region: Global
+    credibility: high
+    notes: Corporate oil exploration updates.
+
+  - handle: offshoremgzn
+    category: energy_supply
+    region: Global
+    credibility: medium
+    notes: Offshore oil and gas news.
+
+  - handle: OGJOnline
+    category: energy_supply
+    region: Global
+    credibility: medium
+    notes: Oil and gas journal articles.
+
+  - handle: bp_plc
+    category: energy_policy
+    region: Global
+    credibility: high
+    notes: Energy transition and policy insights.
+
+  - handle: TotalEnergies
+    category: energy_policy
+    region: Global
+    credibility: high
+    notes: Renewable energy project announcements.
+
+  - handle: Shell
+    category: energy_policy
+    region: Global
+    credibility: high
+    notes: Global energy market strategies.
+
+  - handle: OilandEnergy
+    category: energy_supply
+    region: Global
+    credibility: medium
+    notes: Covers crude oil and natural gas sectors.
+
+  # --- GEOPOLITICS & DEFENSE ---
+  - handle: spectatorindex
+    category: geo_breaking
+    region: Global
+    credibility: medium
+    notes: Posts rapid geopolitical event alerts.
+
+  - handle: AlArabiya_Eng
+    category: geo_breaking
+    region: MENA
+    credibility: high
+    notes: Covers breaking MENA political developments.
+
+  - handle: IDF
+    category: defense
+    region: MENA
+    credibility: high
+    notes: Official Israeli military operation updates.
+
+  - handle: CENTCOM
+    category: defense
+    region: MENA
+    credibility: high
+    notes: US Central Command military reports.
+
+  - handle: NATO
+    category: defense
+    region: Global
+    credibility: high
+    notes: NATO alliance security announcements.
+
+  - handle: ReutersWorld
+    category: geo_breaking
+    region: Global
+    credibility: high
+    notes: Global breaking news from Reuters wire.
+
+  - handle: BBCWorld
+    category: geo_breaking
+    region: Global
+    credibility: high
+    notes: International breaking news coverage.
+
+  - handle: AJEnglish
+    category: geo_breaking
+    region: Global
+    credibility: high
+    notes: Global news with MENA focus.
+
+  - handle: nytimesworld
+    category: geo_breaking
+    region: Global
+    credibility: high
+    notes: World news from New York Times.
+
+  - handle: defense_news
+    category: defense
+    region: Global
+    credibility: high
+    notes: Global defense programs and policy.
+
+  - handle: DefenseIntel
+    category: defense
+    region: US
+    credibility: high
+    notes: US military intelligence insights.
+
+  # --- MACRO / FINANCE ---
+  - handle: uscensusbureau
+    category: macro_data
+    region: US
+    credibility: high
+    notes: Releases US population and economic census data.
+
+  - handle: BEA_News
+    category: macro_data
+    region: US
+    credibility: high
+    notes: Publishes quarterly US GDP estimates.
+
+  - handle: IMFNews
+    category: macro_data
+    region: Global
+    credibility: high
+    notes: Global economic outlook reports.
+
+  - handle: BIS_org
+    categories: [macro_data, credit]
+    region: Global
+    credibility: high
+    notes: Banking stability, financial data, and lending standards.
+
+  - handle: WorldBank
+    category: macro_data
+    region: Global
+    credibility: high
+    notes: Development indicators and poverty data.
+
+  - handle: WSJ
+    category: macro_data
+    region: Global
+    credibility: high
+    notes: Economic news and market data.
+
+  - handle: FT
+    category: macro_data
+    region: Global
+    credibility: high
+    notes: Financial Times economic reports.
+
+  - handle: TheEconomist
+    category: macro_data
+    region: Global
+    credibility: high
+    notes: Weekly economic data analysis.
+
+  - handle: CNBC
+    category: macro_data
+    region: Global
+    credibility: high
+    notes: Real-time market and economic news.
+
+  - handle: BespokeInvest
+    category: macro_data
+    region: US
+    credibility: medium
+    notes: Custom economic charts and data.
+
+  # --- SHIPPING & INFRA ---
+  - handle: MarineTraffic
+    category: shipping
+    region: Global
+    credibility: high
+    notes: Real-time global ship tracking updates.
+
+  - handle: PortHouston
+    category: shipping
+    region: US
+    credibility: high
+    notes: Houston port cargo volume reports.
+
+  - handle: SuezAuthority
+    category: shipping
+    region: MENA
+    credibility: high
+    notes: Suez Canal traffic and disruption alerts.
+
+  - handle: PanamaCanal
+    category: shipping
+    region: Global
+    credibility: high
+    notes: Panama Canal transit statistics.
+
+  - handle: BalticExchange
+    category: shipping
+    region: Global
+    credibility: high
+    notes: Daily freight market rate indices.
+
+  - handle: Splash247
+    category: shipping
+    region: Global
+    credibility: medium
+    notes: Maritime news and shipping updates.
+
+  - handle: WorldMarNews
+    category: shipping
+    region: Global
+    credibility: medium
+    notes: World maritime industry news.
+
+  - handle: PortTechnology
+    category: infra
+    region: Global
+    credibility: medium
+    notes: Port infrastructure technology developments.
+
+  # --- REGULATORS ---
+  - handle: Ofwat
+    category: regulators
+    region: EU
+    credibility: high
+    notes: UK water sector regulatory decisions.
+
+  - handle: EPA
+    categories: [water, regulators]
+    region: US
+    credibility: high
+    notes: Climate infra, water quality, and environmental regulations.
+
+  - handle: SEC_News
+    categories: [regulators, credit]
+    region: US
+    credibility: high
+    notes: Securities filings, enforcement actions, and debt defaults.
+
+  - handle: FCA_UK
+    category: regulators
+    region: EU
+    credibility: high
+    notes: UK financial conduct authority alerts.
+
+  - handle: ESMAComms
+    category: regulators
+    region: EU
+    credibility: high
+    notes: EU securities market regulations.
+
+  - handle: CFTC
+    category: regulators
+    region: US
+    credibility: high
+    notes: Commodity futures trading oversight.
+
+  - handle: CBP
+    category: regulators
+    region: US
+    credibility: high
+    notes: US customs and border trade updates.
+
+  # --- CREDIT & SOLVENCY (Burry-mode) ---
+  - handle: FDICgov
+    category: credit
+    region: US
+    credibility: high
+    notes: Reports quarterly bank failures and credit risks.
+
+  - handle: MoodyInvestors
+    category: credit
+    region: Global
+    credibility: high
+    notes: Publishes corporate credit ratings and downgrades.
+
+  - handle: WolfStreetBlog
+    category: credit
+    region: US
+    credibility: medium
+    notes: Analyzes muni bond solvency and bubbles.
+
+  - handle: ZeroHedge
+    categories: [credit, black_swan]
+    region: Global
+    credibility: medium
+    notes: Contrarian analysis, credit bubbles, and risk flags.
+
+  - handle: DavidRosenberg
+    category: credit
+    region: US
+    credibility: medium
+    notes: Contrarian views on corporate debt stress.
+
+  - handle: ECB
+    category: credit
+    region: EU
+    credibility: high
+    notes: Reports EU bank lending and solvency metrics.
+
+  - handle: ChinaBankNews
+    category: credit
+    region: Asia
+    credibility: medium
+    notes: Monitors Chinese corporate debt risks.
+
+  - handle: S&PGlobalRatings
+    category: credit
+    region: Global
+    credibility: high
+    notes: Issues muni and corporate rating changes.
+
+  - handle: FitchRatings
+    category: credit
+    region: Global
+    credibility: high
+    notes: Alerts on sovereign and credit downgrades.
+
+  - handle: RampCapitalLLC
+    categories: [credit, consumer, housing]
+    region: US
+    credibility: low
+    notes: Satirical contrarian commentary on debt, consumer stress, and housing bubbles.
+
+  # --- CONSUMER ---
+  - handle: TransUnion
+    category: consumer
+    region: US
+    credibility: high
+    notes: Quarterly consumer credit and default data.
+
+  - handle: Visa
+    category: consumer
+    region: Global
+    credibility: high
+    notes: Releases global spending trend reports.
+
+  - handle: MasterCardNews
+    category: consumer
+    region: Global
+    credibility: high
+    notes: Tracks retail spending and delinquency shifts.
+
+  - handle: RetailDive
+    category: consumer
+    region: US
+    credibility: medium
+    notes: Covers retail bankruptcies and consumer cracks.
+
+  - handle: WolfStreet
+    categories: [consumer, housing]
+    region: US
+    credibility: medium
+    notes: Analyzes household debt, auto loans, and housing bubbles.
+
+  - handle: CalculatedRisk
+    categories: [consumer, housing]
+    region: US
+    credibility: medium
+    notes: Monitors household debt, spending, and housing stress.
+
+  - handle: Eurostat
+    category: consumer
+    region: EU
+    credibility: high
+    notes: EU consumer debt and delinquency stats.
+
+  - handle: PBOC
+    category: consumer
+    region: Asia
+    credibility: high
+    notes: Chinese consumer lending and default updates.
+
+  - handle: TheLayoff
+    categories: [consumer, housing]
+    region: US
+    credibility: low
+    notes: Whistleblower posts on layoffs and housing stress.
+
+  # --- AGRI ---
+  - handle: USDA
+    category: agri
+    region: US
+    credibility: high
+    notes: Monthly WASDE crop yield forecasts.
+
+  - handle: usda_oce
+    category: agri
+    region: US
+    credibility: high
+    notes: Farm income and bankruptcy reports.
+
+  - handle: FAOnews
+    category: agri
+    region: Global
+    credibility: high
+    notes: Global food security and yield data.
+
+  - handle: FarmPolicy
+    category: agri
+    region: US
+    credibility: medium
+    notes: Tracks H-2A visa labor shortages.
+
+  - handle: AgWeb
+    category: agri
+    region: US
+    credibility: medium
+    notes: Farm bankruptcies and crop stress news.
+
+  - handle: CropLife
+    category: agri
+    region: Global
+    credibility: medium
+    notes: Agri input costs and yield impacts.
+
+  - handle: EUAgriFood
+    category: agri
+    region: EU
+    credibility: high
+    notes: EU crop production and farm aid updates.
+
+  - handle: ChinaAgri
+    category: agri
+    region: Asia
+    credibility: medium
+    notes: Chinese grain yields and import risks.
+
+  - handle: DTNProgressive
+    category: agri
+    region: US
+    credibility: medium
+    notes: Contrarian farm debt and yield analysis.
+
+  - handle: AgriPulse
+    category: agri
+    region: US
+    credibility: medium
+    notes: US farm bill and bankruptcy news.
+
+  - handle: FoodTank
+    category: agri
+    region: Global
+    credibility: medium
+    notes: Global agri supply chain cracks.
+
+  # --- WATER ---
+  - handle: USGS_Water
+    category: water
+    region: US
+    credibility: high
+    notes: Reservoir levels and drought data.
+
+  - handle: CAWaterBoards
+    category: water
+    region: US
+    credibility: high
+    notes: California water allocation hearings.
+
+  - handle: EU_Environment
+    category: water
+    region: EU
+    credibility: high
+    notes: EU water directive compliance updates.
+
+  - handle: WaterDeeply
+    category: water
+    region: Global
+    credibility: medium
+    notes: Global reservoir and climate stress.
+
+  - handle: ClimateCentral
+    category: water
+    region: Global
+    credibility: medium
+    notes: Insurer retreats from flood zones.
+
+  - handle: InsuranceNewsNet
+    category: water
+    region: US
+    credibility: medium
+    notes: Water risk insurer pullback alerts.
+
+  - handle: MENAWater
+    category: water
+    region: MENA
+    credibility: medium
+    notes: Middle East water scarcity reports.
+
+  - handle: AsiaWater
+    category: water
+    region: Asia
+    credibility: medium
+    notes: Asian reservoir level fluctuations.
+
+  - handle: DroughtGov
+    category: water
+    region: US
+    credibility: medium
+    notes: State water board drought declarations.
+
+  - handle: WaterIntel
+    category: water
+    region: Global
+    credibility: medium
+    notes: Infra investment gaps in water systems.
+
+  - handle: FloodList
+    category: water
+    region: Global
+    credibility: medium
+    notes: Climate-driven water infrastructure risks.
+
+  # --- HOUSING ---
+  - handle: NAR_Research
+    category: housing
+    region: US
+    credibility: high
+    notes: Homebuilder sales and inventory data.
+
+  - handle: FHFA
+    category: housing
+    region: US
+    credibility: high
+    notes: Foreclosure and housing finance reports.
+
+  - handle: REITcom
+    category: housing
+    region: US
+    credibility: medium
+    notes: REIT distress and dividend cuts.
+
+  - handle: HousingWire
+    category: housing
+    region: US
+    credibility: medium
+    notes: Mortgage delinquency and foreclosure trends.
+
+  - handle: ECB_Housing
+    category: housing
+    region: EU
+    credibility: high
+    notes: EU real estate price and distress metrics.
+
+  - handle: ChinaRealEstate
+    category: housing
+    region: Asia
+    credibility: medium
+    notes: Chinese developer debt and housing cracks.
+
+  - handle: BiggerPockets
+    category: housing
+    region: US
+    credibility: medium
+    notes: Investor views on REIT distress.
+
+  # --- BLACK SWAN ---
+  - handle: CDCgov
+    category: black_swan
+    region: US
+    credibility: high
+    notes: Outbreak alerts and public health risks.
+
+  - handle: FDA_Drug_Info
+    category: black_swan
+    region: US
+    credibility: high
+    notes: Product recalls and safety warnings.
+
+  - handle: CISAcyber
+    category: black_swan
+    region: US
+    credibility: high
+    notes: Cyber threat and ransomware advisories.
+
+  - handle: WHO
+    category: black_swan
+    region: Global
+    credibility: high
+    notes: Global pandemic and outbreak updates.
+
+  - handle: ProPublica
+    category: black_swan
+    region: US
+    credibility: high
+    notes: Investigative corporate recall exposures.
+
+  - handle: KrebsOnSecurity
+    category: black_swan
+    region: US
+    credibility: medium
+    notes: Ransomware attacks and cyber breaches.
+
+  - handle: EUHealth
+    category: black_swan
+    region: EU
+    credibility: high
+    notes: EU outbreak and recall notifications.
+
+  - handle: ChinaCDC
+    category: black_swan
+    region: Asia
+    credibility: high
+    notes: Asian health crisis and outbreak reports.
+
+  - handle: OutbreakUpdate
+    category: black_swan
+    region: Global
+    credibility: medium
+    notes: Real-time outbreak tracking.
+
+  - handle: RansomwareNews
+    category: black_swan
+    region: Global
+    credibility: medium
+    notes: Global ransomware incident alerts.
+

@@ -1,0 +1,46 @@
+{
+  "entities": [
+    {
+      "name": "President Félix Tshisekedi",
+      "type": "politician",
+      "role": "President of DRC",
+      "influence_score": 95,
+      "mentioned_in": ["transcript_P4Cbgpbm090", "pdf_drc_mining_code_2018"]
+    },
+    {
+      "name": "Donald Trump",
+      "type": "politician",
+      "role": "US President",
+      "influence_score": 98,
+      "mentioned_in": ["general_context"]
+    },
+    {
+      "name": "M23 Rebels",
+      "type": "ngo",
+      "role": "Armed Rebel Group",
+      "influence_score": 85,
+      "stance": "control_mining_areas"
+    },
+    {
+      "name": "Pygmy Communities",
+      "type": "indigenous_group",
+      "region": "Eastern DRC",
+      "influence_score": 70,
+      "stance": "opposition_to_unconsulted_mining"
+    },
+    {
+      "name": "Ministry of Mines",
+      "type": "regulator",
+      "role": "DRC Mining Authority",
+      "influence_score": 90,
+      "mentioned_in": ["pdf_guidelines_mining_contracts_drc", "transcript_sh7P8qnJxAc"]
+    },
+    {
+      "name": "Human Rights Watch",
+      "type": "ngo",
+      "role": "Human Rights Advocacy",
+      "influence_score": 80,
+      "mentioned_in": ["general_context"]
+    }
+  ]
+}

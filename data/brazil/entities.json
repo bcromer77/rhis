@@ -1,0 +1,55 @@
+{
+  "entities": [
+    {
+      "name": "Senator Mecias de Jesus",
+      "type": "politician",
+      "role": "Senator, Brazil",
+      "influence_score": 70,
+      "mentioned_in": ["pdf_nota_tecnica_pl_1331_2022"]
+    },
+    {
+      "name": "Yanomami People",
+      "type": "indigenous_group",
+      "region": "Amazon, Brazil",
+      "influence_score": 85,
+      "stance": "opposition_to_mining"
+    },
+    {
+      "name": "Kayapó People",
+      "type": "indigenous_group",
+      "region": "Amazon, Brazil",
+      "influence_score": 80,
+      "stance": "demands_consultation"
+    },
+    {
+      "name": "ANM",
+      "type": "regulator",
+      "role": "Agência Nacional de Mineração",
+      "influence_score": 90
+    },
+    {
+      "name": "FUNAI",
+      "type": "regulator",
+      "role": "National Indian Foundation",
+      "influence_score": 85
+    },
+    {
+      "name": "MMA",
+      "type": "regulator",
+      "role": "Ministry of Environment and Climate Change",
+      "influence_score": 88
+    },
+    {
+      "name": "Vale",
+      "type": "ngo",
+      "role": "Mining Company",
+      "influence_score": 95
+    },
+    {
+      "name": "COIAB",
+      "type": "ngo",
+      "role": "Coordination of Indigenous Organizations of the Brazilian Amazon",
+      "influence_score": 75
+    }
+  ]
+}

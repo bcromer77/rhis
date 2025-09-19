@@ -1,0 +1,24 @@
+{
+  "law_2011": {
+    "title": "Ley de Consulta Previa (Ley N° 29785)",
+    "date": "2011-08-23",
+    "summary": "Requires free, prior and informed consultation with indigenous peoples...",
+    "key_provisions": [
+      "Must consult before granting concessions",
+      "Applies to mining and hydrocarbons",
+      "Consent not always binding"
+    ]
+  },
+  "icsid_cases": [
+    {
+      "case_name": "Bear Creek Mining v. Peru",
+      "date": "2017",
+      "summary": "Concessions revoked due to protests → $18.2m award."
+    },
+    {
+      "case_name": "South American Silver v. Peru",
+      "date": "2016",
+      "summary": "Revocation amid Indigenous opposition → settlement."
+    }
+  ]
+}
