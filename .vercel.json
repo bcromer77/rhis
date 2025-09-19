@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
+  "projects": {
+    "name": "rhis",
+    "rootDirectory": "rhis-prism"
+  },
+  "builds": [
+    {
+      "src": "rhis-prism/package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "rhis-prism/$1"
+    }
+  ]
+}
