@@ -1,0 +1,32 @@
+{
+  "entities": [
+    {
+      "name": "President Gustavo Petro",
+      "type": "politician",
+      "role": "President of Colombia",
+      "influence_score": 95,
+      "mentioned_in": ["general_context"]
+    },
+    {
+      "name": "Wayuu Indigenous People",
+      "type": "indigenous_group",
+      "region": "La Guajira, Colombia",
+      "influence_score": 80,
+      "stance": "opposition_to_mining"
+    },
+    {
+      "name": "Ministry of Mines and Energy",
+      "type": "regulator",
+      "role": "Ministerio de Minas y Energía",
+      "influence_score": 90,
+      "mentioned_in": ["pdf_mining_indigenous_colombia_iwgia"]
+    },
+    {
+      "name": "Constitutional Court of Colombia",
+      "type": "regulator",
+      "role": "Judicial Authority on Rights",
+      "influence_score": 95,
+      "mentioned_in": ["pdf_fpic_colombia_pax"]
+    }
+  ]
+}

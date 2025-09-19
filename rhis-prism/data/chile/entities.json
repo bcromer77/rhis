@@ -1,0 +1,53 @@
+{
+  "entities": [
+    {
+      "name": "President Boric",
+      "type": "politician",
+      "role": "President of Chile",
+      "influence_score": 95,
+      "mentioned_in": ["transcript_dQw4w9WgXcQ", "pdf_proyecto_ley_litio_2023"]
+    },
+    {
+      "name": "Council of Atacameño Peoples",
+      "type": "indigenous_group",
+      "region": "Atacama, Chile",
+      "influence_score": 80,
+      "stance": "demands_consultation"
+    },
+    {
+      "name": "Mapuche Communities",
+      "type": "indigenous_group",
+      "region": "Southern Chile",
+      "influence_score": 85,
+      "stance": "opposition_to_mining"
+    },
+    {
+      "name": "CONADI",
+      "type": "regulator",
+      "role": "National Corporation for Indigenous Development",
+      "influence_score": 85,
+      "mentioned_in": ["transcript_abc123def456", "pdf_ley_19253_indigenous_law"]
+    },
+    {
+      "name": "Ministry of Mining",
+      "type": "regulator",
+      "role": "Ministerio de Minería",
+      "influence_score": 90,
+      "mentioned_in": ["pdf_proyecto_ley_litio_2023", "transcript_xyz789ghi012"]
+    },
+    {
+      "name": "SQM",
+      "type": "ngo",
+      "role": "Lithium Mining Company",
+      "influence_score": 92,
+      "mentioned_in": ["transcript_abc123def456", "pdf_proyecto_ley_litio_2023"]
+    },
+    {
+      "name": "Codelco",
+      "type": "ngo",
+      "role": "State-Owned Copper and Lithium Company",
+      "influence_score": 95,
+      "mentioned_in": ["transcript_abc123def456"]
+    }
+  ]
+}

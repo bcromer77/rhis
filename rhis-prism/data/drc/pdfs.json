@@ -1,0 +1,50 @@
+{
+  "task2_government_pdfs_drc": [
+    {
+      "document_id": "drc_mining_code_2018",
+      "title": "Mining Code of the Democratic Republic of Congo (Law No. 18/001 of March 9, 2018)",
+      "date": "2018-03-09",
+      "jurisdiction": "DRC",
+      "chunks": [
+        {
+          "section": "Article 245",
+          "text": "The holder of a mining title must conduct an environmental and social impact study, including consultations with affected local communities before exploitation.",
+          "page": 45
+        },
+        {
+          "section": "Article 100",
+          "text": "Mining concessions require approval from the Mining Cadastre and prior agreement with customary landowners in rural areas.",
+          "page": 20
+        },
+        {
+          "section": "Article 248",
+          "text": "Local communities must benefit from mining activities through development funds and participation in decision-making processes.",
+          "page": 47
+        }
+      ]
+    },
+    {
+      "document_id": "guidelines_mining_contracts_drc",
+      "title": "Guidelines for the Revision of Mining Contracts in the DRC",
+      "date": "2011 (Updated 2023 Context)",
+      "jurisdiction": "DRC",
+      "chunks": [
+        {
+          "section": "Section 3: Community Engagement",
+          "text": "Contract revisions must include provisions for community consultations to ensure fair benefit-sharing and mitigate conflicts in mining zones.",
+          "page": 15
+        },
+        {
+          "section": "Section 5: Conflict Zones",
+          "text": "In areas affected by armed groups like M23, concessions require security assessments and local stakeholder input to prevent exploitation.",
+          "page": 22
+        },
+        {
+          "section": "Annex: Social Safeguards",
+          "text": "Align with international standards, though DRC has not ratified ILO 169; focus on customary rights for Pygmy and other vulnerable groups.",
+          "page": 30
+        }
+      ]
+    }
+  ]
+}

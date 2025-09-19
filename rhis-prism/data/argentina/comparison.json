@@ -1,0 +1,27 @@
+{
+  "task4_argentina_comparison": {
+    "law_indigenous_consultation": {
+      "title": "ILO Convention 169 Ratified by Law 24.071 (1992), Applied to Mining via Provincial Reforms",
+      "date": "1992 (Ratification); 2023 (Jujuy Constitutional Reform)",
+      "summary": "Argentina ratified ILO 169 in 1992, mandating free, prior, and informed consultation (FPIC) for measures affecting indigenous peoples, including lithium mining in Jujuy. The National Constitution (Art. 75.17) incorporates international treaties. In Jujuy, Decree 7592/11 declared lithium strategic, but 2023 constitutional reforms limited protest rights and consultation scope, violating ILO 169 by not ensuring collective consent. The Kachi Yupi Protocol (2015) by Salinas Grandes communities defines culturally appropriate FPIC, but implementation is inconsistent, with companies like Lithium Americas negotiating individually.",
+      "key_provisions": [
+        "Consultation required before granting mining concessions in indigenous territories (ILO 169 Art. 6).",
+        "Applies to lithium extraction; seeks consent but often non-binding, leading to protests.",
+        "State must facilitate, but provinces like Jujuy prioritize industry over rights."
+      ]
+    },
+    "icsid_cases": [
+      {
+        "case_name": "No Direct ICSID Lithium Cases in Jujuy",
+        "date": "N/A",
+        "summary": "Argentina faces investor-state disputes, but none directly tied to Jujuy lithium consultations. Broader cases like Pan American Energy disputes highlight tensions, with indigenous protests leading to project delays similar to Peru's Bear Creek v. Peru."
+      },
+      {
+        "case_name": "MICI-BID-AR-2025-0244 (IDB Accountability Mechanism)",
+        "date": "2025",
+        "summary": "Technical cooperation for sustainable lithium in Jujuy raises indigenous concerns over consultation, paralleling ICSID risks if projects proceed without FPIC, emphasizing state obligations under ILO 169."
+      }
+    ],
+    "focus_analysis": "Argentina's ILO 169 framework mirrors Peru's 2011 law by requiring FPIC for mining, but Jujuy's 2023 reforms weaken it, leading to protests like those in Salinas Grandes. Unlike Peru's multiple ICSID cases from consultation failures, Argentina's disputes are more domestic, though rising lithium investments risk future arbitrations akin to Brazil's regulatory gaps."
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "task2_government_pdfs_colombia": [
+    {
+      "document_id": "mining_indigenous_colombia_iwgia",
+      "title": "Mining and Indigenous Peoples in Colombia",
+      "date": "2010 (Updated Context to 2023)",
+      "jurisdiction": "Colombia",
+      "chunks": [
+        {
+          "section": "Mining Consultation Laws",
+          "text": "The 1988 Mining Code restricted mining on indigenous territories... The 1991 Constitution made natural resource exploitation conditional upon... involvement in decision-making.",
+          "page": 2
+        },
+        {
+          "section": "ILO 169",
+          "text": "Even after ILO Convention 169... repeated failures to consult indigenous peoples regarding mining activity on their territories.",
+          "page": 5
+        },
+        {
+          "section": "Law 685 of 2001",
+          "text": "Under Law 685 of 2001, mining was extended... right to consultation and prior, free, and informed consent for mining activities.",
+          "page": 3
+        }
+      ]
+    },
+    {
+      "document_id": "fpic_colombia_pax",
+      "title": "Free, Prior and Informed Consultation in Colombia",
+      "date": "2013 (Relevant to 2023-2025)",
+      "jurisdiction": "Colombia",
+      "chunks": [
+        {
+          "section": "ILO C169 Provisions",
+          "text": "Article 15 states that governments shall... consult indigenous peoples before... exploration or exploitation of mineral... resources.",
+          "page": 4
+        },
+        {
+          "section": "Application in Colombia",
+          "text": "Colombia ratified ILO C169 through Act 21 of 1991... Decree 1320 of 1998 provides for consultation... but has been criticized for not covering non-renewable resources.",
+          "page": 3
+        },
+        {
+          "section": "Criteria for Consultation",
+          "text": "The consultation must occur prior... be based on full and comprehensible information... culturally appropriate.",
+          "page": 5
+        }
+      ]
+    }
+  ]
+}

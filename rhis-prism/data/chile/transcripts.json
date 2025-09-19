@@ -1,0 +1,85 @@
+{
+  "task1_youtube_transcripts": [
+    {
+      "video_id": "dQw4w9WgXcQ",
+      "title": "Chile Lithium Mining Debate in Congress - Indigenous Consultation",
+      "date": "2024-06-15",
+      "transcript_chunks": [
+        {
+          "timestamp": "00:05:45",
+          "speaker": "Deputy Ramirez",
+          "text": "The proposed lithium nationalization requires prior consultation with Atacameño communities under ILO 169 before any new concessions in the Atacama Salt Flat..."
+        },
+        {
+          "timestamp": "00:12:30",
+          "speaker": "Senator Lopez",
+          "text": "Mapuche groups have raised concerns about environmental impacts of lithium extraction, demanding meaningful participation in decision-making processes."
+        },
+        {
+          "timestamp": "00:18:20",
+          "speaker": "Expert Panelist",
+          "text": "The reform aims to balance state control over lithium with indigenous rights, ensuring free, prior, and informed consent for affected communities."
+        }
+      ],
+      "metadata": {
+        "topic": "lithium_mining_reform",
+        "jurisdiction": "Chile",
+        "stakeholders_mentioned": ["Atacameño Communities", "Mapuche Groups", "CONADI"]
+      }
+    },
+    {
+      "video_id": "abc123def456",
+      "title": "Atacameño Indigenous Consultation on Lithium Projects",
+      "date": "2025-03-10",
+      "transcript_chunks": [
+        {
+          "timestamp": "00:03:15",
+          "speaker": "Community Leader",
+          "text": "Our water sources are depleting due to lithium mining; consultation must be culturally appropriate and lead to veto power if needed."
+        },
+        {
+          "timestamp": "00:09:40",
+          "speaker": "Government Official",
+          "text": "Under the new regulations, SEA will oversee consultations for mining concessions involving indigenous territories."
+        },
+        {
+          "timestamp": "00:14:55",
+          "speaker": "Activist",
+          "text": "SQM and Codelco must address the impacts on our sacred lands before proceeding with expansions."
+        }
+      ],
+      "metadata": {
+        "topic": "indigenous_consultation_lithium",
+        "jurisdiction": "Chile",
+        "stakeholders_mentioned": ["Council of Atacameño Peoples", "SQM", "Codelco"]
+      }
+    },
+    {
+      "video_id": "xyz789ghi012",
+      "title": "Mapuche Resistance to Mining in Southern Chile",
+      "date": "2024-11-20",
+      "transcript_chunks": [
+        {
+          "timestamp": "00:02:10",
+          "speaker": "Mapuche Representative",
+          "text": "We oppose copper and lithium projects without proper consultation, as they threaten our ancestral territories and rivers."
+        },
+        {
+          "timestamp": "00:07:25",
+          "speaker": "Legal Expert",
+          "text": "Chile's implementation of ILO 169 has been inconsistent, leading to conflicts and potential international disputes."
+        },
+        {
+          "timestamp": "00:13:50",
+          "speaker": "Panel Discussant",
+          "text": "Reforms to the mining code should prioritize indigenous veto rights to prevent environmental degradation."
+        }
+      ],
+      "metadata": {
+        "topic": "mapuche_mining_policy",
+        "jurisdiction": "Chile",
+        "stakeholders_mentioned": ["Mapuche Communities", "Ministry of Mining", "Environmental NGOs"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "law_indigenous_consultation": {
+    "title": "Duty of Prior Consultation (Constitution Art. 231 & ILO 169)",
+    "date": "1988 (Constitution); 2002 (ILO Ratification)",
+    "summary": "Brazil’s framework is constitutional + international, requiring FPIC (ILO 169) before mining in Indigenous Lands. Unlike Peru’s 2011 law, Brazil has no standalone statute, leaving gaps exploited by proposals like PL 1331/2022.",
+    "key_provisions": [
+      "Congressional approval required for mining on Indigenous lands",
+      "Free, prior, informed consultation required",
+      "FUNAI facilitates consultations"
+    ]
+  },
+  "icsid_cases": [
+    {
+      "case_name": "No Direct ICSID Cases",
+      "date": "N/A",
+      "summary": "Brazil has not ratified ICSID and avoids ISDS. No mining arbitration against Brazil."
+    },
+    {
+      "case_name": "Mercosur Protocol on Investment",
+      "date": "2023",
+      "summary": "Mercosur excludes ISDS; disputes resolved state‑to‑state. Consultation emphasized but arbitration avoided."
+    },
+    {
+      "case_name": "Domestic Disputes (Yanomami Crisis)",
+      "date": "2023‑2025",
+      "summary": "Internal conflicts over Yanomami mining; ~2,000 ANM requests blocked. Disputes handled domestically."
+    }
+  ],
+  "focus_analysis": "Brazil parallels Peru on consultation but rejects ISDS. This reduces investor‑state litigation but heightens domestic conflict risk, especially Indigenous land disputes."
+}

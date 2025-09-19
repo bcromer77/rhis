@@ -1,0 +1,90 @@
+{
+  "task1_youtube_transcripts": [
+    {
+      "video_id": "gZMIB3N4Egk",
+      "title": "Guerra contra o garimpo ilegal no território yanomami completa um mês",
+      "date": "2023-03-16",
+      "transcript_chunks": [
+        {
+          "timestamp": "00:00:05",
+          "speaker": "Narrator",
+          "text": "The war against illegal mining in Yanomami territory completed a month today."
+        },
+        {
+          "timestamp": "00:00:20",
+          "speaker": "Narrator",
+          "text": "In 30 days of joint operations between the Federal Police and Ibama, the Armed Forces, National Security Force, and the Federal Highway Police (PRF)... Agents destroyed 200 camps..."
+        },
+        {
+          "timestamp": "00:01:03",
+          "speaker": "Narrator",
+          "text": "Among the seized equipment, some high-tech equipment, such as satellite internet modems, has been seized. The attack has not only targeted the logistics of clandestine gold mining but also the financing network of the criminal scheme..."
+        },
+        {
+          "timestamp": "00:01:13",
+          "speaker": "Narrator",
+          "text": "The question now is how to keep the miners away from here on out... ensuring health and safety for the indigenous people is important. Continuity is important. Protection is important, and at the same time, punishment is important."
+        }
+      ],
+      "metadata": {
+        "topic": "indigenous_mining_debate",
+        "jurisdiction": "Brazil",
+        "stakeholders_mentioned": ["Yanomami People", "Federal Police", "Ibama", "Armed Forces"]
+      }
+    },
+    {
+      "video_id": "FtQl0qI4Uz4",
+      "title": "How Can The Yanomami Be Protected? - Brazil Travel Expert",
+      "date": "2025-07-17",
+      "transcript_chunks": [
+        {
+          "timestamp": "00:00:27",
+          "speaker": "Brazil Travel Expert",
+          "text": "Discusses illegal gold mining as a significant risk to Yanomami land, health, and safety. Highlights that mining destroys the forest and contaminates rivers with mercury, endangering Yanomami health."
+        },
+        {
+          "timestamp": "00:01:06",
+          "speaker": "Brazil Travel Expert",
+          "text": "Notes coordinated operations to remove illegal miners and prevent their return, emphasizing government efforts to combat illegal mining."
+        },
+        {
+          "timestamp": "00:02:09",
+          "speaker": "Brazil Travel Expert",
+          "text": "Mentions supporting indigenous leadership, such as leaders like Davi, advocating for Yanomami rights and environmental protection."
+        }
+      ],
+      "metadata": {
+        "topic": "yanomami_protection_mining",
+        "jurisdiction": "Brazil",
+        "stakeholders_mentioned": ["Yanomami", "Brazilian Government", "Davi Kopenawa"]
+      }
+    },
+    {
+      "video_id": "Wpb93aEvJEU",
+      "title": "Consult and Cooperate in Times of Great Need: Indigenous Rights and the Just Transition",
+      "date": "2024-11-15",
+      "transcript_chunks": [
+        {
+          "timestamp": "00:12:06",
+          "speaker": "Martin SES",
+          "text": "Discusses the ILO's efforts to promote dialogue in Brazil, specifically mentioning the upcoming consultation in December 2024, which will highlight the contribution of indigenous peoples..."
+        },
+        {
+          "timestamp": "00:13:53",
+          "speaker": "Vanessa Jimenez",
+          "text": "Mentions that up to 50% of critical minerals, including lithium, are found on indigenous lands, stressing the need for robust, good faith consultations..."
+        },
+        {
+          "timestamp": "00:25:34",
+          "speaker": "Martin SES",
+          "text": "Highlights the mining sector's interest in consultation procedures due to legal and reputational risks, noting the exponential growth in demand for critical minerals like lithium."
+        }
+      ],
+      "metadata": {
+        "topic": "indigenous_consultation_mining",
+        "jurisdiction": "Brazil",
+        "stakeholders_mentioned": ["ILO", "Indigenous Peoples Brazil", "ANM"]
+      }
+    }
+  ]
+}
