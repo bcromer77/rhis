@@ -1,0 +1,50 @@
+{
+  "task2_government_pdfs": [
+    {
+      "document_id": "ley_19253_indigenous_law",
+      "title": "Ley 19.253 sobre Promoción, Protección y Desarrollo de los Pueblos Indígenas",
+      "date": "1993-04-01",
+      "jurisdiction": "Chile",
+      "chunks": [
+        {
+          "section": "Artículo 7",
+          "text": "El Estado reconocerá a los pueblos indígenas como sujetos de derecho especial en el territorio nacional, garantizando su participación en el uso, posesión y disfrute de las tierras que ocupan tradicionalmente...",
+          "page": 2
+        },
+        {
+          "section": "Artículo 8",
+          "text": "En los casos de medidas administrativas o legislativas que afecten a los pueblos indígenas, se realizará consulta previa, libre e informada, conforme a la Convención 169 de la OIT.",
+          "page": 3
+        },
+        {
+          "section": "Capítulo sobre Consulta Indígena",
+          "text": "Para proyectos mineros como la extracción de litio, la consulta debe ser culturalmente adecuada y buscar el consentimiento de las comunidades afectadas, incluyendo Atacameños en la región de Atacama.",
+          "page": 5
+        }
+      ]
+    },
+    {
+      "document_id": "proyecto_ley_litio_2023",
+      "title": "Proyecto de Ley Nacional de Litio y sus Regulaciones",
+      "date": "2023-04-21",
+      "jurisdiction": "Chile",
+      "chunks": [
+        {
+          "section": "Artículo 5",
+          "text": "La explotación de litio será regulada por el Estado, requiriendo concesiones que incluyan consulta indígena previa para territorios ancestrales.",
+          "page": 1
+        },
+        {
+          "section": "Artículo 12",
+          "text": "En zonas con presencia indígena, como el Salar de Atacama, se debe obtener consentimiento de comunidades Atacameñas antes de otorgar permisos de extracción.",
+          "page": 4
+        },
+        {
+          "section": "Sección de Impacto Ambiental",
+          "text": "El Servicio de Evaluación Ambiental (SEA) supervisará las consultas, asegurando cumplimiento con ILO 169 para evitar disputas.",
+          "page": 7
+        }
+      ]
+    }
+  ]
+}

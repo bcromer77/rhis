@@ -1,0 +1,28 @@
+{
+  "task2_government_pdfs": [
+    {
+      "document_id": "dof_2023_mining_reform",
+      "title": "Decreto por el que se reforman, adicionan...",
+      "date": "2023-05-08",
+      "chunks": [
+        {
+          "section": "Artículo 6",
+          "text": "En caso de lotes ubicados en territorios de pueblos indígenas...",
+          "page": 3
+        }
+      ]
+    },
+    {
+      "document_id": "eiti_peru_2024_final_report",
+      "title": "Séptimo Informe Nacional de Transparencia de las Industrias Extractivas",
+      "date": "2024-11",
+      "chunks": [
+        {
+          "section": "10.3. Consulta Previa",
+          "text": "La Consulta Previa es un derecho fundamental reconocido...",
+          "page": 131
+        }
+      ]
+    }
+  ]
+}

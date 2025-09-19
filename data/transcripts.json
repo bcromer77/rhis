@@ -1,0 +1,43 @@
+{
+  "task1_youtube_transcripts": [
+    {
+      "video_id": "F6nt10mLtWg",
+      "title": "S4E8: Plan Sonora: The New Face of Green Colonialism",
+      "date": "2025-03-18",
+      "transcript_chunks": [
+        {
+          "timestamp": "00:07:20",
+          "speaker": "Caroline Tracey",
+          "text": "Plan Sonora as an energy transition and development plan..."
+        },
+        {
+          "timestamp": "00:25:10",
+          "speaker": "Caroline Tracey",
+          "text": "Solar array impacts the Tohono O'odham nation..."
+        }
+      ],
+      "metadata": {
+        "topic": "mining_law_reform",
+        "jurisdiction": "Mexico",
+        "stakeholders_mentioned": ["Tohono O'odham Nation", "Mexican Government", "Ballenas ó Gas Coalition"]
+      }
+    },
+    {
+      "video_id": "jCQPES9EVQY",
+      "title": "Gold Bars Hit Highest Value Ever + Bull Behaviour From Gold Majors",
+      "date": "2024-08-22",
+      "transcript_chunks": [
+        {
+          "timestamp": "00:03:36",
+          "speaker": "Rachel Lee",
+          "text": "Mexico's lower house of Congress approved two constitutional reforms..."
+        }
+      ],
+      "metadata": {
+        "topic": "mining_law_reform",
+        "jurisdiction": "Mexico",
+        "stakeholders_mentioned": ["President López Obrador", "Mexican Mining Chamber"]
+      }
+    }
+  ]
+}

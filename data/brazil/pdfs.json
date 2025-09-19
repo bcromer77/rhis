@@ -1,0 +1,50 @@
+{
+  "task2_government_pdfs": [
+    {
+      "document_id": "nota_tecnica_pl_1331_2022",
+      "title": "NOTA TÉCNICA DA COIAB, SOBRE O PL 1331/2022",
+      "date": "2025-08-22",
+      "jurisdiction": "Brazil",
+      "chunks": [
+        {
+          "section": "Análise Jurídica do PL 1331/2022",
+          "text": "The PL allows the granting of mining concessions in Indigenous Lands, with FPIC from affected Indigenous communities...",
+          "page": 5
+        },
+        {
+          "section": "Tratamento constitucional e internacional",
+          "text": "The PL mandates free, prior, and informed consultation... including interpreters if necessary.",
+          "page": 7
+        },
+        {
+          "section": "Impactos da Mineração em Terras Indígenas: Yanomami",
+          "text": "Details the negative impacts of mining, citing a 1,217% increase in mining areas in the Amazon over 35 years.",
+          "page": 3
+        }
+      ]
+    },
+    {
+      "document_id": "ebook_mineracao_terras_indigenas",
+      "title": "Mineração em terras indígenas na América Latina",
+      "date": "2021-02",
+      "jurisdiction": "Brazil",
+      "chunks": [
+        {
+          "section": "4. A realidade brasileira",
+          "text": "Agência Pública (2020) found 656 mining processes in Indigenous Lands in Amazon Legal. Mining requests rose by 91% in 2019‑2020.",
+          "page": 22
+        },
+        {
+          "section": "3. Direito Indígena e mineração",
+          "text": "1988 Constitution Art. 231 requires Congressional authorization + consultation. ILO 169 ratified in 2002.",
+          "page": 18
+        },
+        {
+          "section": "Regulação",
+          "text": "Cadastro Mineiro (ANM) shows ~2,000 blocked requests due to no regulatory framework.",
+          "page": 165
+        }
+      ]
+    }
+  ]
+}

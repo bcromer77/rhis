@@ -1,0 +1,32 @@
+{
+  "task4_drc_comparison": {
+    "law_indigenous_consultation": {
+      "title": "DRC Mining Code (Law No. 007/2002, Amended 2018); No Ratification of ILO 169",
+      "date": "2002 (Original); 2018 (Amendment)",
+      "summary": "The DRC Mining Code requires environmental and social impact assessments with community consultations for mining concessions, but lacks binding FPIC as in ILO 169 (not ratified). Article 245 mandates local involvement, and 2018 amendments increased state shares in strategic minerals like cobalt. In conflict zones (e.g., M23-controlled east), consultations are often impossible, leading to illicit mining. Customary rights for indigenous groups (e.g., Pygmies) are recognized but weakly enforced, with UN critiques highlighting exploitation without consent.",
+      "key_provisions": [
+        "Consultations via impact studies before concessions; applies to cobalt, coltan extraction.",
+        "Community development funds (0.3% of turnover) for affected locals, but no veto power.",
+        "In rebel areas, government must ensure security, but failures fuel disputes."
+      ]
+    },
+    "icsid_cases": [
+      {
+        "case_name": "AVZ Minerals Ltd v. Democratic Republic of Congo (ICSID Case No. ARB/22/43)",
+        "date": "2022 (Ongoing 2025)",
+        "summary": "Australian investor AVZ claims expropriation of Manono lithium project rights due to government revocation favoring Chinese interests. Tribunal examines consultation failures with locals."
+      },
+      {
+        "case_name": "Congo Mining Ltd SARLU v. Republic of Congo (ICSID Case No. ARB/21/60)",
+        "date": "2021 (Decided 2025)",
+        "summary": "Investors awarded damages for breaches in oil/mining concessions; highlights DRC's lack of consultation and revocation practices."
+      },
+      {
+        "case_name": "Miminco LLC v. Democratic Republic of Congo (ICSID Case No. ARB(AF)/21/1)",
+        "date": "2021 (Ongoing)",
+        "summary": "US investor disputes revocation of permits in Katanga; alleges unfair treatment under BIT, worsened by M23-like instability."
+      }
+    ],
+    "focus_analysis": "Unlike Peru/Chile's ILO 169 FPIC, DRC relies on the 2018 Mining Code but is undermined by non-ratification of ILO 169 and M23 conflict. This amplifies ICSID risk (e.g., AVZ lithium) and weakens indigenous protections."
+  }
+}

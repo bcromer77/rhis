@@ -1,0 +1,27 @@
+{
+  "task4_colombia_comparison": {
+    "law_indigenous_consultation": {
+      "title": "ILO Convention 169 Ratified by Act 21 (1991), Integrated into Mining Code 685 (2001)",
+      "date": "1991 (Ratification); 2001 (Mining Code)",
+      "summary": "Colombia ratified ILO 169 in 1991, requiring FPIC for mining affecting indigenous peoples. The 1991 Constitution (Arts. 63, 330) conditions resource exploitation on community integrity and participation. Mining Code 685/2001 grants pre-emption rights and consultation obligations, but Constitutional Court rulings (e.g., T-769/2009) mandate consent for high-impact activities. Decree 1320/1998 covers renewable resources but gaps persist for minerals, leading to suspensions of concessions without consultation.",
+      "key_provisions": [
+        "Prior consultation before mining concessions (ILO 169 Art. 15).",
+        "Consent required for high-impact projects; applies to indigenous reserves.",
+        "Court enforces FPIC, suspending activities without it."
+      ]
+    },
+    "icsid_cases": [
+      {
+        "case_name": "No Direct Mining ILO 169 ICSID Cases",
+        "date": "N/A",
+        "summary": "Colombia faces ISDS disputes, but mining cases focus on environmental breaches; e.g., foreign investors claim unfair treatment from consultation delays, similar to Peru."
+      },
+      {
+        "case_name": "Supreme Court Withdraws Mining Concessions (2022 Ruling)",
+        "date": "2022",
+        "summary": "Court revoked concessions for lack of ILO 169 consultation, highlighting state duty; parallels Peru's Bear Creek, where failures led to $18M award."
+      }
+    ],
+    "focus_analysis": "Colombia's ILO 169 implementation parallels Peru's law, requiring FPIC for mining, but court interventions enforce it more stringently than Peru's initial framework. While Peru saw ICSID surges from revocations, Colombia's disputes are domestic, with potential for investor claims if consultations block projects, akin to Argentina's Jujuy tensions."
+  }
+}

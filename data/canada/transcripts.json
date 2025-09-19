@@ -1,0 +1,53 @@
+{
+  "task1_youtube_transcripts_canada": [
+    {
+      "video_id": "jjaCffFeY9A",
+      "title": "September 15, 2025—Pushback on efforts to change Yukon mining laws",
+      "date": "2025-09-15",
+      "transcript_chunks": [
+        {
+          "timestamp": "00:01:00",
+          "speaker": "Reporter",
+          "text": "Four years in, the Yukon government's efforts to revise its mining laws continues to meet friction from First Nations over consultation."
+        },
+        {
+          "timestamp": "00:02:45",
+          "speaker": "First Nations Leader",
+          "text": "We demand meaningful consultation under section 35 before any changes to mining regulations."
+        },
+        {
+          "timestamp": "00:04:20",
+          "speaker": "Analyst",
+          "text": "The Mineral Claims Consultation Framework aims to address duty to consult for hydro and mining projects."
+        }
+      ],
+      "metadata": {
+        "topic": "first_nations_mining_consultation",
+        "jurisdiction": "Canada",
+        "stakeholders_mentioned": ["Yukon First Nations", "Government of Yukon"]
+      }
+    },
+    {
+      "video_id": "JOrM9Ulfm7s",
+      "title": "First Nations leaders comment following major projects summit",
+      "date": "2025-07-17",
+      "transcript_chunks": [
+        {
+          "timestamp": "00:00:50",
+          "speaker": "Indigenous Leader",
+          "text": "At the summit, we discussed the need for early consultation on mining and hydro developments."
+        },
+        {
+          "timestamp": "00:03:15",
+          "speaker": "Panelist",
+          "text": "Federal guidelines require accommodation where impacts on rights are anticipated."
+        }
+      ],
+      "metadata": {
+        "topic": "major_projects_consultation",
+        "jurisdiction": "Canada",
+        "stakeholders_mentioned": ["First Nations Major Projects Coalition", "Crown"]
+      }
+    }
+  ]
+}

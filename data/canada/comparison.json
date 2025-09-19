@@ -1,0 +1,27 @@
+{
+  "task4_canada_comparison": {
+    "law_indigenous_consultation": {
+      "title": "Duty to Consult Under Section 35 of Constitution Act 1982; Updated Guidelines (2011)",
+      "date": "1982 (Constitution); 2011 (Guidelines)",
+      "summary": "Canada's duty to consult First Nations arises from the Honour of the Crown when Crown actions may impact Aboriginal/Treaty rights (Haida 2004). Integrated into environmental assessments for mining/hydro via Canadian Environmental Assessment Act. The 2025 Mineral Claims Consultation Framework (BC) mandates pre-registration consultation. Unlike ILO 169's FPIC focus, Canada's is duty-based, requiring accommodation but not always consent, with Supreme Court emphasizing early, meaningful engagement.",
+      "key_provisions": [
+        "Consultation triggered by potential adverse impacts on rights (e.g., mining on traditional lands).",
+        "Accommodation via project modifications; applies to hydro dams and mineral claims.",
+        "Federal coordination for major projects; provinces like Yukon/BC implement frameworks."
+      ]
+    },
+    "icsid_cases": [
+      {
+        "case_name": "Lone Pine Resources Inc. v. Canada (ICSID Case No. UNCT/15/2)",
+        "date": "2022",
+        "summary": "US investor challenged Quebec's fracking moratorium (not direct mining), alleging expropriation; tribunal dismissed, but highlights consultation tensions."
+      },
+      {
+        "case_name": "Ruby River Capital LLC v. Canada (ICSID Case No. ARB/23/5)",
+        "date": "2023",
+        "summary": "Dispute over investment treaty; indirect links to resource projects, where First Nations consultations delayed approvals, risking ISDS claims."
+      }
+    ],
+    "focus_analysis": "Canada's duty to consult parallels Peru's ILO 169 by requiring engagement for mining/hydro, but emphasizes accommodation over veto, leading to fewer direct ICSID cases. Domestic courts enforce it, similar to Colombia, but Canada's federal-provincial split adds complexity, contrasting Argentina's provincial reforms."
+  }
+}
