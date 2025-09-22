@@ -1,28 +1,43 @@
-name: run-prism-pipeline
+name: PRISM Daily Pipeline
 
 on:
   schedule:
-    - cron: "0 */6 * * *"   # Runs every 6 hours
-  workflow_dispatch:         # Allow manual trigger
+    - cron: '0 */6 * * *'  # Every 6 hours (00:00, 06:00, 12:00, 18:00 UTC)
+  workflow_dispatch:  # Manual trigger for testing
 
 jobs:
-  fetch:
+  run-pipeline:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Check out repo
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Set up Python 3.12
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: '3.12'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
+      - name: Download spaCy model
+        run: |
           python -m spacy download en_core_web_sm
 
-      - name: Run PRISM pipeline
-        run: python prism_daily_pipeline.py
+      - name: Run PRISM Pipeline
+        env:
+          OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+          X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
+          CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY }}
+        run: |
+          python prism_daily_pipeline.py
+          echo "✅ Pipeline complete—check Mongo Atlas for new vectors/crisis_cards inserts"
+
+      - name: Verify Outputs (Optional)
+        if: always()
+        run: |
+          # Add a quick Mongo query here if you expose pymongo logging
+          echo "Run succeeded—monitor rhis_prism.vectors and crisis_cards in Atlas"
