@@ -1,7 +1,10 @@
+pymongo
+openai
+python-dotenv
+spacy
+youtube-transcript-api
+tweepy
+pdfplumber
+vaderSentiment
 requests
-firecrawl
-weaviate-client
-sentence-transformers
-pydantic
-pyyaml
-
+beautifulsoup4
