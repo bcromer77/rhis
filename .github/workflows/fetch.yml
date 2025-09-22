@@ -17,13 +17,16 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install dependencies
+      - name: Create virtual environment and install dependencies
         run: |
+          python -m venv venv
+          source venv/bin/activate
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Download spaCy model
+      - name: Download spaCy model (in venv)
         run: |
+          source venv/bin/activate
           python -m spacy download en_core_web_sm
 
       - name: Run PRISM Pipeline
@@ -33,11 +36,11 @@ jobs:
           X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
           CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY }}
         run: |
+          source venv/bin/activate
           python prism_daily_pipeline.py
           echo "✅ Pipeline complete—check Mongo Atlas for new vectors/crisis_cards inserts"
 
       - name: Verify Outputs (Optional)
         if: always()
         run: |
-          # Add a quick Mongo query here if you expose pymongo logging
-          echo "Run succeeded—monitor rhis_prism.vectors and crisis_cards in Atlas"
+          echo "Run succeeded—monitor rhis_prism.vectors and crisis_cards in Atlas dashboard"
