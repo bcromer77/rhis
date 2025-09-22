@@ -7,6 +7,11 @@ import openai
 import spacy
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
+# Import your fetchers
+from fetchers.youtube_fetcher import fetch_youtube_videos
+from fetchers.x_fetcher import fetch_x_posts
+from fetchers.pdf_fetcher import fetch_gov_pdfs
+
 # --- Environment Setup ---
 openai.api_key = os.getenv('OPENAI_KEY')
 client = MongoClient(os.getenv('MONGO_URI'))
@@ -20,11 +25,13 @@ sentiment_analyzer = SentimentIntensityAnalyzer()
 
 # --- Helper Functions ---
 def detect_country(title):
-    """Extract country from video title"""
+    """Extract country from title/content"""
     country_map = {
         'mexico': 'Mexico', 'california': 'USA', 'texas': 'USA', 'new york': 'USA',
         'us senate': 'USA', 'us house': 'USA', 'canada': 'Canada', 
-        'ontario': 'Canada', 'british columbia': 'Canada'
+        'ontario': 'Canada', 'british columbia': 'Canada', 'dof': 'Mexico',
+        'diputados': 'Mexico', 'senado': 'Mexico', 'federal register': 'USA',
+        'congress': 'USA', 'hansard': 'Canada', 'gazette': 'Canada'
     }
     title_lower = title.lower()
     for key, country in country_map.items():
@@ -33,36 +40,33 @@ def detect_country(title):
     return 'Unknown'
 
 def extract_topic(title):
-    """Extract topic from video title"""
-    if any(word in title.lower() for word in ['energy', 'grid', 'carbon']):
+    """Extract topic from title/content"""
+    title_lower = title.lower()
+    if any(word in title_lower for word in ['energy', 'grid', 'carbon', 'climate']):
         return 'energy_policy'
-    elif any(word in title.lower() for word in ['agriculture', 'water']):
+    elif any(word in title_lower for word in ['agriculture', 'water', 'farming']):
         return 'agriculture_policy'
-    elif any(word in title.lower() for word in ['budget', 'finance']):
+    elif any(word in title_lower for word in ['budget', 'finance', 'fiscal', 'tax']):
         return 'fiscal_policy'
+    elif any(word in title_lower for word in ['mining', 'lithium', 'copper', 'mineral']):
+        return 'mining_policy'
     return 'regulatory_policy'
 
-# --- Transcript Fetch (Your existing function, adapted) ---
-def fetch_transcript(video_id: str, languages=["en", "es"]) -> str:
-    try:
-        ytt_api = YouTubeTranscriptApi()
-        fetched_transcript = ytt_api.fetch(video_id, languages=languages)
-        transcript_data = fetched_transcript.to_raw_data()
-        return " ".join([entry["text"] for entry in transcript_data if entry["text"].strip()])
-    except Exception as e:
-        print(f"No transcript for {video_id}: {e}")
-        return ""
-
-# --- Process & Embed (PRISM Style) ---
-def process_and_embed(video_data):
-    """Process video data and insert into vectors collection"""
-    video_id, title, transcript = video_data['id'], video_data['title'], video_data['transcript']
+# --- Process & Embed (Universal for all document types) ---
+def process_and_embed(data):
+    """Process any document (YouTube, X, PDF) and insert into vectors collection"""
     
-    if not transcript:
+    doc_id = data['id']
+    title = data.get('title', 'Untitled')
+    content = data.get('transcript') or data.get('content', '')
+    doc_type = data.get('type', 'generic')
+    
+    if not content:
+        print(f"⚠️ No content for {doc_id}")
         return None
         
     # Extract entities
-    doc = nlp(transcript[:5000])  # Limit for spaCy processing
+    doc = nlp(content[:5000])  # Limit for spaCy processing
     entities = [{'name': ent.text, 'type': ent.label_} 
                 for ent in doc.ents if ent.label_ in ['PERSON', 'ORG', 'GPE']]
     unique_entities = list({e['name']: e for e in entities}.values())[:10]  # Top 10
@@ -70,31 +74,32 @@ def process_and_embed(video_data):
     # Generate embedding
     try:
         response = openai.Embedding.create(
-            input=transcript[:2000], 
+            input=content[:2000], 
             model='text-embedding-ada-002'
         )
         vector = response['data'][0]['embedding']
     except Exception as e:
-        print(f"Embedding failed for {video_id}: {e}")
+        print(f"Embedding failed for {doc_id}: {e}")
         return None
     
     # Calculate urgency
-    sentiment = sentiment_analyzer.polarity_scores(transcript)['compound']
-    urgency_keywords = ['crisis', 'emergency', 'urgent', 'critical', 'dispute', 'protest']
-    urgency = abs(sentiment) * (2 if any(k in transcript.lower() for k in urgency_keywords) else 1)
+    sentiment = sentiment_analyzer.polarity_scores(content)['compound']
+    urgency_keywords = ['crisis', 'emergency', 'urgent', 'critical', 'dispute', 'protest', 
+                       'reform', 'regulation', 'policy change', 'investigation']
+    urgency = abs(sentiment) * (2 if any(k in content.lower() for k in urgency_keywords) else 1)
     
     # Create document for vectors collection
-    doc = {
-        '_id': video_id,
-        'type': 'youtube',
+    document = {
+        '_id': doc_id,
+        'type': doc_type,
         'country': detect_country(title),
         'topic': extract_topic(title),
-        'content': transcript,
+        'content': content,
         'metadata': {
-            'url': f"https://youtube.com/watch?v={video_id}",
+            'url': data.get('url', f"https://source.com/{doc_id}"),
             'title': title,
             'date': datetime.now().isoformat(),
-            'transcript_chunks': [{'timestamp': '0.0', 'text': transcript[:500]}]  # Simplified
+            'transcript_chunks': [{'timestamp': '0.0', 'text': content[:500]}]
         },
         'entities': unique_entities,
         'vector': vector,
@@ -103,14 +108,14 @@ def process_and_embed(video_data):
     }
     
     # Upsert to vectors collection
-    vector_coll.update_one({'_id': video_id}, {'$set': doc}, upsert=True)
-    print(f"✅ Inserted {title} into vectors")
-    return doc
+    vector_coll.update_one({'_id': doc_id}, {'$set': document}, upsert=True)
+    print(f"✅ Processed {title} ({doc_type}) into vectors")
+    return document
 
 # --- Crisis Card Generator ---
 def generate_crisis_card(doc):
     """Generate crisis card from processed document"""
-    prompt = f"""From YouTube legislative hearing on {doc['topic']} in {doc['country']}:
+    prompt = f"""From {doc['type']} source on {doc['topic']} in {doc['country']}:
 Title: {doc['metadata']['title']}
 Content: {doc['content'][:1500]}
 
@@ -156,46 +161,63 @@ Focus on actionable insights for traders, ESG desks, and policy watchers."""
         print(f"Card generation failed for {doc['_id']}: {e}")
         return None
 
-# --- Main Pipeline (Adapted from your existing) ---
+# --- Main Pipeline (Multi-Source) ---
 def run_pipeline():
     print("🚀 Running PRISM Daily Pipeline...")
-    
-    # Your existing video list
-    videos = [
-        {"title": "Mexico Senate – Debate on Energy Reform", "id": "G6C2sSYV9fU"},
-        {"title": "Mexico Chamber of Deputies – Plenary Session", "id": "vx7gDJfaivg"},
-        {"title": "California Senate – Water & Agriculture Hearing", "id": "4U1A7K91W0U"},
-        {"title": "Texas House – Energy Grid & Market Stability", "id": "6M2OQm6jv1o"},
-        {"title": "New York State Assembly – Budget Hearing", "id": "NGaSOfFjtxI"},
-        {"title": "US Senate – Federal Reserve Oversight Hearing", "id": "E7yQxtYk95M"},
-        {"title": "US House – Agriculture Committee Hearing", "id": "OYe9zFVX1Bg"},
-        {"title": "Parliament of Canada – Carbon Pricing Debate", "id": "ST0ShXxq8sk"},
-        {"title": "Ontario Legislative Assembly – Energy & Finance Committee", "id": "U8X1u6p_0tI"},
-        {"title": "British Columbia Legislature – Climate Change Debate", "id": "vlU6yRrG9iw"},
-    ]
     
     processed_docs = []
     generated_cards = []
     
-    for video in videos:
-        vid, title = video["id"], video["title"]
-        print(f"🎥 Processing {title} ({vid})")
+    # --- YOUTUBE FETCHER ---
+    print("🎥 Fetching YouTube transcripts...")
+    try:
+        yt_docs = fetch_youtube_videos()
+        print(f"Found {len(yt_docs)} YouTube videos")
         
-        # Fetch transcript
-        transcript = fetch_transcript(vid, languages=["en", "es"])
-        if not transcript:
-            continue
-            
-        # Process and embed
-        video_data = {'id': vid, 'title': title, 'transcript': transcript}
-        doc = process_and_embed(video_data)
-        if doc:
-            processed_docs.append(doc)
-            
-            # Generate crisis card
-            card = generate_crisis_card(doc)
-            if card:
-                generated_cards.append(card)
+        for data in yt_docs:
+            print(f"🎥 Processing: {data['title']}")
+            doc = process_and_embed(data)
+            if doc:
+                processed_docs.append(doc)
+                card = generate_crisis_card(doc)
+                if card:
+                    generated_cards.append(card)
+    except Exception as e:
+        print(f"❌ YouTube fetcher failed: {e}")
+    
+    # --- X (TWITTER) FETCHER ---
+    print("🐦 Fetching X posts...")
+    try:
+        x_docs = fetch_x_posts()
+        print(f"Found {len(x_docs)} X posts")
+        
+        for data in x_docs:
+            print(f"🐦 Processing: {data['title']}")
+            doc = process_and_embed(data)
+            if doc:
+                processed_docs.append(doc)
+                card = generate_crisis_card(doc)
+                if card:
+                    generated_cards.append(card)
+    except Exception as e:
+        print(f"❌ X fetcher failed: {e}")
+    
+    # --- PDF FETCHER ---
+    print("📄 Fetching government PDFs...")
+    try:
+        pdf_docs = fetch_gov_pdfs(api_key=os.getenv('CONGRESS_API_KEY', 'DEMO_KEY'))
+        print(f"Found {len(pdf_docs)} PDF documents")
+        
+        for data in pdf_docs:
+            print(f"📄 Processing: {data['title']}")
+            doc = process_and_embed(data)
+            if doc:
+                processed_docs.append(doc)
+                card = generate_crisis_card(doc)
+                if card:
+                    generated_cards.append(card)
+    except Exception as e:
+        print(f"❌ PDF fetcher failed: {e}")
     
     print(f"✅ Pipeline complete: {len(processed_docs)} docs processed, {len(generated_cards)} cards generated")
     
@@ -205,6 +227,16 @@ def run_pipeline():
         top_card = max(generated_cards, key=lambda x: x['urgency'])
         print(f"📊 Average urgency: {avg_urgency:.1f}")
         print(f"🚨 Top urgent signal: {top_card['signal'][:60]}...")
+        
+        # Print breakdown by source
+        sources = {}
+        for card in generated_cards:
+            source_type = card['refs'][0].split('_')[0] if '_' in card['refs'][0] else 'unknown'
+            sources[source_type] = sources.get(source_type, 0) + 1
+        print(f"📈 Cards by source: {sources}")
+    
+    return {"processed": len(processed_docs), "cards": len(generated_cards)}
 
 if __name__ == "__main__":
-    run_pipeline()
+    result = run_pipeline()
+    print(f"🎉 PRISM pipeline finished: {result}")
