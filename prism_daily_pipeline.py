@@ -1,242 +1,154 @@
-import os
-import json
-from datetime import datetime
-from youtube_transcript_api import YouTubeTranscriptApi
-from pymongo import MongoClient
-import openai
-import spacy
+import os, json, logging
+from datetime import datetime, timezone
+from dotenv import load_dotenv
+from pymongo import MongoClient, ASCENDING
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+import spacy
+from tenacity import retry, stop_after_attempt, wait_exponential
+from openai import OpenAI
 
-# Import your fetchers
-from fetchers.youtube_fetcher import fetch_youtube_videos
-from fetchers.x_fetcher import fetch_x_posts
-from fetchers.pdf_fetcher import fetch_gov_pdfs
+# --- Setup ---
+load_dotenv(".env.local")
 
-# --- Environment Setup ---
-openai.api_key = os.getenv('OPENAI_KEY')
-client = MongoClient(os.getenv('MONGO_URI'))
-db = client['prism_db']
-vector_coll = db['vectors']
-crisis_cards_coll = db['crisis_cards']
+OPENAI_KEY = os.getenv("OPENAI_KEY")
+MONGO_URI = os.getenv("MONGO_URI")
 
-# Load NLP tools
-nlp = spacy.load('en_core_web_sm')
-sentiment_analyzer = SentimentIntensityAnalyzer()
+client = OpenAI(api_key=OPENAI_KEY)
+mongo = MongoClient(MONGO_URI)
+db = mongo["rhis_prism"]
+signals = db["signals"]
+cards = db["crisis_cards"]
 
-# --- Helper Functions ---
-def detect_country(title):
-    """Extract country from title/content"""
-    country_map = {
-        'mexico': 'Mexico', 'california': 'USA', 'texas': 'USA', 'new york': 'USA',
-        'us senate': 'USA', 'us house': 'USA', 'canada': 'Canada', 
-        'ontario': 'Canada', 'british columbia': 'Canada', 'dof': 'Mexico',
-        'diputados': 'Mexico', 'senado': 'Mexico', 'federal register': 'USA',
-        'congress': 'USA', 'hansard': 'Canada', 'gazette': 'Canada'
-    }
-    title_lower = title.lower()
-    for key, country in country_map.items():
-        if key in title_lower:
-            return country
-    return 'Unknown'
+nlp = spacy.load("en_core_web_sm")
+sentiment = SentimentIntensityAnalyzer()
 
-def extract_topic(title):
-    """Extract topic from title/content"""
-    title_lower = title.lower()
-    if any(word in title_lower for word in ['energy', 'grid', 'carbon', 'climate']):
-        return 'energy_policy'
-    elif any(word in title_lower for word in ['agriculture', 'water', 'farming']):
-        return 'agriculture_policy'
-    elif any(word in title_lower for word in ['budget', 'finance', 'fiscal', 'tax']):
-        return 'fiscal_policy'
-    elif any(word in title_lower for word in ['mining', 'lithium', 'copper', 'mineral']):
-        return 'mining_policy'
-    return 'regulatory_policy'
+logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(message)s")
+utc_now = lambda: datetime.now(timezone.utc).isoformat()
 
-# --- Process & Embed (Universal for all document types) ---
-def process_and_embed(data):
-    """Process any document (YouTube, X, PDF) and insert into vectors collection"""
-    
-    doc_id = data['id']
-    title = data.get('title', 'Untitled')
-    content = data.get('transcript') or data.get('content', '')
-    doc_type = data.get('type', 'generic')
-    
-    if not content:
-        print(f"⚠️ No content for {doc_id}")
-        return None
-        
-    # Extract entities
-    doc = nlp(content[:5000])  # Limit for spaCy processing
-    entities = [{'name': ent.text, 'type': ent.label_} 
-                for ent in doc.ents if ent.label_ in ['PERSON', 'ORG', 'GPE']]
-    unique_entities = list({e['name']: e for e in entities}.values())[:10]  # Top 10
-    
-    # Generate embedding
-    try:
-        response = openai.Embedding.create(
-            input=content[:2000], 
-            model='text-embedding-ada-002'
-        )
-        vector = response['data'][0]['embedding']
-    except Exception as e:
-        print(f"Embedding failed for {doc_id}: {e}")
-        return None
-    
-    # Calculate urgency
-    sentiment = sentiment_analyzer.polarity_scores(content)['compound']
-    urgency_keywords = ['crisis', 'emergency', 'urgent', 'critical', 'dispute', 'protest', 
-                       'reform', 'regulation', 'policy change', 'investigation']
-    urgency = abs(sentiment) * (2 if any(k in content.lower() for k in urgency_keywords) else 1)
-    
-    # Create document for vectors collection
-    document = {
-        '_id': doc_id,
-        'type': doc_type,
-        'country': detect_country(title),
-        'topic': extract_topic(title),
-        'content': content,
-        'metadata': {
-            'url': data.get('url', f"https://source.com/{doc_id}"),
-            'title': title,
-            'date': datetime.now().isoformat(),
-            'transcript_chunks': [{'timestamp': '0.0', 'text': content[:500]}]
-        },
-        'entities': unique_entities,
-        'vector': vector,
-        'urgency': urgency,
-        'timestamp': datetime.now().isoformat()
-    }
-    
-    # Upsert to vectors collection
-    vector_coll.update_one({'_id': doc_id}, {'$set': document}, upsert=True)
-    print(f"✅ Processed {title} ({doc_type}) into vectors")
-    return document
+# --- Retry wrappers ---
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(min=2, max=15))
+def embed(text: str):
+    resp = client.embeddings.create(model="text-embedding-3-small", input=text[:8000])
+    return resp.data[0].embedding
 
-# --- Crisis Card Generator ---
-def generate_crisis_card(doc):
-    """Generate crisis card from processed document"""
-    prompt = f"""From {doc['type']} source on {doc['topic']} in {doc['country']}:
-Title: {doc['metadata']['title']}
-Content: {doc['content'][:1500]}
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(min=2, max=15))
+def llm_card(doc):
+    content = doc["content"][:1500]
+    msg = [
+        {"role": "system", "content": "You are a market analyst. Output valid JSON only."},
+        {"role": "user", "content": f"""
+From {doc['type']} in {doc['country']} on {doc['topic']}:
+Content: {content}
 
-Generate JSON:
+Generate:
 {{
-"_id": "card_{doc['_id']}",
-"signal": "Key regulatory shift or policy change (50 words)",
-"why_traders_care": "Market/sector impact for traders (50 words)", 
-"platform_pitch": "Engaging social media hook (30 words)",
-"country": "{doc['country']}",
-"tags": ["Relevant tags"],
-"urgency": {doc['urgency']},
-"refs": ["{doc['_id']}"],
-"timestamp": "{doc['timestamp']}"
-}}
+  "_id": "card_{doc['_id']}",
+  "signal": "Summary (<=50 words)",
+  "why_traders_care": "Market/ESG impact (<=60 words)",
+  "platform_pitch": "RhisSignals hook (<=25 words)",
+  "country": "{doc['country']}",
+  "tags": ["topic", "entities"],
+  "urgency": {doc['urgency']},
+  "refs": ["{doc['_id']}"],
+  "timestamp": "{doc['timestamp']}",
+  "tweet_draft": "Short, tweetable version"
+}}"""}
+    ]
+    resp = client.chat.completions.create(model="gpt-4o-mini", messages=msg, temperature=0.2)
+    txt = resp.choices[0].message.content
+    start, end = txt.find("{"), txt.rfind("}")
+    return json.loads(txt[start:end+1])
 
-Focus on actionable insights for traders, ESG desks, and policy watchers."""
+# --- Processing ---
+def process_doc(raw):
+    text = raw.get("content") or ""
+    if not text:
+        return None
+    # Entities
+    ents = [{"name": ent.text, "type": ent.label_} for ent in nlp(text[:4000]).ents if ent.label_ in ["PERSON","ORG","GPE"]]
+    ents = list({e["name"]: e for e in ents}.values())
+    # Embedding + urgency
+    vector = embed(text)
+    s = sentiment.polarity_scores(text)["compound"]
+    urgency = abs(s) * (2 if any(k in text.lower() for k in ["protest","dispute","revocation","crisis"]) else 1)
+    doc = {
+        "_id": raw["_id"],
+        "type": raw["type"],
+        "country": raw.get("country","Unknown"),
+        "topic": raw.get("topic","regulatory"),
+        "content": text,
+        "metadata": raw.get("metadata",{}),
+        "entities": ents,
+        "embedding": vector,
+        "urgency": urgency,
+        "timestamp": utc_now()
+    }
+    signals.update_one({"_id": doc["_id"]}, {"$set": doc}, upsert=True)
+    return doc
 
+def generate_card(doc):
     try:
-        response = openai.ChatCompletion.create(
-            model='gpt-4o-mini',
-            messages=[
-                {'role': 'system', 'content': 'Extract policy signals for financial markets'},
-                {'role': 'user', 'content': prompt}
-            ]
-        )
-        card_json = json.loads(response.choices[0].message.content)
-        
-        # Boost urgency for high-impact terms
-        if any(k in card_json['signal'].lower() for k in ['reform', 'regulation', 'policy change']):
-            card_json['urgency'] = card_json['urgency'] * 1.5
-            
-        # Insert to crisis_cards collection
-        crisis_cards_coll.update_one(
-            {'_id': card_json['_id']}, 
-            {'$set': card_json}, 
-            upsert=True
-        )
-        print(f"✅ Generated crisis card: {card_json['signal'][:50]}...")
-        return card_json
-        
+        card = llm_card(doc)
+        card["tags"] = list({doc["topic"], *[e["name"] for e in doc.get("entities",[]) if e["type"]=="ORG"][:3]})
+        cards.update_one({"_id": card["_id"]}, {"$set": card}, upsert=True)
+        return card
     except Exception as e:
-        print(f"Card generation failed for {doc['_id']}: {e}")
+        logging.error(f"Card gen failed for {doc['_id']}: {e}")
         return None
 
-# --- Main Pipeline (Multi-Source) ---
+# --- Main ---
 def run_pipeline():
-    print("🚀 Running PRISM Daily Pipeline...")
-    
-    processed_docs = []
-    generated_cards = []
-    
-    # --- YOUTUBE FETCHER ---
-    print("🎥 Fetching YouTube transcripts...")
-    try:
-        yt_docs = fetch_youtube_videos()
-        print(f"Found {len(yt_docs)} YouTube videos")
-        
-        for data in yt_docs:
-            print(f"🎥 Processing: {data['title']}")
-            doc = process_and_embed(data)
-            if doc:
-                processed_docs.append(doc)
-                card = generate_crisis_card(doc)
-                if card:
-                    generated_cards.append(card)
-    except Exception as e:
-        print(f"❌ YouTube fetcher failed: {e}")
-    
-    # --- X (TWITTER) FETCHER ---
-    print("🐦 Fetching X posts...")
-    try:
-        x_docs = fetch_x_posts()
-        print(f"Found {len(x_docs)} X posts")
-        
-        for data in x_docs:
-            print(f"🐦 Processing: {data['title']}")
-            doc = process_and_embed(data)
-            if doc:
-                processed_docs.append(doc)
-                card = generate_crisis_card(doc)
-                if card:
-                    generated_cards.append(card)
-    except Exception as e:
-        print(f"❌ X fetcher failed: {e}")
-    
-    # --- PDF FETCHER ---
-    print("📄 Fetching government PDFs...")
-    try:
-        pdf_docs = fetch_gov_pdfs(api_key=os.getenv('CONGRESS_API_KEY', 'DEMO_KEY'))
-        print(f"Found {len(pdf_docs)} PDF documents")
-        
-        for data in pdf_docs:
-            print(f"📄 Processing: {data['title']}")
-            doc = process_and_embed(data)
-            if doc:
-                processed_docs.append(doc)
-                card = generate_crisis_card(doc)
-                if card:
-                    generated_cards.append(card)
-    except Exception as e:
-        print(f"❌ PDF fetcher failed: {e}")
-    
-    print(f"✅ Pipeline complete: {len(processed_docs)} docs processed, {len(generated_cards)} cards generated")
-    
-    # Summary stats
-    if generated_cards:
-        avg_urgency = sum(c['urgency'] for c in generated_cards) / len(generated_cards)
-        top_card = max(generated_cards, key=lambda x: x['urgency'])
-        print(f"📊 Average urgency: {avg_urgency:.1f}")
-        print(f"🚨 Top urgent signal: {top_card['signal'][:60]}...")
-        
-        # Print breakdown by source
-        sources = {}
-        for card in generated_cards:
-            source_type = card['refs'][0].split('_')[0] if '_' in card['refs'][0] else 'unknown'
-            sources[source_type] = sources.get(source_type, 0) + 1
-        print(f"📈 Cards by source: {sources}")
-    
-    return {"processed": len(processed_docs), "cards": len(generated_cards)}
+    from fetchers.youtube_fetcher import fetch_youtube_videos
+    from fetchers.x_fetcher import fetch_x_posts
+    from fetchers.pdf_fetcher import fetch_gov_pdfs
+
+    raw_docs = []
+    raw_docs += fetch_youtube_videos()
+    raw_docs += fetch_x_posts()
+    raw_docs += fetch_gov_pdfs()
+
+    logging.info(f"Fetched {len(raw_docs)} docs")
+
+    processed, generated = [], []
+    for raw in raw_docs:
+        doc = process_doc(raw)
+        if doc:
+            processed.append(doc)
+            card = generate_card(doc)
+            if card:
+                generated.append(card)
+
+    logging.info(f"Pipeline finished: {len(processed)} signals, {len(generated)} cards")
+    return {"signals": len(processed), "cards": len(generated)}
 
 if __name__ == "__main__":
-    result = run_pipeline()
-    print(f"🎉 PRISM pipeline finished: {result}")
+    run_pipeline()
+🛠 MongoDB AI Search Setup
+After this reboot, you’ll need to define a Vector Search index in Atlas:
+
+Go to Atlas → Collections → rhis_prism → signals → Indexes → Create Index → Vector Search.
+
+Configure:
+
+Path: embedding
+
+Type: vector
+
+Dimensions: 1536 (for text-embedding-3-small)
+
+Metric: cosine
+
+This unlocks queries like:
+
+python
+Copy code
+db.signals.aggregate([
+  {
+    "$vectorSearch": {
+      "queryVector": <your_embedding>,
+      "path": "embedding",
+      "numCandidates": 200,
+      "limit": 10
+    }
+  }
+])

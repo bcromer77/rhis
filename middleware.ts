@@ -1,22 +1,32 @@
-import { NextResponse } from "next/server"
-import type { NextRequest } from "next/server"
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export function middleware(req: NextRequest) {
-  const { pathname } = req.nextUrl
+export function middleware(request: NextRequest) {
+  const { pathname, searchParams } = request.nextUrl;
 
-  // Allow access to /cover, static files, and Next internals
+  // ✅ Always allow API + Next.js internals
   if (
-    pathname.startsWith("/cover") ||
+    pathname.startsWith("/api") ||
     pathname.startsWith("/_next") ||
-    pathname.startsWith("/favicon.ico") ||
-    pathname.startsWith("/public") ||
-    pathname === "/robots.txt" ||
-    pathname === "/sitemap.xml"
+    pathname === "/favicon.ico"
   ) {
-    return NextResponse.next()
+    return NextResponse.next();
   }
 
-  // Redirect everything else to /cover
-  return NextResponse.redirect(new URL("/cover", req.url))
+  // ✅ Get password from query (?pwd=...) or cookie
+  const expectedPassword = process.env.NEXT_PUBLIC_DASHBOARD_PASSWORD;
+  const cookiePassword = request.cookies.get("dashboard-password")?.value;
+  const queryPassword = searchParams.get("pwd");
+
+  const validPassword =
+    cookiePassword === expectedPassword || queryPassword === expectedPassword;
+
+  // ✅ If user goes to /horizon without valid password → redirect to login screen
+  if (pathname.startsWith("/horizon") && !validPassword) {
+    const loginUrl = new URL("/login", request.url);
+    return NextResponse.redirect(loginUrl);
+  }
+
+  return NextResponse.next();
 }
 
