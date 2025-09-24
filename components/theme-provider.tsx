@@ -1,4 +1,8 @@
-import { ThemeProvider as NextThemesProvider } from 'next-themes';
+
+"use client";
+
+// @ts-expect-error: next-themes ships without proper TS types
+import { ThemeProvider as NextThemesProvider } from "next-themes";
 
 interface ThemeProviderProps {
   children: React.ReactNode;
