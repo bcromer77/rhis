@@ -1,4 +1,3 @@
-// app/api/headline-search/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { MongoClient } from "mongodb";
 
@@ -29,15 +28,15 @@ export async function POST(req: NextRequest) {
     const db = client.db(DB_NAME);
     const signals = db.collection(COLLECTION);
 
-    // --- Simple full-text search for demo ---
+    // ✅ Safe demo query — no invalid "score" in find options
     const docs = await signals
       .find({ $text: { $search: headline } })
-      .project({ score: { $meta: "textScore" } })
-      .sort({ score: { $meta: "textScore" } })
-      .limit(8) // keep it light for demo
+      .project({ score: { $meta: "textScore" } }) // project the score
+      .sort({ score: { $meta: "textScore" } })   // sort by score
+      .limit(8)
       .toArray();
 
-    // Map to clean "Crisis Card" format
+    // Map docs into Crisis Cards
     const cards = docs.map((d: any) => ({
       id: d._id.toString(),
       company: d.company ?? "Unknown",
@@ -46,7 +45,7 @@ export async function POST(req: NextRequest) {
       commodity: d.commodity ?? [],
       tickers: d.tickers ?? [],
       country: d.country ?? "Global",
-      severity: d.severity ?? "info", // demo-friendly fallback
+      severity: d.severity ?? "info",
       sentiment: d.sentiment ?? 0,
       source: d.source ?? "Unknown",
       date: d.date ?? new Date().toISOString(),
