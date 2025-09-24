@@ -1,23 +1,21 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { VectorSearch } from "@/components/vector-search"
-import { RegulatoryHeatmap } from "@/components/regulatory-heatmap"
-import { EnhancedPoliticalRiskHeatmap } from "@/components/enhanced-political-risk-heatmap"
-import { EcologyVoices } from "@/components/global-political-signals"
-import IndigenousBroadcastingDashboard from "@/components/indigenous-broadcasting-dashboard"
-import { Search, TrendingUp, Users, Globe, Map, Activity, BarChart3, AlertTriangle } from "lucide-react"
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { VectorSearch } from "@/components/vector-search";
+import { AlertTriangle, Search, TrendingUp, Globe, Users } from "lucide-react";
 
 interface UnifiedRegulatoryDashboardProps {
-  initialView?: "split" | "full"
+  initialView?: "split" | "full";
 }
 
-export default function UnifiedRegulatoryDashboard({ initialView = "split" }: UnifiedRegulatoryDashboardProps) {
-  const [viewMode, setViewMode] = useState<"split" | "full">(initialView)
-  const [activeTab, setActiveTab] = useState("search")
+export default function UnifiedRegulatoryDashboard({
+  initialView = "split",
+}: UnifiedRegulatoryDashboardProps) {
+  const [viewMode, setViewMode] = useState<"split" | "full">(initialView);
+  const [activeTab, setActiveTab] = useState("search");
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -29,7 +27,9 @@ export default function UnifiedRegulatoryDashboard({ initialView = "split" }: Un
               <h1 className="text-2xl font-bold text-slate-800">
                 Unified Regulatory Intelligence Dashboard
               </h1>
-              <p className="text-slate-600">Comprehensive risk monitoring and analysis platform</p>
+              <p className="text-slate-600">
+                Comprehensive risk monitoring and analysis platform
+              </p>
             </div>
             <div className="flex gap-2">
               <Button
@@ -93,78 +93,35 @@ export default function UnifiedRegulatoryDashboard({ initialView = "split" }: Un
 
       <div className="max-w-7xl mx-auto p-6">
         {viewMode === "split" ? (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Left Panel */}
-            <Card className="h-[800px]">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Search className="h-5 w-5" />
-                  Vector Search & Analysis
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="h-full overflow-y-auto">
-                <VectorSearch />
-              </CardContent>
-            </Card>
-
-            {/* Right Panel */}
-            <Card className="h-[800px]">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <BarChart3 className="h-5 w-5" />
-                  Risk Heatmap
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="h-full overflow-y-auto">
-                <RegulatoryHeatmap />
-              </CardContent>
-            </Card>
-          </div>
+          <Card className="h-[800px]">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Search className="h-5 w-5" />
+                Vector Search & Analysis
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="h-full overflow-y-auto">
+              <VectorSearch />
+            </CardContent>
+          </Card>
         ) : (
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-5">
+          <Tabs
+            value={activeTab}
+            onValueChange={setActiveTab}
+            className="w-full"
+          >
+            <TabsList className="grid w-full grid-cols-1">
               <TabsTrigger value="search" className="flex items-center gap-2">
                 <Search className="h-4 w-4" />
                 Vector Search
               </TabsTrigger>
-              <TabsTrigger value="heatmap" className="flex items-center gap-2">
-                <TrendingUp className="h-4 w-4" />
-                Heatmap
-              </TabsTrigger>
-              <TabsTrigger value="political" className="flex items-center gap-2">
-                <Users className="h-4 w-4" />
-                Political Risk
-              </TabsTrigger>
-              <TabsTrigger value="ecology" className="flex items-center gap-2">
-                <Activity className="h-4 w-4" />
-                Ecology Voices
-              </TabsTrigger>
-              <TabsTrigger value="geo" className="flex items-center gap-2">
-                <Map className="h-4 w-4" />
-                GeoTemporal
-              </TabsTrigger>
             </TabsList>
-
             <TabsContent value="search" className="mt-6">
               <VectorSearch />
-            </TabsContent>
-            <TabsContent value="heatmap" className="mt-6">
-              <RegulatoryHeatmap />
-            </TabsContent>
-            <TabsContent value="political" className="mt-6">
-              <EnhancedPoliticalRiskHeatmap />
-            </TabsContent>
-            <TabsContent value="ecology" className="mt-6">
-              <EcologyVoices />
-            </TabsContent>
-            <TabsContent value="geo" className="mt-6">
-              <div className="h-[800px] rounded-lg overflow-hidden">
-                <IndigenousBroadcastingDashboard />
-              </div>
             </TabsContent>
           </Tabs>
         )}
       </div>
     </div>
-  )
+  );
 }

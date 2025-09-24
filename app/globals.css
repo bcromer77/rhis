@@ -2,58 +2,68 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222.2 84% 4.9%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222.2 84% 4.9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --radius: 0.5rem;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-  }
+/* === Global Resets & Base === */
+html, body {
+  @apply bg-white text-slate-800 antialiased;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
 }
 
-@layer components {
-  .regulatory-card {
-    @apply p-4 border rounded shadow mb-4;
-  }
-  .regulatory-card h3 {
-    @apply font-bold text-xl;
-  }
-  .regulatory-list {
-    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4;
-  }
+/* Typography Scaling */
+h1 {
+  @apply text-5xl font-extrabold tracking-tight text-slate-900;
+}
+h2 {
+  @apply text-3xl font-bold tracking-tight text-slate-900;
+}
+h3 {
+  @apply text-2xl font-semibold text-slate-800;
+}
+p {
+  @apply text-slate-700 leading-relaxed;
 }
 
+/* Links */
+a {
+  @apply text-indigo-600 hover:text-indigo-800 transition-colors;
+}
+
+/* Buttons (override included with shadcn/ui where needed) */
+button {
+  @apply focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2;
+}
+
+/* Smooth transitions everywhere */
+* {
+  @apply transition-colors duration-200;
+}
+
+/* === Layout helpers === */
+.container {
+  @apply max-w-6xl mx-auto px-6;
+}
+
+/* === NavBar === */
+nav {
+  @apply sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200;
+}
+
+/* Footer */
+footer {
+  @apply text-slate-500;
+}
+
+/* === Crisis Cards Enhancements === */
+.card-hover {
+  @apply hover:shadow-lg hover:-translate-y-1 transition-transform duration-300;
+}
+
+/* === Crisis Sentiment Pills === */
+.sentiment-positive {
+  @apply bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium;
+}
+.sentiment-negative {
+  @apply bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-medium;
+}
+.sentiment-neutral {
+  @apply bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm font-medium;
+}

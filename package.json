@@ -8,26 +8,38 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "node scripts/seed_signals.js"
+    "seed": "node scripts/seed_signals.js",
+    "vercel-deploy": "vercel --prod",
+    "deploy": "npm run seed && npm run build && npm run vercel-deploy"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.15",
+    "@radix-ui/react-dropdown-menu": "^2.1.16",
+    "@radix-ui/react-label": "^2.1.7",
+    "@radix-ui/react-popover": "^1.1.15",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@radix-ui/react-toast": "^1.2.15",
+    "@radix-ui/react-tooltip": "^1.2.8",
     "@types/node": "22.7.4",
     "@types/react": "18.3.11",
     "@types/react-dom": "18.3.1",
-    "autoprefixer": "10.4.20",
+    "autoprefixer": "^10.4.20",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "dotenv": "^17.2.2",
     "eslint": "8.57.1",
     "eslint-config-next": "15.0.3",
+    "lucide-react": "^0.544.0",
     "mongodb": "^6.9.0",
-    "next": "15.0.3",
+    "next": "^15.0.3",
     "openai": "^4.0.0",
-    "postcss": "8.4.47",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "tailwindcss": "3.4.14",
+    "postcss": "^8.4.47",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "resend": "^6.1.0",
+    "tailwind-merge": "^3.3.1",
+    "tailwind-variants": "^3.1.1",
+    "tailwindcss": "^3.4.14",
     "typescript": "5.6.3"
-  },
-  "devDependencies": {
-    "@types/mongodb": "^5.4.0"
   }
 }

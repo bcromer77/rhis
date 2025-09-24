@@ -1,11 +1,10 @@
+// app/api/headline-search/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { MongoClient } from "mongodb";
-import OpenAI from "openai";
 
 const MONGO_URI = process.env.MONGO_URI!;
 const DB_NAME = "prism_db";
 const COLLECTION = "signals";
-const OPENAI_KEY = process.env.OPENAI_API_KEY;
 
 let cachedClient: MongoClient | null = null;
 
@@ -16,42 +15,9 @@ async function getClient() {
   return cachedClient;
 }
 
-async function embedQuery(query: string) {
-  const openai = new OpenAI({ apiKey: OPENAI_KEY });
-  const resp = await openai.embeddings.create({
-    input: query,
-    model: "text-embedding-3-small", // or same model you seeded with
-  });
-  return resp.data[0].embedding;
-}
-
-async function summarizeSignals(headline: string, docs: any[]) {
-  if (!OPENAI_KEY) return null;
-  const openai = new OpenAI({ apiKey: OPENAI_KEY });
-
-  // Collapse content for LLM
-  const context = docs
-    .map(
-      (d) =>
-        `• ${d.company || "Unknown Company"} — ${d.signal || d.title} (${d.severity}): ${d.why_traders_care || d.description}`
-    )
-    .join("\n");
-
-  const prompt = `You are a financial ESG risk analyst. Summarize these signals into 2-3 crisp sentences for an executive, highlighting risks, opportunities, and implications:\n\nQuery: ${headline}\nSignals:\n${context}\n\nSummary:`;
-
-  const resp = await openai.chat.completions.create({
-    model: "gpt-4o-mini", // fast + cheap, perfect for TLDR
-    messages: [{ role: "user", content: prompt }],
-    max_tokens: 120,
-    temperature: 0.6,
-  });
-
-  return resp.choices[0].message?.content?.trim() || null;
-}
-
 export async function POST(req: NextRequest) {
   try {
-    const { headline, k = 10 } = await req.json();
+    const { headline } = await req.json();
     if (!headline) {
       return NextResponse.json(
         { ok: false, error: "Headline required" },
@@ -63,55 +29,79 @@ export async function POST(req: NextRequest) {
     const db = client.db(DB_NAME);
     const signals = db.collection(COLLECTION);
 
-    // embed query
-    const queryEmbedding = await embedQuery(headline);
+    // Enhanced text search with scoring
+    const docs = await signals
+      .find(
+        { $text: { $search: headline } },
+        { score: { $meta: "textScore" } }
+      )
+      .sort({ score: { $meta: "textScore" } })
+      .limit(12)
+      .toArray();
 
-    // vector search pipeline
-    const pipeline: any[] = [
-      {
-        $vectorSearch: {
-          queryVector: queryEmbedding,
-          path: "embedding",
-          numCandidates: 50,
-          limit: k,
-          index: "default",
-        },
-      },
-      { $limit: k },
-    ];
-
-    const docs = await signals.aggregate(pipeline).toArray();
-
+    // Map into Crisis Card shape with enhanced structure
     const cards = docs.map((d: any) => ({
       _id: d._id,
-      company: d.company,
-      signal: d.signal || d.title,
-      why_traders_care: d.why_traders_care,
-      commodity: d.commodity,
-      tickers: d.tickers,
-      country: d.country,
-      sentiment: d.sentiment,
-      _mlBucket: d._mlBucket,
-      _mlWind: d._mlWind,
-      severity: d.severity,
-      description: d.description,
-      source: d.source,
-      tags: d.tags,
-      date: d.date || new Date().toISOString(),
+      company: d.company || "Unknown Company",
+      signal: d.signal || d.title || "Signal detected",
+      description: d.description || d.why_traders_care || "No description available",
+      why_traders_care: d.why_traders_care || "Market impact analysis pending",
+      commodity: Array.isArray(d.commodity) ? d.commodity : (d.commodity ? [d.commodity] : []),
+      tickers: Array.isArray(d.tickers) ? d.tickers : (d.tickers ? [d.tickers] : []),
+      country: d.country || "Global",
+      sentiment: typeof d.sentiment === 'number' ? d.sentiment : 0,
+      severity: d.severity || (d.sentiment && d.sentiment < -0.3 ? "CRITICAL" : 
+                              d.sentiment && d.sentiment < 0.3 ? "WARNING" : "OPPORTUNITY"),
+      source: d.source || "Internal Analysis",
+      date: d.date || d.created_at || new Date().toISOString(),
+      tags: Array.isArray(d.tags) ? d.tags : [],
+      // 🚨 Crisis Card specific fields
+      who_loses: d.who_loses || d.losers || "Analysis pending",
+      who_wins: d.who_wins || d.winners || "Analysis pending",
+      _score: d.score || 0,
+      _mlBucket: d._mlBucket || (d.sentiment && d.sentiment < 0 ? "risks" : "opportunities"),
     }));
 
-    // 🎯 Generate TLDR summary
-    const tldr = docs.length > 0 ? await summarizeSignals(headline, docs) : null;
+    // Calculate overall sentiment
+    const overallSentiment = cards.length > 0 
+      ? cards.reduce((sum, card) => sum + (card.sentiment || 0), 0) / cards.length 
+      : 0;
 
     return NextResponse.json({
       ok: true,
       headline,
       total: cards.length,
       docs: cards,
-      storyboard: { tldr: tldr || `Found ${cards.length} relevant signals.` },
+      sentiment: overallSentiment,
+      storyboard: {
+        tldr: cards.length > 0
+          ? `Found ${cards.length} signals for '${headline}'. Overall sentiment: ${overallSentiment > 0.3 ? 'Positive' : overallSentiment < -0.3 ? 'Negative' : 'Mixed'}`
+          : `No direct signals found for '${headline}'. Try broader terms like 'FDA', 'lithium', or company tickers.`,
+        sentiment_label: overallSentiment > 0.3 ? 'Bullish' : overallSentiment < -0.3 ? 'Bearish' : 'Neutral'
+      },
     });
   } catch (err: any) {
     console.error("❌ API error:", err);
-    return NextResponse.json({ ok: false, error: err.message }, { status: 500 });
+    return NextResponse.json({ 
+      ok: false, 
+      error: err.message,
+      docs: [], // Fallback to empty array
+      total: 0
+    }, { status: 500 });
   }
+}
+
+// Also support GET requests for testing
+export async function GET(req: NextRequest) {
+  const headline = req.nextUrl.searchParams.get("headline") || "";
+  if (!headline) {
+    return NextResponse.json({ ok: false, error: "Headline parameter required" }, { status: 400 });
+  }
+  
+  // Reuse POST logic
+  return POST(new NextRequest(req.url, {
+    method: 'POST',
+    body: JSON.stringify({ headline }),
+    headers: { 'Content-Type': 'application/json' }
+  }));
 }

@@ -1,0 +1,45 @@
+import "./globals.css";
+import { ReactNode } from "react";
+import Link from "next/link";
+import { Menu } from "lucide-react";
+
+export const metadata = {
+  title: "RHIS | Regulatory Horizon Intelligence – See Signals Before They’re News",
+  description:
+    "RHIS helps investors, corporates, and risk managers detect regulatory, ESG, and geopolitical signals before they hit the headlines. From FDA dockets to council meetings, see foresight where others see noise.",
+  openGraph: {
+    title: "ESG Radar | RHIS",
+    description:
+      "From water usage and displacement to board votes and power permits — ESG Radar surfaces the signals that others miss.",
+    url: "https://yourdomain.com/case-studies",
+    siteName: "RHIS",
+    images: [
+      {
+        url: "https://yourdomain.com/og-image-esg.png",
+        width: 1200,
+        height: 630,
+        alt: "ESG Radar Dashboard – RHIS",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ESG Radar | RHIS",
+    description:
+      "Turning boring ESG disclosures into foresight. Water. Power. Displacement. Governance. All signals, zero noise.",
+    images: ["https://yourdomain.com/og-image-esg.png"],
+  },
+};
+
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return (
+    <html lang="en">
+      <body>
+        {/* Global nav or header could go here */}
+        {children}
+      </body>
+    </html>
+  );
+}

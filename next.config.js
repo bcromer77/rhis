@@ -1,12 +1,7 @@
-// next.config.js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true, // ensure Next.js app router is enabled
-  },
-  reactStrictMode: true,
-  poweredByHeader: false,
+  reactStrictMode: true
+  // no experimental.appDir needed in Next 15
 };
 
 export default nextConfig;
-
