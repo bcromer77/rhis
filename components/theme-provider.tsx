@@ -1,7 +1,7 @@
 "use client";
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Temporary: no theme switching for demo, just render children
+  // Stripped version: skip next-themes for demo stability
   return <>{children}</>;
 }
 
