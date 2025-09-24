@@ -1,3 +1,4 @@
+// app/api/headline-search/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { MongoClient } from "mongodb";
 
@@ -28,59 +29,27 @@ export async function POST(req: NextRequest) {
     const db = client.db(DB_NAME);
     const signals = db.collection(COLLECTION);
 
-    // Create text index if it doesn't exist
-    try {
-      await signals.createIndex({ 
-        signal: "text", 
-        title: "text", 
-        why_traders_care: "text",
-        company: "text"
-      });
-    } catch (error) {
-      // Index might already exist, continue
-    }
-
-    // ✅ Fixed MongoDB query - proper .project() usage
+    // --- Simple full-text search for demo ---
     const docs = await signals
       .find({ $text: { $search: headline } })
-      .project({ 
-        company: 1,
-        signal: 1,
-        title: 1,
-        why_traders_care: 1,
-        commodity: 1,
-        tickers: 1,
-        country: 1,
-        sentiment: 1,
-        severity: 1,
-        source: 1,
-        date: 1,
-        tags: 1,
-        who_loses: 1,
-        who_wins: 1,
-        _mlBucket: 1,
-        score: { $meta: "textScore" }
-      })
+      .project({ score: { $meta: "textScore" } })
       .sort({ score: { $meta: "textScore" } })
-      .limit(12)
+      .limit(8) // keep it light for demo
       .toArray();
 
+    // Map to clean "Crisis Card" format
     const cards = docs.map((d: any) => ({
-      _id: d._id,
-      company: d.company || "Unknown Company",
-      signal: d.signal || d.title || "No signal available",
-      why_traders_care: d.why_traders_care || "Impact assessment pending",
-      commodity: d.commodity || "General",
-      tickers: d.tickers || [],
-      country: d.country || "Global",
-      sentiment: d.sentiment || "Neutral",
-      severity: d.severity || (d._mlBucket === "risks" ? "CRITICAL" : "OPPORTUNITY"),
-      source: d.source || "PRISM Intelligence",
-      date: d.date || new Date().toISOString(),
-      tags: d.tags || [],
-      who_loses: d.who_loses || "Assessment pending",
-      who_wins: d.who_wins || "Assessment pending",
-      _score: d.score || 0,
+      id: d._id.toString(),
+      company: d.company ?? "Unknown",
+      signal: d.signal ?? d.title ?? headline,
+      why_traders_care: d.why_traders_care ?? "No context available",
+      commodity: d.commodity ?? [],
+      tickers: d.tickers ?? [],
+      country: d.country ?? "Global",
+      severity: d.severity ?? "info", // demo-friendly fallback
+      sentiment: d.sentiment ?? 0,
+      source: d.source ?? "Unknown",
+      date: d.date ?? new Date().toISOString(),
     }));
 
     return NextResponse.json({
@@ -91,40 +60,16 @@ export async function POST(req: NextRequest) {
       storyboard: {
         tldr:
           cards.length > 0
-            ? `Found ${cards.length} relevant signals for '${headline}' with market intelligence insights`
-            : `No direct signals found for '${headline}'. Try broader search terms or check back later for updates.`,
+            ? `Found ${cards.length} signals for '${headline}'`
+            : `No signals yet for '${headline}'`,
       },
     });
-
   } catch (err: any) {
-    console.error("❌ Headline Search API Error:", err);
+    console.error("❌ API error:", err);
     return NextResponse.json(
-      { 
-        ok: false, 
-        error: "Failed to search headlines",
-        details: process.env.NODE_ENV === 'development' ? err.message : 'Internal server error'
-      }, 
+      { ok: false, error: err.message || "Internal error" },
       { status: 500 }
     );
   }
 }
 
-// Optional: Add GET method for testing
-export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const headline = searchParams.get('headline');
-  
-  if (!headline) {
-    return NextResponse.json(
-      { ok: false, error: "Headline query parameter required" },
-      { status: 400 }
-    );
-  }
-
-  // Convert GET to POST format internally
-  const mockRequest = {
-    json: async () => ({ headline })
-  } as NextRequest;
-
-  return POST(mockRequest);
-}
