@@ -18,37 +18,31 @@ export async function POST(req: NextRequest) {
   try {
     const { headline } = await req.json();
     if (!headline) {
-      return NextResponse.json(
-        { ok: false, error: "Headline required" },
-        { status: 400 }
-      );
+      return NextResponse.json({ ok: false, error: "Headline required" }, { status: 400 });
     }
 
     const client = await getClient();
     const db = client.db(DB_NAME);
     const signals = db.collection(COLLECTION);
 
-    // ✅ Safe demo query — no invalid "score" in find options
+    // ✅ Safe query for demo — no type conflicts
     const docs = await signals
       .find({ $text: { $search: headline } })
-      .project({ score: { $meta: "textScore" } }) // project the score
-      .sort({ score: { $meta: "textScore" } })   // sort by score
-      .limit(8)
+      .project({ score: { $meta: "textScore" } })
+      .sort({ score: { $meta: "textScore" } })
+      .limit(12)
       .toArray();
 
-    // Map docs into Crisis Cards
+    // Crisis Card friendly shape
     const cards = docs.map((d: any) => ({
-      id: d._id.toString(),
-      company: d.company ?? "Unknown",
-      signal: d.signal ?? d.title ?? headline,
-      why_traders_care: d.why_traders_care ?? "No context available",
-      commodity: d.commodity ?? [],
-      tickers: d.tickers ?? [],
-      country: d.country ?? "Global",
-      severity: d.severity ?? "info",
-      sentiment: d.sentiment ?? 0,
-      source: d.source ?? "Unknown",
-      date: d.date ?? new Date().toISOString(),
+      _id: d._id,
+      company: d.company,
+      signal: d.signal || d.title,
+      why_traders_care: d.why_traders_care,
+      severity: d.severity,
+      description: d.description,
+      source: d.source,
+      date: d.date || new Date().toISOString(),
     }));
 
     return NextResponse.json({
@@ -56,19 +50,11 @@ export async function POST(req: NextRequest) {
       headline,
       total: cards.length,
       docs: cards,
-      storyboard: {
-        tldr:
-          cards.length > 0
-            ? `Found ${cards.length} signals for '${headline}'`
-            : `No signals yet for '${headline}'`,
-      },
+      storyboard: { tldr: `Found ${cards.length} signals for '${headline}'` },
     });
   } catch (err: any) {
     console.error("❌ API error:", err);
-    return NextResponse.json(
-      { ok: false, error: err.message || "Internal error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ ok: false, error: err.message }, { status: 500 });
   }
 }
 
