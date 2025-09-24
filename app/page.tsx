@@ -1,82 +1,123 @@
 import Link from "next/link";
 
 export default function HomePage() {
+  const demoQueries = ["Lithium", "Nvidia", "Taiwan", "Sarepta Therapeutics"];
+
   return (
-    <main className="min-h-screen bg-gray-50 p-8">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        
-        {/* Unified Dashboard */}
-        <Link href="/dashboard" className="block p-6 rounded-lg border bg-white hover:shadow-lg">
-          <h2 className="text-xl font-semibold mb-2">Unified Dashboard</h2>
-          <p className="text-sm text-gray-600">
-            Comprehensive regulatory monitoring and risk assessment
-          </p>
-          <div className="mt-2 text-xs text-blue-600">Real-time · Multi-source</div>
-        </Link>
+    <main className="min-h-screen bg-gray-50">
+      {/* Hero Section */}
+      <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-16 px-8 text-center">
+        <h1 className="text-4xl font-bold mb-4">PRISM Horizon</h1>
+        <p className="text-lg opacity-90 max-w-2xl mx-auto">
+          The reaction engine for global signals. From headlines to horizon scanning,
+          discover risks, opportunities, and overlooked plays.
+        </p>
 
-        {/* Vector Search */}
-        <Link href="/vector-search" className="block p-6 rounded-lg border bg-white hover:shadow-lg">
-          <h2 className="text-xl font-semibold mb-2">Vector Search</h2>
-          <p className="text-sm text-gray-600">
-            AI-powered semantic search across regulatory documents
-          </p>
-          <div className="mt-2 text-xs text-blue-600">Semantic · AI-Powered</div>
-        </Link>
+        {/* Quick Start Demo Chips */}
+        <div className="mt-6 flex flex-wrap justify-center gap-3">
+          {demoQueries.map((q) => (
+            <Link
+              key={q}
+              href={`/horizon?q=${encodeURIComponent(q)}`}
+              className="px-4 py-2 rounded-full bg-white text-blue-600 font-medium shadow hover:bg-blue-50 transition"
+            >
+              {q}
+            </Link>
+          ))}
+        </div>
+      </div>
 
-        {/* Political Risk Heatmap */}
-        <Link href="/political-risk-heatmap" className="block p-6 rounded-lg border bg-white hover:shadow-lg">
-          <h2 className="text-xl font-semibold mb-2">Political Risk Heatmap</h2>
-          <p className="text-sm text-gray-600">
-            Geographic visualization of political and regulatory risks
-          </p>
-          <div className="mt-2 text-xs text-blue-600">Geographic · Risk Analysis</div>
-        </Link>
+      {/* Grid of Features */}
+      <div className="max-w-7xl mx-auto p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <Tile
+          href="/dashboard"
+          title="Unified Dashboard"
+          desc="Comprehensive regulatory monitoring and risk assessment"
+          tags={["Real-time", "Multi-source"]}
+        />
 
-        {/* Global Political Signals */}
-        <Link href="/global-political-signals" className="block p-6 rounded-lg border bg-white hover:shadow-lg">
-          <h2 className="text-xl font-semibold mb-2">Global Political Signals</h2>
-          <p className="text-sm text-gray-600">
-            Worldwide political intelligence and trend analysis
-          </p>
-          <div className="mt-2 text-xs text-blue-600">Global · Intelligence</div>
-        </Link>
+        <Tile
+          href="/horizon"
+          title="Vector Search"
+          desc="AI-powered semantic search across regulatory signals and headlines"
+          tags={["Semantic", "AI-Powered", "Live Demo"]}
+        />
 
-        {/* Legal Risk Intelligence */}
-        <Link href="/legal-risks" className="block p-6 rounded-lg border bg-white hover:shadow-lg">
-          <h2 className="text-xl font-semibold mb-2">Legal Risk Intelligence</h2>
-          <p className="text-sm text-gray-600">
-            Treaty violations, ISDS triggers, and compliance monitoring
-          </p>
-          <div className="mt-2 text-xs text-blue-600">Legal · Compliance</div>
-        </Link>
+        <Tile
+          href="/political-risk-heatmap"
+          title="Political Risk Heatmap"
+          desc="Geographic visualization of political and regulatory risks"
+          tags={["Geographic", "Risk Analysis"]}
+        />
 
-        {/* Indigenous Broadcasting News */}
-        <Link href="/indigenous-news" className="block p-6 rounded-lg border bg-white hover:shadow-lg">
-          <h2 className="text-xl font-semibold mb-2">Indigenous Broadcasting News</h2>
-          <p className="text-sm text-gray-600">
-            Community alerts, FPIC violations, and live grievance tracking
-          </p>
-          <div className="mt-2 text-xs text-blue-600">FPIC Risk · Electoral Instability · Live Feed</div>
-        </Link>
+        <Tile
+          href="/global-political-signals"
+          title="Global Political Signals"
+          desc="Worldwide political intelligence and trend analysis"
+          tags={["Global", "Intelligence"]}
+        />
 
-        {/* Regulatory Insights */}
-        <Link href="/regulatory-insights" className="block p-6 rounded-lg border bg-white hover:shadow-lg">
-          <h2 className="text-xl font-semibold mb-2">Regulatory Insights</h2>
-          <p className="text-sm text-gray-600">
-            Deep analysis and insights from regulatory data
-          </p>
-          <div className="mt-2 text-xs text-blue-600">Analytics · Insights</div>
-        </Link>
+        <Tile
+          href="/legal-risks"
+          title="Legal Risk Intelligence"
+          desc="Treaty violations, ISDS triggers, and compliance monitoring"
+          tags={["Legal", "Compliance"]}
+        />
 
-        {/* Compare Mode */}
-        <Link href="/compare-mode" className="block p-6 rounded-lg border bg-white hover:shadow-lg">
-          <h2 className="text-xl font-semibold mb-2">Compare Mode</h2>
-          <p className="text-sm text-gray-600">
-            Side-by-side comparison of regulatory environments
-          </p>
-          <div className="mt-2 text-xs text-blue-600">Comparison · Analysis</div>
-        </Link>
+        <Tile
+          href="/indigenous-news"
+          title="Indigenous Broadcasting News"
+          desc="Community alerts, FPIC violations, and live grievance tracking"
+          tags={["FPIC Risk", "Instability", "Live Feed"]}
+        />
+
+        <Tile
+          href="/regulatory-insights"
+          title="Regulatory Insights"
+          desc="Deep analysis and insights from regulatory data"
+          tags={["Analytics", "Insights"]}
+        />
+
+        <Tile
+          href="/compare-mode"
+          title="Compare Mode"
+          desc="Side-by-side comparison of regulatory environments"
+          tags={["Comparison", "Analysis"]}
+        />
       </div>
     </main>
   );
 }
+
+function Tile({
+  href,
+  title,
+  desc,
+  tags,
+}: {
+  href: string;
+  title: string;
+  desc: string;
+  tags: string[];
+}) {
+  return (
+    <Link
+      href={href}
+      className="block p-6 rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-lg transition transform hover:-translate-y-1"
+    >
+      <h2 className="text-xl font-semibold mb-2 text-gray-900">{title}</h2>
+      <p className="text-sm text-gray-600 mb-3">{desc}</p>
+      <div className="flex flex-wrap gap-2">
+        {tags.map((tag) => (
+          <span
+            key={tag}
+            className="text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 font-medium"
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+    </Link>
+  );
+}
+
