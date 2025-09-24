@@ -1,107 +1,76 @@
-// app/api/headline-search/route.ts
-import { NextRequest, NextResponse } from "next/server";
-import { MongoClient } from "mongodb";
+import { NextRequest, NextResponse } from 'next/server';
+import { MongoClient } from 'mongodb';
 
-const MONGO_URI = process.env.MONGO_URI!;
-const DB_NAME = "prism_db";
-const COLLECTION = "signals";
+const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017';
+const client = new MongoClient(uri);
 
-let cachedClient: MongoClient | null = null;
-
-async function getClient() {
-  if (cachedClient) return cachedClient;
-  cachedClient = new MongoClient(MONGO_URI);
-  await cachedClient.connect();
-  return cachedClient;
-}
-
-export async function POST(req: NextRequest) {
+export async function GET(request: NextRequest) {
   try {
-    const { headline } = await req.json();
+    const { searchParams } = new URL(request.url);
+    const headline = searchParams.get('headline');
+
     if (!headline) {
       return NextResponse.json(
-        { ok: false, error: "Headline required" },
+        { error: 'Headline parameter is required' },
         { status: 400 }
       );
     }
 
-    const client = await getClient();
-    const db = client.db(DB_NAME);
-    const signals = db.collection(COLLECTION);
+    await client.connect();
+    const db = client.db('rhis');
+    const collection = db.collection('crisis_signals');
 
-    // Enhanced text search with scoring
-    const docs = await signals
-      .find(
-        { $text: { $search: headline } },
-        { score: { $meta: "textScore" } }
-      )
+    // Create text index if it doesn't exist
+    try {
+      await collection.createIndex({ headline: 'text', summary: 'text' });
+    } catch (error) {
+      // Index might already exist, continue
+    }
+
+    // Fixed MongoDB query - moved score projection to .project() method
+    const results = await collection
+      .find({ $text: { $search: headline } })
+      .project({ 
+        headline: 1,
+        summary: 1,
+        severity: 1,
+        category: 1,
+        timestamp: 1,
+        source: 1,
+        score: { $meta: "textScore" }
+      })
       .sort({ score: { $meta: "textScore" } })
       .limit(12)
       .toArray();
 
-    // Map into Crisis Card shape with enhanced structure
-    const cards = docs.map((d: any) => ({
-      _id: d._id,
-      company: d.company || "Unknown Company",
-      signal: d.signal || d.title || "Signal detected",
-      description: d.description || d.why_traders_care || "No description available",
-      why_traders_care: d.why_traders_care || "Market impact analysis pending",
-      commodity: Array.isArray(d.commodity) ? d.commodity : (d.commodity ? [d.commodity] : []),
-      tickers: Array.isArray(d.tickers) ? d.tickers : (d.tickers ? [d.tickers] : []),
-      country: d.country || "Global",
-      sentiment: typeof d.sentiment === 'number' ? d.sentiment : 0,
-      severity: d.severity || (d.sentiment && d.sentiment < -0.3 ? "CRITICAL" : 
-                              d.sentiment && d.sentiment < 0.3 ? "WARNING" : "OPPORTUNITY"),
-      source: d.source || "Internal Analysis",
-      date: d.date || d.created_at || new Date().toISOString(),
-      tags: Array.isArray(d.tags) ? d.tags : [],
-      // 🚨 Crisis Card specific fields
-      who_loses: d.who_loses || d.losers || "Analysis pending",
-      who_wins: d.who_wins || d.winners || "Analysis pending",
-      _score: d.score || 0,
-      _mlBucket: d._mlBucket || (d.sentiment && d.sentiment < 0 ? "risks" : "opportunities"),
+    // Transform results into Crisis Card format
+    const crisisCards = results.map((result: any) => ({
+      id: result._id.toString(),
+      headline: result.headline || 'No headline available',
+      summary: result.summary || 'No summary available',
+      severity: result.severity || 'Medium',
+      category: result.category || 'General',
+      timestamp: result.timestamp || new Date().toISOString(),
+      source: result.source || 'Unknown',
+      score: result.score || 0
     }));
 
-    // Calculate overall sentiment
-    const overallSentiment = cards.length > 0 
-      ? cards.reduce((sum, card) => sum + (card.sentiment || 0), 0) / cards.length 
-      : 0;
-
     return NextResponse.json({
-      ok: true,
-      headline,
-      total: cards.length,
-      docs: cards,
-      sentiment: overallSentiment,
-      storyboard: {
-        tldr: cards.length > 0
-          ? `Found ${cards.length} signals for '${headline}'. Overall sentiment: ${overallSentiment > 0.3 ? 'Positive' : overallSentiment < -0.3 ? 'Negative' : 'Mixed'}`
-          : `No direct signals found for '${headline}'. Try broader terms like 'FDA', 'lithium', or company tickers.`,
-        sentiment_label: overallSentiment > 0.3 ? 'Bullish' : overallSentiment < -0.3 ? 'Bearish' : 'Neutral'
-      },
+      success: true,
+      results: crisisCards,
+      count: crisisCards.length
     });
-  } catch (err: any) {
-    console.error("❌ API error:", err);
-    return NextResponse.json({ 
-      ok: false, 
-      error: err.message,
-      docs: [], // Fallback to empty array
-      total: 0
-    }, { status: 500 });
-  }
-}
 
-// Also support GET requests for testing
-export async function GET(req: NextRequest) {
-  const headline = req.nextUrl.searchParams.get("headline") || "";
-  if (!headline) {
-    return NextResponse.json({ ok: false, error: "Headline parameter required" }, { status: 400 });
+  } catch (error) {
+    console.error('Headline search error:', error);
+    return NextResponse.json(
+      { 
+        error: 'Failed to search headlines',
+        details: error instanceof Error ? error.message : 'Unknown error'
+      },
+      { status: 500 }
+    );
+  } finally {
+    await client.close();
   }
-  
-  // Reuse POST logic
-  return POST(new NextRequest(req.url, {
-    method: 'POST',
-    body: JSON.stringify({ headline }),
-    headers: { 'Content-Type': 'application/json' }
-  }));
 }
