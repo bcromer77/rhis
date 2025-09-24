@@ -1,76 +1,130 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { MongoClient } from 'mongodb';
+import { NextRequest, NextResponse } from "next/server";
+import { MongoClient } from "mongodb";
 
-const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017';
-const client = new MongoClient(uri);
+const MONGO_URI = process.env.MONGO_URI!;
+const DB_NAME = "prism_db";
+const COLLECTION = "signals";
 
-export async function GET(request: NextRequest) {
+let cachedClient: MongoClient | null = null;
+
+async function getClient() {
+  if (cachedClient) return cachedClient;
+  cachedClient = new MongoClient(MONGO_URI);
+  await cachedClient.connect();
+  return cachedClient;
+}
+
+export async function POST(req: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
-    const headline = searchParams.get('headline');
-
+    const { headline } = await req.json();
     if (!headline) {
       return NextResponse.json(
-        { error: 'Headline parameter is required' },
+        { ok: false, error: "Headline required" },
         { status: 400 }
       );
     }
 
-    await client.connect();
-    const db = client.db('rhis');
-    const collection = db.collection('crisis_signals');
+    const client = await getClient();
+    const db = client.db(DB_NAME);
+    const signals = db.collection(COLLECTION);
 
     // Create text index if it doesn't exist
     try {
-      await collection.createIndex({ headline: 'text', summary: 'text' });
+      await signals.createIndex({ 
+        signal: "text", 
+        title: "text", 
+        why_traders_care: "text",
+        company: "text"
+      });
     } catch (error) {
       // Index might already exist, continue
     }
 
-    // Fixed MongoDB query - moved score projection to .project() method
-    const results = await collection
+    // ✅ Fixed MongoDB query - proper .project() usage
+    const docs = await signals
       .find({ $text: { $search: headline } })
       .project({ 
-        headline: 1,
-        summary: 1,
+        company: 1,
+        signal: 1,
+        title: 1,
+        why_traders_care: 1,
+        commodity: 1,
+        tickers: 1,
+        country: 1,
+        sentiment: 1,
         severity: 1,
-        category: 1,
-        timestamp: 1,
         source: 1,
+        date: 1,
+        tags: 1,
+        who_loses: 1,
+        who_wins: 1,
+        _mlBucket: 1,
         score: { $meta: "textScore" }
       })
       .sort({ score: { $meta: "textScore" } })
       .limit(12)
       .toArray();
 
-    // Transform results into Crisis Card format
-    const crisisCards = results.map((result: any) => ({
-      id: result._id.toString(),
-      headline: result.headline || 'No headline available',
-      summary: result.summary || 'No summary available',
-      severity: result.severity || 'Medium',
-      category: result.category || 'General',
-      timestamp: result.timestamp || new Date().toISOString(),
-      source: result.source || 'Unknown',
-      score: result.score || 0
+    const cards = docs.map((d: any) => ({
+      _id: d._id,
+      company: d.company || "Unknown Company",
+      signal: d.signal || d.title || "No signal available",
+      why_traders_care: d.why_traders_care || "Impact assessment pending",
+      commodity: d.commodity || "General",
+      tickers: d.tickers || [],
+      country: d.country || "Global",
+      sentiment: d.sentiment || "Neutral",
+      severity: d.severity || (d._mlBucket === "risks" ? "CRITICAL" : "OPPORTUNITY"),
+      source: d.source || "PRISM Intelligence",
+      date: d.date || new Date().toISOString(),
+      tags: d.tags || [],
+      who_loses: d.who_loses || "Assessment pending",
+      who_wins: d.who_wins || "Assessment pending",
+      _score: d.score || 0,
     }));
 
     return NextResponse.json({
-      success: true,
-      results: crisisCards,
-      count: crisisCards.length
+      ok: true,
+      headline,
+      total: cards.length,
+      docs: cards,
+      storyboard: {
+        tldr:
+          cards.length > 0
+            ? `Found ${cards.length} relevant signals for '${headline}' with market intelligence insights`
+            : `No direct signals found for '${headline}'. Try broader search terms or check back later for updates.`,
+      },
     });
 
-  } catch (error) {
-    console.error('Headline search error:', error);
+  } catch (err: any) {
+    console.error("❌ Headline Search API Error:", err);
     return NextResponse.json(
       { 
-        error: 'Failed to search headlines',
-        details: error instanceof Error ? error.message : 'Unknown error'
-      },
+        ok: false, 
+        error: "Failed to search headlines",
+        details: process.env.NODE_ENV === 'development' ? err.message : 'Internal server error'
+      }, 
       { status: 500 }
     );
-  } finally {
-    await client.close();
   }
+}
+
+// Optional: Add GET method for testing
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const headline = searchParams.get('headline');
+  
+  if (!headline) {
+    return NextResponse.json(
+      { ok: false, error: "Headline query parameter required" },
+      { status: 400 }
+    );
+  }
+
+  // Convert GET to POST format internally
+  const mockRequest = {
+    json: async () => ({ headline })
+  } as NextRequest;
+
+  return POST(mockRequest);
 }
