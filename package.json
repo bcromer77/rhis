@@ -8,6 +8,15 @@
     "lint": "next lint",
     "start": "next start"
   },
+{
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "postinstall": "node scripts/seed_on_build.js"
+  }
+}
+
   "dependencies": {
     "@aws-sdk/credential-providers": "latest",
     "@emotion/is-prop-valid": "latest",
