@@ -1,15 +1,7 @@
-
 "use client";
 
-// @ts-expect-error: next-themes ships without proper TS types
-import { ThemeProvider as NextThemesProvider } from "next-themes";
-
-interface ThemeProviderProps {
-  children: React.ReactNode;
-  [key: string]: any;
-}
-
-export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
-  return <NextThemesProvider {...props}>{children}</NextThemesProvider>;
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  // Temporary: no theme switching for demo, just render children
+  return <>{children}</>;
 }
 
