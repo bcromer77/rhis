@@ -1,17 +1,12 @@
+// next.config.js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-
-  async redirects() {
-    return [
-      {
-        source: "/",
-        destination: "/horizon",
-        permanent: false,
-      },
-    ];
+  experimental: {
+    appDir: true, // ensure Next.js app router is enabled
   },
+  reactStrictMode: true,
+  poweredByHeader: false,
 };
 
-module.exports = nextConfig;
+export default nextConfig;
 
