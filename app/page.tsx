@@ -1,123 +1,176 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 
-export default function HomePage() {
-  const demoQueries = ["Lithium", "Nvidia", "Taiwan", "Sarepta Therapeutics"];
+type CrisisCard = {
+  id: string;
+  company: string;
+  title: string;
+  severity: "CRITICAL" | "WARNING" | "CAUTION";
+  description: string;
+  source: string;
+};
+
+const demoCards: CrisisCard[] = [
+  {
+    id: "1",
+    company: "Sarepta Therapeutics",
+    title: "FDA Clinical Hold",
+    severity: "CRITICAL",
+    description: "FDA places clinical hold on SRP-9001 trial (DMD gene therapy).",
+    source: "FDA Docket 2025-134"
+  },
+  {
+    id: "2",
+    company: "MP Materials",
+    title: "Rare Earth Expansion",
+    severity: "WARNING",
+    description: "Expansion in Nevada faces scrutiny over tribal water rights.",
+    source: "Nevada Council Minutes"
+  },
+  {
+    id: "3",
+    company: "Meta",
+    title: "New Mexico Data Center",
+    severity: "CRITICAL",
+    description: "Tribal council challenges water allocations under Colorado Compact.",
+    source: "Ute Mountain Council Record"
+  },
+  {
+    id: "4",
+    company: "De Beers",
+    title: "Ownership Battle",
+    severity: "CAUTION",
+    description: "Botswana vs Angola fight could delay diamond/water rights permits.",
+    source: "Reuters / Botswana Gazette"
+  },
+];
+
+export default function LandingPage() {
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState<CrisisCard[]>(demoCards);
+  const [loading, setLoading] = useState(false);
+
+  async function runSearch() {
+    if (!query.trim()) return;
+    setLoading(true);
+    try {
+      const res = await fetch("/api/headline-search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ headline: query }),
+      });
+      const data = await res.json();
+      // for now just fallback to demo cards if no docs
+      setResults(data.docs?.length ? data.docs : demoCards);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
-    <main className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-16 px-8 text-center">
-        <h1 className="text-4xl font-bold mb-4">PRISM Horizon</h1>
-        <p className="text-lg opacity-90 max-w-2xl mx-auto">
-          The reaction engine for global signals. From headlines to horizon scanning,
-          discover risks, opportunities, and overlooked plays.
+    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-900 to-black text-white">
+      {/* Hero */}
+      <section className="text-center py-20 px-6">
+        <h1 className="text-5xl font-bold mb-6 tracking-tight">
+          Before it’s news, it’s a signal.
+        </h1>
+        <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+          Type a ticker → see the risks no one else sees. Powered by MongoDB Atlas Vector Search.
         </p>
 
-        {/* Quick Start Demo Chips */}
-        <div className="mt-6 flex flex-wrap justify-center gap-3">
-          {demoQueries.map((q) => (
-            <Link
-              key={q}
-              href={`/horizon?q=${encodeURIComponent(q)}`}
-              className="px-4 py-2 rounded-full bg-white text-blue-600 font-medium shadow hover:bg-blue-50 transition"
+        {/* Search Bar */}
+        <div className="mt-8 flex max-w-xl mx-auto shadow rounded-lg overflow-hidden">
+          <input
+            type="text"
+            placeholder="Try: Sarepta, Meta, Micron, De Beers..."
+            className="flex-grow px-4 py-3 text-black focus:outline-none"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+          <button
+            onClick={runSearch}
+            disabled={loading}
+            className="px-6 py-3 bg-amber-500 hover:bg-amber-600 font-semibold text-black"
+          >
+            {loading ? "Searching..." : "Search"}
+          </button>
+        </div>
+
+        {/* Subscribe CTA */}
+        <div className="mt-6">
+          <Link
+            href="/subscribe"
+            className="text-amber-400 font-semibold hover:underline"
+          >
+            Subscribe for Crisis Alerts →
+          </Link>
+        </div>
+      </section>
+
+      {/* Crisis Cards Wall */}
+      <section className="max-w-6xl mx-auto px-6 pb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {results.map((card) => (
+            <div
+              key={card.id}
+              className={`p-6 rounded-xl shadow-lg border-l-4 ${
+                card.severity === "CRITICAL"
+                  ? "border-red-500 bg-red-500/10"
+                  : card.severity === "WARNING"
+                  ? "border-yellow-500 bg-yellow-500/10"
+                  : "border-amber-400 bg-amber-500/10"
+              }`}
             >
-              {q}
-            </Link>
+              <h3 className="text-xl font-bold mb-2">{card.company}</h3>
+              <p className="font-semibold mb-1">{card.title}</p>
+              <p className="text-gray-300 mb-3">{card.description}</p>
+              <p className="text-xs text-gray-400">Source: {card.source}</p>
+            </div>
           ))}
         </div>
-      </div>
+      </section>
 
-      {/* Grid of Features */}
-      <div className="max-w-7xl mx-auto p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <Tile
-          href="/dashboard"
-          title="Unified Dashboard"
-          desc="Comprehensive regulatory monitoring and risk assessment"
-          tags={["Real-time", "Multi-source"]}
-        />
+      {/* Mini Map Widget */}
+      <section className="bg-slate-800 py-12">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-2xl font-bold mb-4">Signals Across the Globe</h2>
+          <p className="text-gray-400 mb-8">
+            From DRC cobalt to New Mexico water rights, PRISM captures risks in
+            every jurisdiction.
+          </p>
+          <div className="w-full h-64 bg-slate-700 rounded-lg flex items-center justify-center text-gray-400">
+            🌍 [Mini Global Map Placeholder]
+          </div>
+        </div>
+      </section>
 
-        <Tile
-          href="/horizon"
+      {/* Features Behind the Demo */}
+      <section className="max-w-6xl mx-auto py-16 px-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Feature
           title="Vector Search"
-          desc="AI-powered semantic search across regulatory signals and headlines"
-          tags={["Semantic", "AI-Powered", "Live Demo"]}
+          desc="Unify treaties, transcripts, and council minutes into a single searchable risk fabric."
         />
-
-        <Tile
-          href="/political-risk-heatmap"
-          title="Political Risk Heatmap"
-          desc="Geographic visualization of political and regulatory risks"
-          tags={["Geographic", "Risk Analysis"]}
-        />
-
-        <Tile
-          href="/global-political-signals"
-          title="Global Political Signals"
-          desc="Worldwide political intelligence and trend analysis"
-          tags={["Global", "Intelligence"]}
-        />
-
-        <Tile
-          href="/legal-risks"
+        <Feature
           title="Legal Risk Intelligence"
-          desc="Treaty violations, ISDS triggers, and compliance monitoring"
-          tags={["Legal", "Compliance"]}
+          desc="FPIC, ISDS, and treaty violation monitoring — grounded in filings, not headlines."
         />
-
-        <Tile
-          href="/indigenous-news"
-          title="Indigenous Broadcasting News"
-          desc="Community alerts, FPIC violations, and live grievance tracking"
-          tags={["FPIC Risk", "Instability", "Live Feed"]}
+        <Feature
+          title="Global Signals"
+          desc="Political and ESG risks from 20+ countries, surfaced before markets react."
         />
-
-        <Tile
-          href="/regulatory-insights"
-          title="Regulatory Insights"
-          desc="Deep analysis and insights from regulatory data"
-          tags={["Analytics", "Insights"]}
-        />
-
-        <Tile
-          href="/compare-mode"
-          title="Compare Mode"
-          desc="Side-by-side comparison of regulatory environments"
-          tags={["Comparison", "Analysis"]}
-        />
-      </div>
+      </section>
     </main>
   );
 }
 
-function Tile({
-  href,
-  title,
-  desc,
-  tags,
-}: {
-  href: string;
-  title: string;
-  desc: string;
-  tags: string[];
-}) {
+function Feature({ title, desc }: { title: string; desc: string }) {
   return (
-    <Link
-      href={href}
-      className="block p-6 rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-lg transition transform hover:-translate-y-1"
-    >
-      <h2 className="text-xl font-semibold mb-2 text-gray-900">{title}</h2>
-      <p className="text-sm text-gray-600 mb-3">{desc}</p>
-      <div className="flex flex-wrap gap-2">
-        {tags.map((tag) => (
-          <span
-            key={tag}
-            className="text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 font-medium"
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
-    </Link>
+    <div className="p-6 rounded-xl bg-slate-900 border border-slate-700 shadow hover:shadow-lg transition">
+      <h3 className="text-lg font-semibold mb-2 text-amber-400">{title}</h3>
+      <p className="text-sm text-gray-400">{desc}</p>
+    </div>
   );
 }
 

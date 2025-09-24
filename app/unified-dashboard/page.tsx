@@ -1,7 +1,8 @@
-"use client"
-import { UnifiedRegulatoryDashboard } from "@/components/unified-regulatory-dashboard"
-import { Button } from "@/components/ui/button"
-import { ArrowLeft } from "lucide-react"
+"use client";
+
+import UnifiedRegulatoryDashboard from "@/components/unified-regulatory-dashboard";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 
 export default function UnifiedDashboardPage() {
   return (
@@ -18,5 +19,5 @@ export default function UnifiedDashboardPage() {
 
       <UnifiedRegulatoryDashboard initialView="split" />
     </div>
-  )
+  );
 }

@@ -1,28 +1,3 @@
-<<<<<<< HEAD
-k"use client"
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Search } from "lucide-react"
-import IndigenousVectorSearchBar from "@/components/IndigenousVectorSearchBar"
-
-export default function UnifiedRegulatoryDashboard() {
-  return (
-    <div className="max-w-7xl mx-auto p-6">
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Search className="h-5 w-5" />
-            Vector Search & Analysis
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <IndigenousVectorSearchBar />
-        </CardContent>
-      </Card>
-    </div>
-  )
-}
-=======
 "use client"
 
 import { useState } from "react"
@@ -40,7 +15,7 @@ interface UnifiedRegulatoryDashboardProps {
   initialView?: "split" | "full"
 }
 
-export function UnifiedRegulatoryDashboard({ initialView = "split" }: UnifiedRegulatoryDashboardProps) {
+export default function UnifiedRegulatoryDashboard({ initialView = "split" }: UnifiedRegulatoryDashboardProps) {
   const [viewMode, setViewMode] = useState<"split" | "full">(initialView)
   const [activeTab, setActiveTab] = useState("search")
 
@@ -51,14 +26,24 @@ export function UnifiedRegulatoryDashboard({ initialView = "split" }: UnifiedReg
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-2xl font-bold text-slate-800">Unified Regulatory Intelligence Dashboard</h1>
+              <h1 className="text-2xl font-bold text-slate-800">
+                Unified Regulatory Intelligence Dashboard
+              </h1>
               <p className="text-slate-600">Comprehensive risk monitoring and analysis platform</p>
             </div>
             <div className="flex gap-2">
-              <Button variant={viewMode === "split" ? "default" : "outline"} onClick={() => setViewMode("split")} size="sm">
+              <Button
+                variant={viewMode === "split" ? "default" : "outline"}
+                onClick={() => setViewMode("split")}
+                size="sm"
+              >
                 Split View
               </Button>
-              <Button variant={viewMode === "full" ? "default" : "outline"} onClick={() => setViewMode("full")} size="sm">
+              <Button
+                variant={viewMode === "full" ? "default" : "outline"}
+                onClick={() => setViewMode("full")}
+                size="sm"
+              >
                 Full View
               </Button>
             </div>
@@ -163,19 +148,15 @@ export function UnifiedRegulatoryDashboard({ initialView = "split" }: UnifiedReg
             <TabsContent value="search" className="mt-6">
               <VectorSearch />
             </TabsContent>
-
             <TabsContent value="heatmap" className="mt-6">
               <RegulatoryHeatmap />
             </TabsContent>
-
             <TabsContent value="political" className="mt-6">
               <EnhancedPoliticalRiskHeatmap />
             </TabsContent>
-
             <TabsContent value="ecology" className="mt-6">
               <EcologyVoices />
             </TabsContent>
-
             <TabsContent value="geo" className="mt-6">
               <div className="h-[800px] rounded-lg overflow-hidden">
                 <IndigenousBroadcastingDashboard />
@@ -187,5 +168,3 @@ export function UnifiedRegulatoryDashboard({ initialView = "split" }: UnifiedReg
     </div>
   )
 }
-
->>>>>>> origin/main

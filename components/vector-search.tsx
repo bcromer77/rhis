@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 "use client"
 
 import { useState } from "react"
@@ -47,7 +46,9 @@ export function VectorSearch() {
   }
 
   const toggleFilter = (filter: string) => {
-    setSelectedFilters((prev) => (prev.includes(filter) ? prev.filter((f) => f !== filter) : [...prev, filter]))
+    setSelectedFilters((prev) =>
+      prev.includes(filter) ? prev.filter((f) => f !== filter) : [...prev, filter]
+    )
   }
 
   return (
@@ -76,7 +77,11 @@ export function VectorSearch() {
               className="flex-1 bg-white/20 text-white placeholder:text-purple-200 border-purple-500/30"
               onKeyPress={(e) => e.key === "Enter" && handleSearch()}
             />
-            <Button onClick={handleSearch} disabled={isLoading} className="bg-purple-600 hover:bg-purple-700">
+            <Button
+              onClick={handleSearch}
+              disabled={isLoading}
+              className="bg-purple-600 hover:bg-purple-700"
+            >
               <Search className="h-4 w-4 mr-2" />
               {isLoading ? "Searching..." : "Search"}
             </Button>
@@ -167,8 +172,8 @@ export function VectorSearch() {
                       result.riskLevel === "High"
                         ? "destructive"
                         : result.riskLevel === "Medium"
-                          ? "default"
-                          : "secondary"
+                        ? "default"
+                        : "secondary"
                     }
                   >
                     {result.riskLevel} Risk
@@ -180,12 +185,18 @@ export function VectorSearch() {
                 <div className="flex items-center justify-between">
                   <div className="flex gap-2">
                     {result.tags.map((tag, tagIndex) => (
-                      <Badge key={tagIndex} variant="outline" className="text-purple-200 border-purple-500/30">
+                      <Badge
+                        key={tagIndex}
+                        variant="outline"
+                        className="text-purple-200 border-purple-500/30"
+                      >
                         {tag}
                       </Badge>
                     ))}
                   </div>
-                  <span className="text-sm text-purple-300">Relevance: {result.relevanceScore}%</span>
+                  <span className="text-sm text-purple-300">
+                    Relevance: {result.relevanceScore}%
+                  </span>
                 </div>
               </CardContent>
             </Card>
@@ -206,33 +217,3 @@ export function VectorSearch() {
     </div>
   )
 }
-=======
-"use client";
-
-import React, { useState, useEffect } from "react";
-import dynamic from "next/dynamic";
-
-const IndigenousVectorSearchBar = dynamic(
-  () => import("@/components/mock/IndigenousVectorSearchBar"),
-  { ssr: false }
-);
-
-export const VectorSearch = () => {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
-
-  return (
-    <IndigenousVectorSearchBar
-      issuesData={[]} // can update with MongoDB props later
-      selectedRegion=""
-      selectedTab="All"
-    />
-  );
-};
-
->>>>>>> origin/main
