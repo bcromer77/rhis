@@ -7,19 +7,9 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "PRISM | Regulatory & Horizon Intelligence System",
-  description:
-    "Advanced regulatory intelligence and risk monitoring platform for financial markets.",
-  keywords:
-    "regulatory intelligence, risk monitoring, financial markets, ESG, geopolitical risk",
+  description: "Advanced regulatory intelligence and risk monitoring platform for financial markets.",
+  keywords: "regulatory intelligence, risk monitoring, financial markets, ESG, geopolitical risk",
   authors: [{ name: "PRISM Intelligence" }],
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-  },
-  themeColor: "#000000",
-  icons: {
-    icon: "/favicon.ico",
-  },
 };
 
 export default function RootLayout({
@@ -29,6 +19,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#000000" />
+        <link rel="icon" href="/favicon.ico" />
+      </head>
       <body className={`${inter.className} bg-black text-white antialiased`}>
         <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black">
           <main className="relative">{children}</main>
@@ -37,4 +32,3 @@ export default function RootLayout({
     </html>
   );
 }
-
