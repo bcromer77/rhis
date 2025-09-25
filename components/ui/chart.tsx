@@ -2,8 +2,8 @@
 
 import * as React from "react"
 import {
-  LineChart,
-  Line,
+  BarChart,
+  Bar,
   XAxis,
   YAxis,
   Tooltip,
@@ -11,7 +11,7 @@ import {
   TooltipProps,
 } from "recharts"
 
-// Define a custom payload/tooltip type
+// Define payload + label typing
 interface CustomPayload {
   value: number
   name: string
@@ -25,31 +25,41 @@ interface CustomTooltipProps extends TooltipProps<number, string> {
 function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-black text-white p-2 rounded shadow">
-        {label && <p>{label}</p>}
-        <p>{payload[0].value}</p>
+      <div className="bg-black text-white p-2 rounded shadow-md text-sm">
+        {label && <p className="font-bold">{label}</p>}
+        <p>
+          Impact: <span className="text-green-400">{payload[0].value}%</span>
+        </p>
       </div>
     )
   }
   return null
 }
 
+// Example headline → winners & losers dataset
 const data = [
-  { name: "Winner A", value: 400 },
-  { name: "Loser B", value: 300 },
-  { name: "Winner C", value: 200 },
+  { name: "MP Materials (US)", impact: 35 },     // clear winner
+  { name: "Lynas Rare Earths (AU)", impact: 20 },
+  { name: "Lockheed Martin", impact: 10 },
+  { name: "China Northern RE", impact: -25 },    // loser
+  { name: "Shenghe Resources", impact: -30 },    // loser
 ]
 
-export function ChartDemo() {
+export function GeoHeadlineChart() {
   return (
-    <ResponsiveContainer width="100%" height={300}>
-      <LineChart data={data}>
-        <XAxis dataKey="name" stroke="#888" />
-        <YAxis />
-        <Tooltip content={<CustomTooltip />} />
-        <Line type="monotone" dataKey="value" stroke="#82ca9d" />
-      </LineChart>
-    </ResponsiveContainer>
+    <div className="w-full h-[400px]">
+      <h2 className="text-lg font-semibold mb-2">
+        📈 Market Impact: China clamps down on rare earths
+      </h2>
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={data}>
+          <XAxis dataKey="name" stroke="#ccc" />
+          <YAxis />
+          <Tooltip content={<CustomTooltip />} />
+          <Bar dataKey="impact" fill="#82ca9d" />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
   )
 }
 

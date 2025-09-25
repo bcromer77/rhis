@@ -16,6 +16,15 @@ import {
   TrendingDown,
   TrendingUp as TrendingUpIcon,
 } from "lucide-react";
+import { GeoHeadlineChart } from "@/components/ui/chart"
+
+export default function Home() {
+  return (
+    <main className="p-6">
+      <GeoHeadlineChart />
+    </main>
+  )
+}
 
 // Crisis Card Type (matches your backend)
 type CrisisCard = {
