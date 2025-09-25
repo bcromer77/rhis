@@ -18,7 +18,8 @@ export default function VectorSearchBar() {
           _id: "none",
           company: "No Results",
           signal: "🔍 No mock results found",
-          description: "Try searching: Nike, Paramount, Mexico, Taiwan, Russia, Water",
+          description:
+            "Try searching: Nike, Paramount, Mexico, Taiwan, Russia, Water",
           why_traders_care: "",
           country: "",
           commodity: [],
@@ -49,7 +50,7 @@ export default function VectorSearchBar() {
         <button
           onClick={handleSearch}
           className="bg-blue-600 text-white px-4 py-2 rounded"
-        />
+        >
           Search
         </button>
       </div>
