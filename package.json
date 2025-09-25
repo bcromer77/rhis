@@ -43,6 +43,8 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dotenv": "^17.2.2",
+    "embla-carousel": "^8.6.0",
+    "embla-carousel-react": "^8.6.0",
     "framer-motion": "^11.0.0",
     "lucide-react": "^0.544.0",
     "mongodb": "^6.9.0",
