@@ -11,21 +11,22 @@ import {
   TooltipProps,
 } from "recharts"
 
-// 👇 Define a proper type for the tooltip payload
+// Define a custom payload/tooltip type
 interface CustomPayload {
   value: number
   name: string
 }
 
-function CustomTooltip({
-  active,
-  payload,
-  label,
-}: TooltipProps<number, string> & { payload?: CustomPayload[] }) {
+interface CustomTooltipProps extends TooltipProps<number, string> {
+  payload?: CustomPayload[]
+  label?: string
+}
+
+function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
   if (active && payload && payload.length) {
     return (
       <div className="bg-black text-white p-2 rounded shadow">
-        <p>{label}</p>
+        {label && <p>{label}</p>}
         <p>{payload[0].value}</p>
       </div>
     )
