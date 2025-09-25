@@ -16,15 +16,7 @@ import {
   TrendingDown,
   TrendingUp as TrendingUpIcon,
 } from "lucide-react";
-import { GeoHeadlineChart } from "@/components/ui/chart"
-
-export default function Home() {
-  return (
-    <main className="p-6">
-      <GeoHeadlineChart />
-    </main>
-  )
-}
+import { GeoHeadlineChart } from "@/components/ui/chart";
 
 // Crisis Card Type (matches your backend)
 type CrisisCard = {
@@ -202,6 +194,7 @@ function CrisisCardComponent({ card }: { card: CrisisCard }) {
   );
 }
 
+// ✅ Only ONE default export now
 export default function LandingPage() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<CrisisCard[]>(demoCrisisCards);
@@ -435,3 +428,4 @@ function Feature({
     </Card>
   );
 }
+
