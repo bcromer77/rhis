@@ -1,76 +1,54 @@
-"use client";
+"use client"
 
-import * as React from "react";
+import * as React from "react"
 import {
   LineChart,
   Line,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Legend,
-} from "recharts";
+  TooltipProps,
+} from "recharts"
 
-// Types from Recharts
-import type { TooltipProps } from "recharts";
+// 👇 Define a proper type for the tooltip payload
+interface CustomPayload {
+  value: number
+  name: string
+}
 
-// Example data (replace with your API data)
-const sampleData = [
-  { name: "Jan", value: 40 },
-  { name: "Feb", value: 30 },
-  { name: "Mar", value: 20 },
-  { name: "Apr", value: 27 },
-  { name: "May", value: 18 },
-  { name: "Jun", value: 23 },
-  { name: "Jul", value: 34 },
-];
-
-// Custom tooltip with safe typing
 function CustomTooltip({
   active,
   payload,
   label,
-}: TooltipProps<number, string>) {
+}: TooltipProps<number, string> & { payload?: CustomPayload[] }) {
   if (active && payload && payload.length) {
     return (
-      <div className="rounded bg-black/80 p-2 text-sm text-white shadow-lg">
-        <p className="font-medium">{label}</p>
-        {payload.map((entry, index) => (
-          <p key={`item-${index}`}>
-            {entry.name}: {entry.value}
-          </p>
-        ))}
+      <div className="bg-black text-white p-2 rounded shadow">
+        <p>{label}</p>
+        <p>{payload[0].value}</p>
       </div>
-    );
+    )
   }
-  return null;
+  return null
 }
+
+const data = [
+  { name: "Winner A", value: 400 },
+  { name: "Loser B", value: 300 },
+  { name: "Winner C", value: 200 },
+]
 
 export function ChartDemo() {
   return (
-    <div className="h-[400px] w-full">
-      <ResponsiveContainer width="100%" height="100%">
-        <LineChart
-          data={sampleData}
-          margin={{ top: 20, right: 30, left: 0, bottom: 0 }}
-        >
-          <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-          <XAxis dataKey="name" stroke="#aaa" />
-          <YAxis stroke="#aaa" />
-          <Tooltip content={<CustomTooltip />} />
-          <Legend />
-          <Line
-            type="monotone"
-            dataKey="value"
-            stroke="#10b981"
-            strokeWidth={2}
-            dot={{ r: 4 }}
-            activeDot={{ r: 6 }}
-          />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
-  );
+    <ResponsiveContainer width="100%" height={300}>
+      <LineChart data={data}>
+        <XAxis dataKey="name" stroke="#888" />
+        <YAxis />
+        <Tooltip content={<CustomTooltip />} />
+        <Line type="monotone" dataKey="value" stroke="#82ca9d" />
+      </LineChart>
+    </ResponsiveContainer>
+  )
 }
 
