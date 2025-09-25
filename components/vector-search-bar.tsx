@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CrisisCard } from "@/components/regulatory-card";
+import CrisisCard from "@/components/regulatory-card";
 import { mockResults } from "@/lib/mock-results";
 
 export default function VectorSearchBar() {
