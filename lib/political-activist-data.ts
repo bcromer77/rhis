@@ -285,19 +285,40 @@ export const getRiskTypeDistribution = () => {
   return distribution;
 };
 
-// State-wise risk analysis
+// State-wise risk analysis (demo-safe version)
 export const getStateRiskAnalysis = () => {
-  // explicitly type stateRisks as a dictionary with index signatures
-  const stateRisks: {
-    [key: string]: {
-      risks: PoliticalActivistRisk[];
-      totalScore: number;
-      highestRisk: number;
-      riskCount: number;
-      averageScore: number; // ✅ always present now
-    };
-  } = {};
+  const stateRisks = politicalActivistRisks.reduce(
+    (acc, risk) => {
+      if (!acc[risk.state]) {
+        acc[risk.state] = {
+          risks: [],
+          totalScore: 0,
+          highestRisk: 0,
+          riskCount: 0,
+        };
+      }
+      acc[risk.state].risks.push(risk);
+      acc[risk.state].totalScore += risk.overallRiskScore;
+      acc[risk.state].highestRisk = Math.max(
+        acc[risk.state].highestRisk,
+        risk.overallRiskScore
+      );
+      acc[risk.state].riskCount++;
+      return acc;
+    },
+    {} as Record<
+      string,
+      {
+        risks: PoliticalActivistRisk[];
+        totalScore: number;
+        highestRisk: number;
+        riskCount: number;
+      }
+    >
+  );
 
+  return stateRisks;
+};
   politicalActivistRisks.forEach((risk) => {
     if (!stateRisks[risk.state]) {
       stateRisks[risk.state] = {
