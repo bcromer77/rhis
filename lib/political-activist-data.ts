@@ -317,6 +317,8 @@ export const getStateRiskAnalysis = () => {
     >
   );
 
+  return stateRisks;   // ✅ ends cleanly
+};
   return stateRisks;
 };
   politicalActivistRisks.forEach((risk) => {
