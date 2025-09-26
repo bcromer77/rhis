@@ -287,25 +287,35 @@ export const getRiskTypeDistribution = () => {
 
 // State-wise risk analysis
 export const getStateRiskAnalysis = () => {
-  const stateRisks: any = politicalActivistRisks.reduce(
-    (acc: any, risk) => {
-      if (!acc[risk.state]) {
-        acc[risk.state] = {
-          risks: [],
-          totalScore: 0,
-          highestRisk: 0,
-          riskCount: 0,
-          averageScore: 0,
-        };
-      }
-      acc[risk.state].risks.push(risk);
-      acc[risk.state].totalScore += risk.overallRiskScore;
-      acc[risk.state].highestRisk = Math.max(acc[risk.state].highestRisk, risk.overallRiskScore);
-      acc[risk.state].riskCount++;
-      return acc;
-    },
-    {}
-  );
+  // explicitly type stateRisks as a dictionary with index signatures
+  const stateRisks: {
+    [key: string]: {
+      risks: PoliticalActivistRisk[];
+      totalScore: number;
+      highestRisk: number;
+      riskCount: number;
+      averageScore: number; // ✅ always present now
+    };
+  } = {};
+
+  politicalActivistRisks.forEach((risk) => {
+    if (!stateRisks[risk.state]) {
+      stateRisks[risk.state] = {
+        risks: [],
+        totalScore: 0,
+        highestRisk: 0,
+        riskCount: 0,
+        averageScore: 0,
+      };
+    }
+    stateRisks[risk.state].risks.push(risk);
+    stateRisks[risk.state].totalScore += risk.overallRiskScore;
+    stateRisks[risk.state].highestRisk = Math.max(
+      stateRisks[risk.state].highestRisk,
+      risk.overallRiskScore
+    );
+    stateRisks[risk.state].riskCount++;
+  });
 
   // Calculate average risk score per state
   Object.keys(stateRisks).forEach((state) => {
@@ -315,8 +325,7 @@ export const getStateRiskAnalysis = () => {
   });
 
   return stateRisks;
-};
-  // Calculate average risk score per state
+};  // Calculate average risk score per state
   Object.keys(stateRisks).forEach((state) => {
     stateRisks[state].averageScore = Math.round(
       stateRisks[state].totalScore / stateRisks[state].riskCount
