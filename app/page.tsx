@@ -1,19 +1,17 @@
-// app/page.tsx
 "use client";
 
 import { useState } from "react";
 import Link from "next/link";
 
-// Teaser results with Polaroid-style colored themes
 const teaserResults = [
   {
     title: "Taiwan Semiconductor Supply Chain Risk",
     category: "Geopolitical",
     impact: "Critical",
-    preview: "Escalation over Taiwan raises risks for semiconductor supply chains...",
+    preview: "Escalation over Taiwan raises risks for semiconductor supply chains affecting global tech supply.",
     date: "2025-09-27",
     locked: false,
-    borderColor: "border-l-red-500", // Red Polaroid frame
+    borderColor: "border-l-red-500",
     bgColor: "bg-red-50",
     tags: ["Real-time", "Supply Chain"]
   },
@@ -21,10 +19,10 @@ const teaserResults = [
     title: "EU Grain Export Disruption Analysis", 
     category: "Trade Intelligence",
     impact: "Warning",
-    preview: "Attacks disrupt Ukrainian and Romanian export flows...",
+    preview: "Attacks disrupt Ukrainian and Romanian export flows, impacting European food security.",
     date: "2025-09-26", 
     locked: false,
-    borderColor: "border-l-blue-500", // Blue Polaroid frame
+    borderColor: "border-l-blue-500",
     bgColor: "bg-blue-50",
     tags: ["AI-Powered", "Trade Risk"]
   },
@@ -32,21 +30,21 @@ const teaserResults = [
     title: "Mexico Lithium Nationalization Impact",
     category: "ESG Monitoring", 
     impact: "Critical",
-    preview: "Mexico halts new lithium concessions, expands LitioMx's monopoly...",
+    preview: "Mexico halts new lithium concessions, expands LitioMx's monopoly affecting EV supply chains.",
     date: "2025-09-25",
     locked: true,
-    borderColor: "border-l-green-500", // Green Polaroid frame  
+    borderColor: "border-l-green-500",
     bgColor: "bg-green-50",
     tags: ["Geographic", "ESG Analysis"]
   },
   {
-    title: "Advanced Risk Heatmaps Available",
+    title: "Advanced Risk Intelligence Available",
     category: "Premium Intelligence",
     impact: "Unlock", 
-    preview: "Get full market impact analysis, winner/loser breakdowns, and real-time alerts...",
+    preview: "Get full market impact analysis, winner/loser breakdowns, and real-time crisis alerts.",
     date: "Sign up",
     locked: true,
-    borderColor: "border-l-orange-500", // Orange Polaroid frame
+    borderColor: "border-l-orange-500",
     bgColor: "bg-orange-50", 
     tags: ["Global", "Intelligence"]
   },
@@ -58,12 +56,11 @@ export default function HomePage() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    setSearchQuery(e.target.value || "regulatory risks");
     setShowResults(true);
   };
 
   return (
-    <div className="bg-white">
+    <div className="bg-white min-h-screen">
       {/* Hero Section */}
       <div className="relative overflow-hidden bg-white">
         <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
@@ -92,7 +89,7 @@ export default function HomePage() {
                 />
                 <button
                   type="submit"
-                  className="flex-none rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
+                  className="flex-none rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-800"
                 >
                   Search
                 </button>
@@ -102,7 +99,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Polaroid Cards Results Section */}
+      {/* Results Section */}
       {showResults && (
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -110,7 +107,7 @@ export default function HomePage() {
               Crisis Intelligence Preview
             </h2>
             <p className="mt-2 text-gray-600">
-              Here's what PRISM found for "{searchQuery}"
+              Here's what PRISM found for "{searchQuery || 'regulatory risks'}"
             </p>
           </div>
 
@@ -118,14 +115,7 @@ export default function HomePage() {
             {teaserResults.map((result, index) => (
               <div
                 key={index}
-                className={`relative rounded-lg border-l-4 ${result.borderColor} bg-white p-6 shadow-sm hover:shadow-lg transition-all duration-200 ${
-                  result.locked ? 'opacity-75' : 'hover:-translate-y-1'
-                }`}
-                style={{
-                  background: result.locked 
-                    ? `linear-gradient(135deg, ${result.bgColor.replace('bg-', '').replace('-50', '')}-50 0%, white 100%)`
-                    : 'white'
-                }}
+                className={`relative border-l-4 ${result.borderColor} bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-200 hover:-translate-y-1 p-6`}
               >
                 {result.locked && (
                   <div className="absolute top-4 right-4">
@@ -135,29 +125,11 @@ export default function HomePage() {
                   </div>
                 )}
 
-                {/* Polaroid-style header with icon */}
                 <div className="flex items-center mb-4">
                   <div className={`h-8 w-8 rounded ${result.bgColor} flex items-center justify-center mr-3`}>
-                    {result.category.includes('Geopolitical') && (
-                      <svg className="h-4 w-4 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM18.894 17.834a.75.75 0 00-1.06 1.06l-1.591-1.59a.75.75 0 111.06-1.061l1.591 1.59zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM5.106 17.834a.75.75 0 001.06 1.06l1.591-1.59a.75.75 0 10-1.06-1.061l-1.591 1.59zM3 12a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5H3.75A.75.75 0 013 12zM5.106 6.166a.75.75 0 001.06-1.06l1.591 1.59a.75.75 0 11-1.06 1.061L5.106 6.166z" clipRule="evenodd" />
-                      </svg>
-                    )}
-                    {result.category.includes('Trade') && (
-                      <svg className="h-4 w-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    )}
-                    {result.category.includes('ESG') && (
-                      <svg className="h-4 w-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" clipRule="evenodd" />
-                      </svg>
-                    )}
-                    {result.category.includes('Premium') && (
-                      <svg className="h-4 w-4 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    )}
+                    <svg className="h-4 w-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
                   </div>
                   <h4 className="text-sm font-medium text-gray-900">{result.category}</h4>
                 </div>
@@ -177,7 +149,6 @@ export default function HomePage() {
                   )}
                 </p>
 
-                {/* Polaroid-style tags */}
                 <div className="flex flex-wrap gap-2 mb-4">
                   {result.tags.map((tag, tagIndex) => (
                     <span
@@ -207,7 +178,6 @@ export default function HomePage() {
             ))}
           </div>
 
-          {/* Call to Action */}
           <div className="mt-12 text-center">
             <div className="rounded-lg bg-gray-50 px-6 py-8">
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
@@ -219,7 +189,7 @@ export default function HomePage() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   href="/signup"
-                  className="inline-flex items-center justify-center rounded-md bg-gray-900 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
+                  className="inline-flex items-center justify-center rounded-md bg-gray-900 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-gray-800"
                 >
                   Start free trial
                 </Link>
@@ -235,11 +205,10 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* Features Preview (when no search yet) */}
+      {/* Features Preview */}
       {!showResults && (
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
-            {/* Polaroid-style feature cards */}
             <div className="border-l-4 border-l-blue-500 bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
               <div className="h-12 w-12 rounded bg-blue-50 flex items-center justify-center mb-4">
                 <svg className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
